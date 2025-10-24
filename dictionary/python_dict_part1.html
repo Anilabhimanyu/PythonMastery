@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Python Dictionary Complete Reference</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 40px;
+      background: #f6f8fa;
+      color: #333;
+      line-height: 1.6;
+    }
+    h1, h2, h3 {
+      color: #0366d6;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    th, td {
+      border: 1px solid #e1e4e8;
+      padding: 10px;
+      text-align: left;
+    }
+    th {
+      background: #0366d6;
+      color: white;
+    }
+    pre {
+      background: #f0f0f0;
+      padding: 10px;
+      border-radius: 6px;
+      overflow-x: auto;
+    }
+    .note {
+      background: #fffbea;
+      border-left: 5px solid #ffdf5d;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 6px;
+    }
+    details {
+      background: #fff;
+      padding: 10px 15px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      border: 1px solid #ddd;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    summary {
+      font-weight: bold;
+      cursor: pointer;
+      color: #0366d6;
+    }
+    a {
+      color: #0366d6;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+<h1>🐍 Python Dictionary — Complete Reference</h1>
+<p>Dictionaries are <b>mutable, unordered key-value collections</b> in Python. They are widely used for fast lookups, mapping relationships, and structured data storage.</p>
+
+---
+
+<h2>📘 Basic Definition</h2>
+<pre><code>my_dict = {"name": "Anil", "age": 25, "city": "AP"}
+print(my_dict)        # {'name': 'Anil', 'age': 25, 'city': 'AP'}
+print(type(my_dict))  # &lt;class 'dict'&gt;
+</code></pre>
+
+---
+
+<h2>🏗️ Dictionary Properties</h2>
+<table>
+  <tr><th>Property</th><th>Description</th><th>Example</th></tr>
+  <tr><td>Mutable</td><td>Can add, modify, or remove keys</td><td><code>d["age"] = 26</code></td></tr>
+  <tr><td>Unordered (Python ≤3.6)</td><td>No guaranteed order of keys</td><td>N/A</td></tr>
+  <tr><td>Ordered (Python ≥3.7)</td><td>Insertion order is preserved</td><td><code>d.keys()</code></td></tr>
+  <tr><td>Key uniqueness</td><td>Keys must be unique & hashable</td><td><code>{"a":1,"a":2} → {"a":2}</code></td></tr>
+  <tr><td>Iterable</td><td>Can iterate keys, values, or items</td><td><code>for k,v in d.items(): print(k,v)</code></td></tr>
+  <tr><td>Dynamic size</td><td>Can grow/shrink as needed</td><td><code>d["new"] = 123</code></td></tr>
+</table>
+
+---
+
+<h2>⚙️ Dictionary Methods</h2>
+<table>
+  <tr><th>Method</th><th>Description</th><th>Example</th><th>Output</th></tr>
+  <tr><td>get(key, default)</td><td>Return value if key exists else default</td><td><code>d.get("age", 0)</code></td><td>25</td></tr>
+  <tr><td>keys()</td><td>Return all keys</td><td><code>d.keys()</code></td><td>dict_keys([...])</td></tr>
+  <tr><td>values()</td><td>Return all values</td><td><code>d.values()</code></td><td>dict_values([...])</td></tr>
+  <tr><td>items()</td><td>Return key-value pairs</td><td><code>d.items()</code></td><td>dict_items([...])</td></tr>
+  <tr><td>pop(key)</td><td>Remove key and return value</td><td><code>d.pop("age")</code></td><td>25</td></tr>
+  <tr><td>popitem()</td><td>Remove last inserted key-value</td><td><code>d.popitem()</code></td><td>('city','AP')</td></tr>
+  <tr><td>update(other_dict)</td><td>Merge another dict</td><td><code>d.update({"hobby":"coding"})</code></td><td>{...}</td></tr>
+  <tr><td>clear()</td><td>Remove all items</td><td><code>d.clear()</code></td><td>{}</td></tr>
+  <tr><td>setdefault(key, default)</td><td>Return value; if not exist, insert key with default</td><td><code>d.setdefault("country","IN")</code></td><td>IN</td></tr>
+  <tr><td>copy()</td><td>Shallow copy of dict</td><td><code>d2 = d.copy()</code></td><td>{...}</td></tr>
+</table>
+
+---
+
+<h2>🧮 Dictionary Operations</h2>
+<table>
+  <tr><th>Operation</th><th>Example</th><th>Result</th></tr>
+  <tr><td>Access</td><td><code>d["name"]</code></td><td>'Anil'</td></tr>
+  <tr><td>Membership</td><td><code>"age" in d</code></td><td>True</td></tr>
+  <tr><td>Delete</td><td><code>del d["city"]</code></td><td>Removes key</td></tr>
+  <tr><td>Merge</td><td><code>d.update({"city":"AP"})</code></td><td>Adds key</td></tr>
+  <tr><td>Iteration</td><td><code>for k,v in d.items(): print(k,v)</code></td><td>Prints all pairs</td></tr>
+</table>
+
+---
+
+<h2>💡 Dictionary Comprehension</h2>
+<pre><code>nums = [1,2,3]
+squared = {x: x**2 for x in nums}
+print(squared)  # {1:1, 2:4, 3:9}
+
+even = {x: x*2 for x in nums if x%2==0}
+print(even)  # {2:4}
+</code></pre>
+
+---
+
+<h2>💼 Real-world Use Cases</h2>
+<ul>
+  <li>Counting frequency of elements</li>
+  <li>Storing configuration or settings</li>
+  <li>Fast lookup tables for algorithms</li>
+  <li>Mapping relationships (user → score)</li>
+  <li>Grouping items by property</li>
+</ul>
+
+---
+
+<h2>🧠 Memory and Performance</h2>
+<pre><code>import sys
+d = {i:i*2 for i in range(10)}
+l = list(range(10))
+print(sys.getsizeof(d), sys.getsizeof(l))  # Dict uses more memory, but O(1) lookup
+</code></pre>
+
+---
+
+<details>
+  <summary>💻 LeetCode Practice Problems Involving Dictionaries (Click to Expand)</summary>
+  <table>
+    <tr>
+      <th>#</th>
+      <th>Problem</th>
+      <th>Concept</th>
+      <th>LeetCode Link</th>
+    </tr>
+    <tr><td>1</td><td>Two Sum</td><td>Hashmap for O(1) lookup</td><td><a href="https://leetcode.com/problems/two-sum/" target="_blank">🔗 View</a></td></tr>
+    <tr><td>2</td><td>Group Anagrams</td><td>Tuple key in dict</td><td><a href="https://leetcode.com/problems/group-anagrams/" target="_blank">🔗 View</a></td></tr>
+    <tr><td>3</td><td>Top K Frequent Elements</td><td>Frequency count dictionary</td><td><a href="https://leetcode.com/problems/top-k-frequent-elements/" target="_blank">🔗 View</a></td></tr>
+    <tr><td>4</td><td>Sort Characters by Frequency</td><td>Count dict + tuple sorting</td><td><a href="https://leetcode.com/problems/sort-characters-by-frequency/" target="_blank">🔗 View</a></td></tr>
+    <tr><td>5</td><td>Valid Anagram</td><td>Count frequency dict comparison</td><td><a href="https://leetcode.com/problems/valid-anagram/" target="_blank">🔗 View</a></td></tr>
+    <tr><td>6</td><td>Two Sum II</td><td>Two pointers + hashmap</td><td><a href="https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/" target="_blank">🔗 View</a></td></tr>
+    <tr><td>7</td><td>Minimum Index Sum of Two Lists</td><td>Mapping values to indices</td><td><a href="https://leetcode.com/problems/minimum-index-sum-of-two-lists/" target="_blank">🔗 View</a></td></tr>
+    <tr><td>8</td><td>Design Twitter</td><td>Stores user→tweets dict</td><td><a href="https://leetcode.com/problems/design-twitter/" target="_blank">🔗 View</a></td></tr>
+    <tr><td>9</td><td>Employee Free Time</td><td>Interval mapping dict</td><td><a href="https://leetcode.com/problems/employee-free-time/" target="_blank">🔗 View</a></td></tr>
+    <tr><td>10</td><td>Subdomain Visit Count</td><td>Frequency counting</td><td><a href="https://leetcode.com/problems/subdomain-visit-count/" target="_blank">🔗 View</a></td></tr>
+  </table>
+</details>
+
+<hr>
+<p style="text-align:center;">🔗 <b>Part of DSA Visuals Collection</b> |
+<a href="index.html">🏠 Home</a> |
+<a href="python-list-reference.html">📋 List</a> |
+<a href="python-tuple-reference.html">🔗 Tuple</a> |
+<a href="arrays-roadmap.html">🧮 Arrays</a> |
+<a href="recursion-roadmap.html">🔁 Recursion</a>
+</p>
+
+</body>
+</html>
