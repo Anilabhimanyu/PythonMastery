@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DSA: Arrays - Complete Visual and Practice Guide</title>
+<style>
+  body { font-family: 'Segoe UI', sans-serif; margin: 40px; background: #f9fafb; color: #222; }
+  h1, h2 { color: #0070f3; }
+  h3 { color: #333; }
+  pre { background: #111; color: #0f0; padding: 10px; border-radius: 8px; overflow-x: auto; }
+  .section { background: white; padding: 25px; margin-bottom: 30px; border-radius: 16px; box-shadow: 0 2px 6px rgba(0,0,0,0.08); }
+  a { color: #0070f3; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .ascii { font-family: monospace; background: #f0f0f0; padding: 10px; border-radius: 10px; }
+</style>
+</head>
+<body>
+
+<h1>🌈 DSA Roadmap: Arrays in Python</h1>
+
+<div class="section">
+<h2>1️⃣ Definition & Intuition</h2>
+<p><b>Array</b> = Collection of elements stored in contiguous memory locations.</p>
+<p>Think of it as a row of lockers 🧳 — each locker has a number (index), and you can instantly access any locker.</p>
+
+<div class="ascii">
+Indexes →  0   1   2   3   4
+Values  → [10, 20, 30, 40, 50]
+</div>
+
+<p><b>Key property:</b> Random access is O(1) — directly jump to any index.</p>
+</div>
+
+<div class="section">
+<h2>2️⃣ Common Operations & Time Complexity</h2>
+<table border="1" cellspacing="0" cellpadding="6">
+<tr><th>Operation</th><th>Average Time</th><th>Description</th></tr>
+<tr><td>Access</td><td>O(1)</td><td>arr[i]</td></tr>
+<tr><td>Insert (end)</td><td>O(1)</td><td>append()</td></tr>
+<tr><td>Insert (middle)</td><td>O(n)</td><td>shift elements</td></tr>
+<tr><td>Delete</td><td>O(n)</td><td>shift elements</td></tr>
+<tr><td>Search</td><td>O(n)</td><td>linear scan</td></tr>
+</table>
+
+<pre>
+# Python example
+nums = [1, 2, 3, 4, 5]
+nums.append(6)        # Add at end
+nums.insert(2, 10)    # Insert at index 2
+nums.remove(4)        # Remove value 4
+print(nums[3])        # Access index 3
+</pre>
+</div>
+
+<div class="section">
+<h2>3️⃣ ASCII Visual: Array in Memory</h2>
+<pre class="ascii">
+Memory Address (Contiguous)
+
+1000  ─▶ [  5 ]  ← arr[0]
+1004  ─▶ [ 12 ]  ← arr[1]
+1008  ─▶ [ 25 ]  ← arr[2]
+1012  ─▶ [ 38 ]  ← arr[3]
+</pre>
+<p>Each element has equal spacing (fixed size). That’s why array access is O(1).</p>
+</div>
+
+<div class="section">
+<h2>4️⃣ Problem-Solving Mindset</h2>
+<p>When facing an array problem, ask yourself 👇</p>
+<ul>
+<li>Do I need to <b>traverse</b> it? (→ use loops or two-pointers)</li>
+<li>Do I need to <b>search</b>? (→ linear or binary search)</li>
+<li>Do I need to <b>modify</b>? (→ insertion/deletion, watch for O(n))</li>
+<li>Do I need <b>prefix/suffix</b> results? (→ precompute partial sums)</li>
+<li>Do I need <b>window/sliding window</b>? (→ continuous subarray)</li>
+</ul>
+
+<p>🎯 Always think: <b>What pattern fits this?</b></p>
+
+<pre class="ascii">
+Array Problem Patterns:
+
+1. Traversal → for/while loop
+2. Two Pointers → sorted arrays, pairs, duplicates
+3. Sliding Window → subarray, sum, longest substring
+4. Prefix Sum → cumulative results
+5. Hashing → frequencies, complements
+6. Sorting + Binary Search → optimization
+</pre>
+</div>
+
+<div class="section">
+<h2>5️⃣ LeetCode Practice Links</h2>
+
+<h3>🟢 Easy</h3>
+<ul>
+<li><a href="https://leetcode.com/problems/two-sum/">#1 Two Sum</a></li>
+<li><a href="https://leetcode.com/problems/remove-duplicates-from-sorted-array/">#26 Remove Duplicates</a></li>
+<li><a href="https://leetcode.com/problems/merge-sorted-array/">#88 Merge Sorted Array</a></li>
+<li><a href="https://leetcode.com/problems/move-zeroes/">#283 Move Zeroes</a></li>
+<li><a href="https://leetcode.com/problems/maximum-subarray/">#53 Maximum Subarray</a></li>
+</ul>
+
+<h3>🟡 Medium</h3>
+<ul>
+<li><a href="https://leetcode.com/problems/3sum/">#15 3Sum</a></li>
+<li><a href="https://leetcode.com/problems/container-with-most-water/">#11 Container With Most Water</a></li>
+<li><a href="https://leetcode.com/problems/subarray-sum-equals-k/">#560 Subarray Sum Equals K</a></li>
+<li><a href="https://leetcode.com/problems/product-of-array-except-self/">#238 Product of Array Except Self</a></li>
+<li><a href="https://leetcode.com/problems/longest-consecutive-sequence/">#128 Longest Consecutive Sequence</a></li>
+</ul>
+
+<h3>🔴 Hard</h3>
+<ul>
+<li><a href="https://leetcode.com/problems/first-missing-positive/">#41 First Missing Positive</a></li>
+<li><a href="https://leetcode.com/problems/median-of-two-sorted-arrays/">#4 Median of Two Sorted Arrays</a></li>
+<li><a href="https://leetcode.com/problems/trapping-rain-water/">#42 Trapping Rain Water</a></li>
+</ul>
+</div>
+
+<div class="section">
+<h2>6️⃣ Python Snippets to Remember</h2>
+<pre>
+# Reverse
+arr[::-1]
+
+# Find max subarray sum (Kadane's Algorithm)
+def maxSubArray(nums):
+    max_sum = curr = nums[0]
+    for x in nums[1:]:
+        curr = max(x, curr + x)
+        max_sum = max(max_sum, curr)
+    return max_sum
+
+# Two Pointers (Remove Duplicates)
+def removeDuplicates(nums):
+    if not nums: return 0
+    slow = 0
+    for fast in range(1, len(nums)):
+        if nums[fast] != nums[slow]:
+            slow += 1
+            nums[slow] = nums[fast]
+    return slow + 1
+</pre>
+</div>
+
+<div class="section">
+<h2>7️⃣ How to Think Like an Array Engineer 🧠</h2>
+<ul>
+<li>Draw array indexes on paper.</li>
+<li>Trace loops manually for small input.</li>
+<li>Recognize repetitive patterns → replace with formula or prefix sums.</li>
+<li>Notice when a window “moves” → apply sliding window.</li>
+<li>When you re-use results → caching, prefix, or DP.</li>
+</ul>
+
+<p><b>Key Memory Tip:</b> Arrays are like railway coaches 🚆 — fixed sequence, constant spacing. You can’t insert a new coach in the middle without shifting all others.</p>
+</div>
+
+<div class="section">
+<h2>8️⃣ ASCII Summary Map</h2>
+<pre class="ascii">
+   +-------------------+
+   |     ARRAYS 🧮     |
+   +-------------------+
+          |     
+   +------+------+
+   |             |
+Two Pointers   Sliding Window
+   |             |
+   v             v
+Prefix Sum   Hash Map / Set
+   |             |
+   +------->  Dynamic Problems
+</pre>
+</div>
+
+<p style="text-align:center;color:#555">Built for Python DSA Learning • Practice 1 pattern per day • Master before moving to Linked Lists</p>
+
+</body>
+</html>
