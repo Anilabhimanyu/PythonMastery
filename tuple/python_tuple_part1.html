@@ -1,181 +1,143 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Python Tuple Complete Reference</title>
-  <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      margin: 40px;
-      background: #f6f8fa;
-      color: #333;
-      line-height: 1.6;
-    }
-    h1, h2, h3 {
-      color: #0366d6;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin: 20px 0;
-      background: white;
-      border-radius: 10px;
-      overflow: hidden;
-    }
-    th, td {
-      border: 1px solid #e1e4e8;
-      padding: 10px;
-      text-align: left;
-    }
-    th {
-      background: #0366d6;
-      color: white;
-    }
-    pre {
-      background: #f0f0f0;
-      padding: 10px;
-      border-radius: 6px;
-      overflow-x: auto;
-    }
-    .note {
-      background: #fffbea;
-      border-left: 5px solid #ffdf5d;
-      padding: 10px;
-      margin: 10px 0;
-      border-radius: 6px;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DSA: Tuples - Complete Visual and Practice Guide</title>
+<style>
+  body { font-family: 'Segoe UI', sans-serif; margin: 40px; background: #f9fafb; color: #222; }
+  h1, h2 { color: #0070f3; }
+  h3 { color: #333; }
+  pre { background: #111; color: #0f0; padding: 10px; border-radius: 8px; overflow-x: auto; }
+  .section { background: white; padding: 25px; margin-bottom: 30px; border-radius: 16px; box-shadow: 0 2px 6px rgba(0,0,0,0.08); }
+  a { color: #0070f3; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .ascii { font-family: monospace; background: #f0f0f0; padding: 10px; border-radius: 10px; }
+  details { background: #fff; padding: 10px 15px; border-radius: 8px; margin-bottom: 10px; border: 1px solid #ddd; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+  summary { font-weight: bold; cursor: pointer; color: #0070f3; }
+</style>
 </head>
 <body>
 
-<h1>🐍 Python Tuple — Complete Reference</h1>
-<p>Tuples are <b>immutable sequences</b> used to store ordered collections of items. They’re similar to lists but <b>cannot be changed</b> after creation.</p>
+<h1>🌈 DSA Roadmap: Tuples in Python</h1>
 
----
+<div class="section">
+<h2>1️⃣ Definition & Intuition</h2>
+<p><b>Tuple</b> = Immutable, ordered collection of elements. Can hold mixed data types.</p>
+<p>Think of it as a <b>frozen array</b> ❄️ — once created, you cannot modify its contents.</p>
 
-<h2>📘 Basic Definition</h2>
-<pre><code>my_tuple = (10, 20, 30)
-print(my_tuple)        # (10, 20, 30)
-print(type(my_tuple))  # &lt;class 'tuple'&gt;
-</code></pre>
+<div class="ascii">
+Indexes →  0     1       2
+Values  → ('A', 10, True)
+</div>
 
-<div class="note"><b>Note:</b> Single element tuples need a comma — e.g. <code>(10,)</code></div>
+<p><b>Key property:</b> Immutable → safe to use as dictionary keys or set elements.</p>
+</div>
 
----
-
-<h2>🏗️ Tuple Properties</h2>
-<table>
-  <tr><th>Property</th><th>Description</th><th>Example</th></tr>
-  <tr><td>Ordered</td><td>Preserves the order of items</td><td><code>(1, 2, 3)</code> → always 1→2→3</td></tr>
-  <tr><td>Immutable</td><td>Cannot be modified after creation</td><td><code>t[0] = 99 ❌</code></td></tr>
-  <tr><td>Indexable</td><td>Supports positive & negative indexing</td><td><code>t[-1]</code> → last item</td></tr>
-  <tr><td>Slicable</td><td>You can slice like lists</td><td><code>t[1:3]</code> → new tuple</td></tr>
-  <tr><td>Iterable</td><td>Can loop through items</td><td><code>for x in t: print(x)</code></td></tr>
-  <tr><td>Hashable (if items are immutable)</td><td>Can be used as dictionary keys</td><td><code>{(1,2): "pair"}</code></td></tr>
+<div class="section">
+<h2>2️⃣ Common Operations & Time Complexity</h2>
+<table border="1" cellspacing="0" cellpadding="6">
+<tr><th>Operation</th><th>Time</th><th>Description</th></tr>
+<tr><td>Access</td><td>O(1)</td><td>t[index]</td></tr>
+<tr><td>Iteration</td><td>O(n)</td><td>for x in t</td></tr>
+<tr><td>Search</td><td>O(n)</td><td>value in t</td></tr>
+<tr><td>Concatenation</td><td>O(n)</td><td>t1 + t2</td></tr>
+<tr><td>Repetition</td><td>O(n*m)</td><td>t * m</td></tr>
+<tr><td>Slicing</td><td>O(k)</td><td>t[start:end]</td></tr>
 </table>
 
----
+<pre>
+# Python examples
+t = ('A', 10, True)
+print(t[1])         # 10
+print(t[:2])        # ('A', 10)
+t2 = t + ('New',)   # Concatenation
+print(t2 * 2)       # Repetition
+</pre>
+</div>
 
-<h2>⚙️ Tuple Methods (Built-in)</h2>
-<table>
-  <tr><th>Method</th><th>Description</th><th>Example</th><th>Output</th></tr>
-  <tr><td><code>count(x)</code></td><td>Returns number of occurrences of x</td><td><code>(1,2,2,3).count(2)</code></td><td><code>2</code></td></tr>
-  <tr><td><code>index(x)</code></td><td>Returns index of first occurrence of x</td><td><code>(10,20,30).index(20)</code></td><td><code>1</code></td></tr>
+<div class="section">
+<h2>3️⃣ Tuple Methods</h2>
+<table border="1" cellspacing="0" cellpadding="6">
+<tr><th>Method</th><th>Description</th><th>Example</th><th>Output</th></tr>
+<tr><td>count(value)</td><td>Count occurrences of value</td><td>t.count(10)</td><td>1</td></tr>
+<tr><td>index(value)</td><td>Return first index of value</td><td>t.index('A')</td><td>0</td></tr>
 </table>
+<p><i>Note:</i> Tuples have very few methods because they are immutable.</p>
+</div>
 
-<div class="note">✅ Only 2 methods are available — tuples are simple & lightweight.</div>
+<div class="section">
+<h2>4️⃣ Tuple Comprehension / Conversion</h2>
+<p>Tuples don’t have comprehension, but you can create using <code>tuple()</code>:</p>
 
----
+<pre>
+nums = [1,2,3]
+t = tuple(x*2 for x in nums)
+print(t)  # (2,4,6)
 
-<h2>🧮 Tuple Operations</h2>
+# Convert list to tuple
+l = [10,20]
+t2 = tuple(l)
+print(t2)  # (10,20)
+</pre>
+</div>
 
-<table>
-  <tr><th>Operation</th><th>Example</th><th>Result</th></tr>
-  <tr><td>Concatenation</td><td><code>(1,2)+(3,4)</code></td><td><code>(1,2,3,4)</code></td></tr>
-  <tr><td>Repetition</td><td><code>("hi",)*3</code></td><td><code>('hi','hi','hi')</code></td></tr>
-  <tr><td>Membership</td><td><code>2 in (1,2,3)</code></td><td><code>True</code></td></tr>
-  <tr><td>Iteration</td><td><code>for i in t: print(i)</code></td><td>Each element</td></tr>
-  <tr><td>Unpacking</td><td><code>a,b,c = (1,2,3)</code></td><td><code>a=1,b=2,c=3</code></td></tr>
-  <tr><td>Nesting</td><td><code>t = ((1,2),(3,4))</code></td><td>Tuple inside tuple</td></tr>
-</table>
-
----
-
-<h2>🔁 Tuple vs List</h2>
-<table>
-  <tr><th>Feature</th><th>Tuple</th><th>List</th></tr>
-  <tr><td>Mutability</td><td>Immutable</td><td>Mutable</td></tr>
-  <tr><td>Syntax</td><td><code>()</code></td><td><code>[]</code></td></tr>
-  <tr><td>Performance</td><td>Faster, smaller memory</td><td>Slower, more flexible</td></tr>
-  <tr><td>Use as dict key</td><td>✅ Yes (if immutable)</td><td>❌ No</td></tr>
-  <tr><td>Use case</td><td>Fixed data</td><td>Changing data</td></tr>
-</table>
-
----
-
-<h2>💼 Real-world Use Cases</h2>
+<div class="section">
+<h2>5️⃣ Real-World Use Cases</h2>
 <ul>
-  <li>Returning multiple values from functions</li>
-  <li>Storing fixed configuration values</li>
-  <li>Dictionary keys for composite identifiers</li>
-  <li>Representing 2D coordinates (x, y)</li>
+<li>Function returns multiple values → use tuple</li>
+<li>Store immutable records</li>
+<li>Use as keys in dictionaries / elements in sets</li>
+<li>Group related data together</li>
+<li>Used in sorting / pairing (coordinate points)</li>
 </ul>
+</div>
 
-<pre><code>def minmax(values):
-    return (min(values), max(values))
-
-low, high = minmax([10, 20, 30])
-print(low, high)   # 10 30
-</code></pre>
-
----
-
-<h2>🧠 Memory Efficiency</h2>
-<pre><code>import sys
-lst = [1, 2, 3]
-tpl = (1, 2, 3)
-print(sys.getsizeof(lst), sys.getsizeof(tpl))  # List uses more memory
-</code></pre>
-
-<div class="note">✅ Tuples are more memory-efficient and faster to iterate than lists.</div>
-
----
-
-<h2>🧩 Common Interview/LeetCode-Style Practice Ideas</h2>
+<div class="section">
+<h2>6️⃣ Problem-Solving Mindset</h2>
 <ul>
-  <li>Check if all tuple elements are the same</li>
-  <li>Find frequency of elements in a tuple</li>
-  <li>Convert list of tuples → dictionary</li>
-  <li>Swap elements in tuple without converting to list</li>
-  <li>Sort list of tuples by 2nd element</li>
+<li>Immutable → cannot modify; use concatenation or convert to list for changes.</li>
+<li>Tuples are fast and memory-efficient for fixed-size collections.</li>
+<li>Frequently used in combination with dictionaries, sets, and loops.</li>
+<li>Think about unpacking for multiple return values.</li>
 </ul>
+</div>
 
-<table>
-  <tr><th>Problem</th><th>LeetCode Link</th></tr>
-  <tr><td>Tuple operations (Python practice)</td><td><a href="https://leetcode.com/problemset/all/?search=tuple" target="_blank">LeetCode: Search "tuple"</a></td></tr>
-  <tr><td>Nested structure iteration</td><td><a href="https://leetcode.com/problems/nested-list-weight-sum/" target="_blank">Nested List Weight Sum</a></td></tr>
-</table>
+<div class="section">
+<h2>7️⃣ LeetCode Practice Links</h2>
+<details>
+<summary>💻 Click to Expand Tuple Problems</summary>
+<ul>
+<li><a href="https://leetcode.com/problems/two-sum/">#1 Two Sum</a> (tuple as result)</li>
+<li><a href="https://leetcode.com/problems/group-anagrams/">#49 Group Anagrams</a> (tuple keys)</li>
+<li><a href="https://leetcode.com/problems/top-k-frequent-elements/">#347 Top K Frequent Elements</a> (tuple sorting)</li>
+<li><a href="https://leetcode.com/problems/minimum-index-sum-of-two-lists/">#599 Minimum Index Sum of Two Lists</a> (tuple for index-value)</li>
+<li><a href="https://leetcode.com/problems/design-twitter/">#355 Design Twitter</a> (timestamp, tweet_id tuples)</li>
+<li><a href="https://leetcode.com/problems/meeting-rooms-ii/">#253 Meeting Rooms II</a> (interval tuples)</li>
+<li><a href="https://leetcode.com/problems/merge-intervals/">#56 Merge Intervals</a> (interval merging)</li>
+<li><a href="https://leetcode.com/problems/employee-free-time/">#759 Employee Free Time</a> (list of tuples)</li>
+</ul>
+</details>
+</div>
 
----
+<div class="section">
+<h2>8️⃣ ASCII Summary Map</h2>
+<pre class="ascii">
+   +-------------------+
+   |      TUPLES 🍏     |
+   +-------------------+
+          |
+   +------+------+
+   |             |
+ Immutable    Used as Keys
+   |             |
+Grouping / Packing
+   |
+Function Returns / Sorting
+</pre>
+</div>
 
-<h2>📚 Summary</h2>
-<table>
-  <tr><th>Feature</th><th>List</th><th>Tuple</th></tr>
-  <tr><td>Mutability</td><td>Yes</td><td>No</td></tr>
-  <tr><td>Methods</td><td>Dozens</td><td>2</td></tr>
-  <tr><td>Memory</td><td>More</td><td>Less</td></tr>
-  <tr><td>Speed</td><td>Slower</td><td>Faster</td></tr>
-  <tr><td>Use Case</td><td>Dynamic data</td><td>Static, fixed data</td></tr>
-</table>
-
-<hr>
-<p style="text-align:center;">🔗 <b>Part of DSA Visuals Collection</b> |
-<a href="index.html">🏠 Home</a> |
-<a href="python-list-reference.html">📋 List</a> |
-<a href="arrays-roadmap.html">🧮 Arrays</a> |
-<a href="recursion-roadmap.html">🔁 Recursion</a>
-</p>
+<p style="text-align:center;color:#555">Built for Python DSA Learning • Practice 1 pattern per day • Master before moving to Dictionaries / Arrays / Recursion</p>
 
 </body>
 </html>
