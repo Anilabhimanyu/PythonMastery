@@ -5,503 +5,177 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Python Tuple Complete Reference</title>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      background: #0f172a;
-      color: #e2e8f0;
+      font-family: 'Segoe UI', sans-serif;
+      margin: 40px;
+      background: #f6f8fa;
+      color: #333;
       line-height: 1.6;
-      min-height: 100vh;
-      padding: 20px;
     }
-    
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      background: #1e293b;
-      border-radius: 20px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-      overflow: hidden;
+    h1, h2, h3 {
+      color: #0366d6;
     }
-    
-    header {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-      padding: 40px;
-      text-align: center;
-    }
-    
-    h1 { font-size: 2.5rem; margin-bottom: 10px; }
-    .tagline { opacity: 0.9; font-size: 1.1rem; }
-    
-    .search-bar {
-      padding: 20px 40px;
-      background: #334155;
-      border-bottom: 2px solid #475569;
-    }
-    
-    #searchInput {
-      width: 100%;
-      padding: 12px 20px;
-      border: 2px solid #475569;
-      border-radius: 10px;
-      font-size: 16px;
-      transition: all 0.3s;
-      background: #1e293b;
-      color: #e2e8f0;
-    }
-    
-    #searchInput:focus {
-      outline: none;
-      border-color: #667eea;
-      box-shadow: 0 0 0 3px rgba(102,126,234,0.2);
-    }
-    
-    .content { padding: 40px; }
-    
-    .section {
-      margin-bottom: 40px;
-      border-left: 4px solid #818cf8;
-      padding-left: 20px;
-    }
-    
-    h2 {
-      color: #818cf8;
-      margin-bottom: 20px;
-      font-size: 1.8rem;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      transition: color 0.3s;
-    }
-    
-    h2:hover { color: #a5b4fc; }
-    h2::before { content: '▼'; font-size: 0.8em; transition: transform 0.3s; }
-    h2.collapsed::before { transform: rotate(-90deg); }
-    
-    .section-content {
-      max-height: 3000px;
-      overflow: hidden;
-      transition: max-height 0.4s ease, opacity 0.4s ease;
-    }
-    
-    .section-content.hidden {
-      max-height: 0;
-      opacity: 0;
-    }
-    
     table {
       width: 100%;
       border-collapse: collapse;
       margin: 20px 0;
-      background: #334155;
+      background: white;
       border-radius: 10px;
       overflow: hidden;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.3);
     }
-    
     th, td {
-      padding: 15px;
+      border: 1px solid #e1e4e8;
+      padding: 10px;
       text-align: left;
-      border-bottom: 1px solid #475569;
     }
-    
     th {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      background: #0366d6;
       color: white;
-      font-weight: 600;
-      text-transform: uppercase;
-      font-size: 0.9rem;
-      letter-spacing: 0.5px;
     }
-    
-    tr:hover { background: #475569; transition: background 0.2s; }
-    
     pre {
-      background: #0f172a;
-      color: #ffffff;
-      padding: 20px;
-      border-radius: 10px;
+      background: #f0f0f0;
+      padding: 10px;
+      border-radius: 6px;
       overflow-x: auto;
-      margin: 15px 0;
-      font-family: 'Courier New', monospace;
-      font-size: 14px;
-      box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
-      border: 1px solid #334155;
     }
-    
-    code {
-      background: #334155;
-      padding: 3px 8px;
-      border-radius: 4px;
-      font-family: 'Courier New', monospace;
-      color: #fbbf24;
-      font-size: 0.9em;
-    }
-    
     .note {
-      background: #422006;
-      border-left: 5px solid #f59e0b;
-      padding: 15px 20px;
-      margin: 20px 0;
-      border-radius: 10px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.3);
-      color: #fef3c7;
-    }
-    
-    .note strong { color: #fbbf24; }
-    
-    ul {
-      list-style: none;
-      padding-left: 0;
-    }
-    
-    li {
-      padding: 10px 0;
-      padding-left: 30px;
-      position: relative;
-    }
-    
-    li::before {
-      content: '→';
-      position: absolute;
-      left: 0;
-      color: #818cf8;
-      font-weight: bold;
-    }
-    
-    .footer {
-      background: #2d3748;
-      color: white;
-      padding: 30px;
-      text-align: center;
-    }
-    
-    .footer a {
-      color: #818cf8;
-      text-decoration: none;
-      margin: 0 15px;
-      transition: color 0.3s;
-    }
-    
-    .footer a:hover { color: #a5b4fc; }
-    
-    .quick-nav {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin: 20px 0;
-    }
-    
-    .quick-nav button {
-      padding: 8px 16px;
-      background: #667eea;
-      color: white;
-      border: none;
-      border-radius: 20px;
-      cursor: pointer;
-      transition: all 0.3s;
-      font-size: 0.9rem;
-    }
-    
-    .quick-nav button:hover {
-      background: #764ba2;
-      transform: translateY(-2px);
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    }
-    
-    @media (max-width: 768px) {
-      h1 { font-size: 2rem; }
-      .content { padding: 20px; }
-      table { font-size: 0.9rem; }
+      background: #fffbea;
+      border-left: 5px solid #ffdf5d;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 6px;
     }
   </style>
 </head>
 <body>
 
-<div class="container">
-  <header>
-    <h1>🐍 Python Tuple Reference</h1>
-    <p class="tagline">Immutable, Fast, Memory-Efficient Sequences</p>
-  </header>
+<h1>🐍 Python Tuple — Complete Reference</h1>
+<p>Tuples are <b>immutable sequences</b> used to store ordered collections of items. They’re similar to lists but <b>cannot be changed</b> after creation.</p>
 
-  <div class="search-bar">
-    <input type="text" id="searchInput" placeholder="🔍 Search topics (e.g., 'immutable', 'methods', 'vs list')..." />
-  </div>
+---
 
-  <div class="content">
-    <div class="quick-nav">
-      <button onclick="scrollToSection('basics')">Basics</button>
-      <button onclick="scrollToSection('properties')">Properties</button>
-      <button onclick="scrollToSection('methods')">Methods</button>
-      <button onclick="scrollToSection('operations')">Operations</button>
-      <button onclick="scrollToSection('comparison')">vs List</button>
-      <button onclick="scrollToSection('usecases')">Use Cases</button>
-    </div>
-
-    <div class="section" id="basics">
-      <h2 onclick="toggleSection(this)">📘 Basic Definition</h2>
-      <div class="section-content">
-        <pre><code>my_tuple = (10, 20, 30)
+<h2>📘 Basic Definition</h2>
+<pre><code>my_tuple = (10, 20, 30)
 print(my_tuple)        # (10, 20, 30)
 print(type(my_tuple))  # &lt;class 'tuple'&gt;
+</code></pre>
 
-# Single element tuple (comma required!)
-single = (42,)
-print(type(single))    # &lt;class 'tuple'&gt;
+<div class="note"><b>Note:</b> Single element tuples need a comma — e.g. <code>(10,)</code></div>
 
-# Without comma - not a tuple
-not_tuple = (42)
-print(type(not_tuple)) # &lt;class 'int'&gt;</code></pre>
-        <div class="note"><strong>⚠️ Important:</strong> Single element tuples need a trailing comma: <code>(10,)</code> otherwise it's just a value in parentheses.</div>
-      </div>
-    </div>
+---
 
-    <div class="section" id="properties">
-      <h2 onclick="toggleSection(this)">🏗️ Tuple Properties</h2>
-      <div class="section-content">
-        <table>
-          <tr><th>Property</th><th>Description</th><th>Example</th></tr>
-          <tr><td><strong>Ordered</strong></td><td>Maintains insertion order</td><td><code>(1, 2, 3)</code> always stays 1→2→3</td></tr>
-          <tr><td><strong>Immutable</strong></td><td>Cannot modify after creation</td><td><code>t[0] = 99</code> ❌ TypeError</td></tr>
-          <tr><td><strong>Indexable</strong></td><td>Access by positive/negative index</td><td><code>t[-1]</code> → last item</td></tr>
-          <tr><td><strong>Slicable</strong></td><td>Extract sub-tuples</td><td><code>t[1:3]</code> → new tuple</td></tr>
-          <tr><td><strong>Iterable</strong></td><td>Can loop through items</td><td><code>for x in t: print(x)</code></td></tr>
-          <tr><td><strong>Hashable</strong></td><td>Can be dict keys (if contents immutable)</td><td><code>{(1,2): "value"}</code> ✅</td></tr>
-          <tr><td><strong>Heterogeneous</strong></td><td>Can store different types</td><td><code>(1, "hi", 3.14, True)</code></td></tr>
-        </table>
-      </div>
-    </div>
+<h2>🏗️ Tuple Properties</h2>
+<table>
+  <tr><th>Property</th><th>Description</th><th>Example</th></tr>
+  <tr><td>Ordered</td><td>Preserves the order of items</td><td><code>(1, 2, 3)</code> → always 1→2→3</td></tr>
+  <tr><td>Immutable</td><td>Cannot be modified after creation</td><td><code>t[0] = 99 ❌</code></td></tr>
+  <tr><td>Indexable</td><td>Supports positive & negative indexing</td><td><code>t[-1]</code> → last item</td></tr>
+  <tr><td>Slicable</td><td>You can slice like lists</td><td><code>t[1:3]</code> → new tuple</td></tr>
+  <tr><td>Iterable</td><td>Can loop through items</td><td><code>for x in t: print(x)</code></td></tr>
+  <tr><td>Hashable (if items are immutable)</td><td>Can be used as dictionary keys</td><td><code>{(1,2): "pair"}</code></td></tr>
+</table>
 
-    <div class="section" id="methods">
-      <h2 onclick="toggleSection(this)">⚙️ Tuple Methods (Only 2!)</h2>
-      <div class="section-content">
-        <table>
-          <tr><th>Method</th><th>Description</th><th>Example</th><th>Output</th></tr>
-          <tr><td><code>count(x)</code></td><td>Count occurrences of x</td><td><code>(1,2,2,3).count(2)</code></td><td><code>2</code></td></tr>
-          <tr><td><code>index(x)</code></td><td>First index of x (raises ValueError if not found)</td><td><code>(10,20,30).index(20)</code></td><td><code>1</code></td></tr>
-        </table>
-        <div class="note"><strong>✅ Why so few?</strong> Tuples are immutable, so they don't need append, remove, sort, etc. This makes them simpler and faster!</div>
-      </div>
-    </div>
+---
 
-    <div class="section" id="operations">
-      <h2 onclick="toggleSection(this)">🧮 Tuple Operations</h2>
-      <div class="section-content">
-        <table>
-          <tr><th>Operation</th><th>Syntax</th><th>Example</th><th>Result</th></tr>
-          <tr><td>Concatenation</td><td><code>+</code></td><td><code>(1,2) + (3,4)</code></td><td><code>(1,2,3,4)</code></td></tr>
-          <tr><td>Repetition</td><td><code>*</code></td><td><code>("hi",) * 3</code></td><td><code>('hi','hi','hi')</code></td></tr>
-          <tr><td>Membership</td><td><code>in</code></td><td><code>2 in (1,2,3)</code></td><td><code>True</code></td></tr>
-          <tr><td>Length</td><td><code>len()</code></td><td><code>len((1,2,3))</code></td><td><code>3</code></td></tr>
-          <tr><td>Min/Max</td><td><code>min()/max()</code></td><td><code>max((5,2,8))</code></td><td><code>8</code></td></tr>
-          <tr><td>Unpacking</td><td><code>a,b,c = tuple</code></td><td><code>a,b,c = (1,2,3)</code></td><td><code>a=1, b=2, c=3</code></td></tr>
-          <tr><td>Extended Unpacking</td><td><code>*rest</code></td><td><code>a,*b,c = (1,2,3,4)</code></td><td><code>a=1, b=[2,3], c=4</code></td></tr>
-          <tr><td>Nesting</td><td>Tuples in tuples</td><td><code>((1,2),(3,4))</code></td><td>2D structure</td></tr>
-        </table>
-        
-        <pre><code># Unpacking examples
-def get_stats():
-    return (10, 20, 30)  # min, avg, max
+<h2>⚙️ Tuple Methods (Built-in)</h2>
+<table>
+  <tr><th>Method</th><th>Description</th><th>Example</th><th>Output</th></tr>
+  <tr><td><code>count(x)</code></td><td>Returns number of occurrences of x</td><td><code>(1,2,2,3).count(2)</code></td><td><code>2</code></td></tr>
+  <tr><td><code>index(x)</code></td><td>Returns index of first occurrence of x</td><td><code>(10,20,30).index(20)</code></td><td><code>1</code></td></tr>
+</table>
 
-minimum, average, maximum = get_stats()
-print(f"Min: {minimum}, Avg: {average}, Max: {maximum}")
+<div class="note">✅ Only 2 methods are available — tuples are simple & lightweight.</div>
 
-# Extended unpacking
-first, *middle, last = (1, 2, 3, 4, 5)
-print(first)   # 1
-print(middle)  # [2, 3, 4]
-print(last)    # 5</code></pre>
-      </div>
-    </div>
+---
 
-    <div class="section" id="comparison">
-      <h2 onclick="toggleSection(this)">🔁 Tuple vs List</h2>
-      <div class="section-content">
-        <table>
-          <tr><th>Feature</th><th>Tuple <code>()</code></th><th>List <code>[]</code></th></tr>
-          <tr><td>Mutability</td><td>❌ Immutable</td><td>✅ Mutable</td></tr>
-          <tr><td>Performance</td><td>⚡ Faster iteration</td><td>🐢 Slower</td></tr>
-          <tr><td>Memory</td><td>💾 Less memory</td><td>📦 More memory</td></tr>
-          <tr><td>Methods</td><td>2 methods</td><td>11+ methods</td></tr>
-          <tr><td>Dict key</td><td>✅ Yes (if contents immutable)</td><td>❌ No (unhashable)</td></tr>
-          <tr><td>Set element</td><td>✅ Yes (if contents immutable)</td><td>❌ No (unhashable)</td></tr>
-          <tr><td>Use case</td><td>Fixed/read-only data</td><td>Dynamic/changing data</td></tr>
-          <tr><td>Safety</td><td>Protected from changes</td><td>Can be modified accidentally</td></tr>
-        </table>
+<h2>🧮 Tuple Operations</h2>
 
-        <pre><code>import sys
+<table>
+  <tr><th>Operation</th><th>Example</th><th>Result</th></tr>
+  <tr><td>Concatenation</td><td><code>(1,2)+(3,4)</code></td><td><code>(1,2,3,4)</code></td></tr>
+  <tr><td>Repetition</td><td><code>("hi",)*3</code></td><td><code>('hi','hi','hi')</code></td></tr>
+  <tr><td>Membership</td><td><code>2 in (1,2,3)</code></td><td><code>True</code></td></tr>
+  <tr><td>Iteration</td><td><code>for i in t: print(i)</code></td><td>Each element</td></tr>
+  <tr><td>Unpacking</td><td><code>a,b,c = (1,2,3)</code></td><td><code>a=1,b=2,c=3</code></td></tr>
+  <tr><td>Nesting</td><td><code>t = ((1,2),(3,4))</code></td><td>Tuple inside tuple</td></tr>
+</table>
 
-# Memory comparison
-lst = [1, 2, 3, 4, 5]
-tpl = (1, 2, 3, 4, 5)
+---
 
-print(f"List: {sys.getsizeof(lst)} bytes")   # ~120 bytes
-print(f"Tuple: {sys.getsizeof(tpl)} bytes")  # ~104 bytes
+<h2>🔁 Tuple vs List</h2>
+<table>
+  <tr><th>Feature</th><th>Tuple</th><th>List</th></tr>
+  <tr><td>Mutability</td><td>Immutable</td><td>Mutable</td></tr>
+  <tr><td>Syntax</td><td><code>()</code></td><td><code>[]</code></td></tr>
+  <tr><td>Performance</td><td>Faster, smaller memory</td><td>Slower, more flexible</td></tr>
+  <tr><td>Use as dict key</td><td>✅ Yes (if immutable)</td><td>❌ No</td></tr>
+  <tr><td>Use case</td><td>Fixed data</td><td>Changing data</td></tr>
+</table>
 
-# Tuples are typically 10-20% smaller!</code></pre>
-      </div>
-    </div>
+---
 
-    <div class="section" id="usecases">
-      <h2 onclick="toggleSection(this)">💼 Real-World Use Cases</h2>
-      <div class="section-content">
-        <ul>
-          <li><strong>Function returns:</strong> Return multiple values elegantly</li>
-          <li><strong>Dictionary keys:</strong> Multi-part keys like coordinates</li>
-          <li><strong>Fixed configurations:</strong> RGB colors, coordinates, database records</li>
-          <li><strong>Data integrity:</strong> Prevent accidental modifications</li>
-          <li><strong>Performance critical:</strong> When speed matters</li>
-          <li><strong>Named tuples:</strong> Lightweight alternative to classes</li>
-        </ul>
+<h2>💼 Real-world Use Cases</h2>
+<ul>
+  <li>Returning multiple values from functions</li>
+  <li>Storing fixed configuration values</li>
+  <li>Dictionary keys for composite identifiers</li>
+  <li>Representing 2D coordinates (x, y)</li>
+</ul>
 
-        <pre><code># Use case 1: Multiple return values
-def get_user_info():
-    return ("Alice", 25, "Engineer")
+<pre><code>def minmax(values):
+    return (min(values), max(values))
 
-name, age, role = get_user_info()
+low, high = minmax([10, 20, 30])
+print(low, high)   # 10 30
+</code></pre>
 
-# Use case 2: Dictionary with tuple keys
-locations = {
-    (40.7128, -74.0060): "New York",
-    (51.5074, -0.1278): "London",
-    (35.6762, 139.6503): "Tokyo"
-}
+---
 
-# Use case 3: Named tuples
-from collections import namedtuple
+<h2>🧠 Memory Efficiency</h2>
+<pre><code>import sys
+lst = [1, 2, 3]
+tpl = (1, 2, 3)
+print(sys.getsizeof(lst), sys.getsizeof(tpl))  # List uses more memory
+</code></pre>
 
-Point = namedtuple('Point', ['x', 'y'])
-p = Point(10, 20)
-print(p.x, p.y)  # 10 20
+<div class="note">✅ Tuples are more memory-efficient and faster to iterate than lists.</div>
 
-# Use case 4: Swap values
-a, b = 5, 10
-a, b = b, a  # Uses tuple packing/unpacking
-print(a, b)  # 10 5</code></pre>
-      </div>
-    </div>
+---
 
-    <div class="section" id="practice">
-      <h2 onclick="toggleSection(this)">🧩 Practice Problems</h2>
-      <div class="section-content">
-        <table>
-          <tr><th>Problem</th><th>Difficulty</th><th>Concept</th></tr>
-          <tr><td>Find most frequent element in tuple</td><td>Easy</td><td><code>count()</code> method</td></tr>
-          <tr><td>Check if all elements are unique</td><td>Easy</td><td>Set conversion</td></tr>
-          <tr><td>Flatten nested tuple</td><td>Medium</td><td>Recursion</td></tr>
-          <tr><td>Sort list of tuples by 2nd element</td><td>Medium</td><td>Lambda functions</td></tr>
-          <tr><td>Convert list of tuples to dict</td><td>Easy</td><td><code>dict()</code> constructor</td></tr>
-          <tr><td>Find intersection of two tuples</td><td>Easy</td><td>Set operations</td></tr>
-        </table>
+<h2>🧩 Common Interview/LeetCode-Style Practice Ideas</h2>
+<ul>
+  <li>Check if all tuple elements are the same</li>
+  <li>Find frequency of elements in a tuple</li>
+  <li>Convert list of tuples → dictionary</li>
+  <li>Swap elements in tuple without converting to list</li>
+  <li>Sort list of tuples by 2nd element</li>
+</ul>
 
-        <pre><code># Practice: Sort list of tuples by second element
-students = [("Alice", 85), ("Bob", 92), ("Charlie", 78)]
-sorted_students = sorted(students, key=lambda x: x[1], reverse=True)
-print(sorted_students)
-# [('Bob', 92), ('Alice', 85), ('Charlie', 78)]
+<table>
+  <tr><th>Problem</th><th>LeetCode Link</th></tr>
+  <tr><td>Tuple operations (Python practice)</td><td><a href="https://leetcode.com/problemset/all/?search=tuple" target="_blank">LeetCode: Search "tuple"</a></td></tr>
+  <tr><td>Nested structure iteration</td><td><a href="https://leetcode.com/problems/nested-list-weight-sum/" target="_blank">Nested List Weight Sum</a></td></tr>
+</table>
 
-# Practice: Flatten nested tuple
-def flatten(t):
-    result = []
-    for item in t:
-        if isinstance(item, tuple):
-            result.extend(flatten(item))
-        else:
-            result.append(item)
-    return tuple(result)
+---
 
-nested = (1, (2, 3), (4, (5, 6)))
-print(flatten(nested))  # (1, 2, 3, 4, 5, 6)</code></pre>
-      </div>
-    </div>
+<h2>📚 Summary</h2>
+<table>
+  <tr><th>Feature</th><th>List</th><th>Tuple</th></tr>
+  <tr><td>Mutability</td><td>Yes</td><td>No</td></tr>
+  <tr><td>Methods</td><td>Dozens</td><td>2</td></tr>
+  <tr><td>Memory</td><td>More</td><td>Less</td></tr>
+  <tr><td>Speed</td><td>Slower</td><td>Faster</td></tr>
+  <tr><td>Use Case</td><td>Dynamic data</td><td>Static, fixed data</td></tr>
+</table>
 
-    <div class="section" id="summary">
-      <h2 onclick="toggleSection(this)">📚 Quick Summary</h2>
-      <div class="section-content">
-        <div class="note">
-          <strong>When to use Tuples:</strong><br>
-          ✅ Data shouldn't change (coordinates, RGB values, config)<br>
-          ✅ Need to use as dict keys or set elements<br>
-          ✅ Performance matters (faster than lists)<br>
-          ✅ Want to prevent accidental modifications<br>
-          ✅ Returning multiple values from functions
-        </div>
-        <div class="note">
-          <strong>When to use Lists:</strong><br>
-          ✅ Need to modify data frequently<br>
-          ✅ Need list methods (append, remove, sort, etc.)<br>
-          ✅ Size of collection changes over time<br>
-          ✅ Order matters and needs to be changed
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="footer">
-    <p><strong>🔗 Part of DSA Visuals Collection</strong></p>
-    <div style="margin-top: 15px;">
-      <a href="index.html">🏠 Home</a>
-      <a href="https://anilabhimanyu.github.io/PythonMastery/arrays/python_list_part1.html">📋 List Part1</a>
-      <a href="https://anilabhimanyu.github.io/PythonMastery/arrays/python_list_part2.html">📋 List Part2</a>
-      <a href="#">🧮 Arrays</a>
-      <a href="#">🔁 Recursion</a>
-    </div>
-  </div>
-</div>
-
-<script>
-  // Search functionality
-  const searchInput = document.getElementById('searchInput');
-  searchInput.addEventListener('input', (e) => {
-    const query = e.target.value.toLowerCase();
-    const sections = document.querySelectorAll('.section');
-    
-    sections.forEach(section => {
-      const text = section.textContent.toLowerCase();
-      if (text.includes(query) || query === '') {
-        section.style.display = 'block';
-        // Expand section if it matches search
-        if (query !== '') {
-          const content = section.querySelector('.section-content');
-          const heading = section.querySelector('h2');
-          content.classList.remove('hidden');
-          heading.classList.remove('collapsed');
-        }
-      } else {
-        section.style.display = 'none';
-      }
-    });
-  });
-
-  // Toggle sections
-  function toggleSection(heading) {
-    heading.classList.toggle('collapsed');
-    const content = heading.nextElementSibling;
-    content.classList.toggle('hidden');
-  }
-
-  // Smooth scroll to section
-  function scrollToSection(id) {
-    const section = document.getElementById(id);
-    section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    
-    // Expand the section
-    const heading = section.querySelector('h2');
-    const content = section.querySelector('.section-content');
-    heading.classList.remove('collapsed');
-    content.classList.remove('hidden');
-  }
-
-  // Expand all sections by default
-  document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('.section-content').forEach(content => {
-      content.classList.remove('hidden');
-    });
-  });
-</script>
+<hr>
+<p style="text-align:center;">🔗 <b>Part of DSA Visuals Collection</b> |
+<a href="index.html">🏠 Home</a> |
+<a href="python-list-reference.html">📋 List</a> |
+<a href="arrays-roadmap.html">🧮 Arrays</a> |
+<a href="recursion-roadmap.html">🔁 Recursion</a>
+</p>
 
 </body>
 </html>
