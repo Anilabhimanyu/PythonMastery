@@ -1,0 +1,1738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Python Regular Expressions — Complete Reference</title>
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 30px;
+    background: #fafafa;
+    color: #222;
+    line-height: 1.6;
+  }
+  h1, h2, h3 {
+    color: #00539C;
+  }
+  h1 {
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  .lead {
+    text-align: center;
+    color: #6b7280;
+    margin-bottom: 30px;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+  }
+  th, td {
+    border: 1px solid #ddd;
+    padding: 10px 15px;
+    text-align: left;
+  }
+  th {
+    background-color: #00539C;
+    color: white;
+  }
+  tr:nth-child(even) { background-color: #f9f9f9; }
+  details {
+    background: #fff;
+    padding: 10px 15px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  }
+  summary {
+    font-weight: bold;
+    cursor: pointer;
+    color: #00539C;
+    font-size: 18px;
+    padding: 5px 0;
+  }
+  code {
+    background: #eee;
+    padding: 2px 6px;
+    border-radius: 5px;
+    font-family: Consolas, monospace;
+    font-size: 13px;
+  }
+  pre {
+    background: #0b1220;
+    color: #9fffb0;
+    padding: 15px;
+    border-radius: 8px;
+    overflow-x: auto;
+    font-family: Consolas, monospace;
+    font-size: 13px;
+  }
+  .ascii {
+    font-family: monospace;
+    background: #f3f6fb;
+    padding: 15px;
+    border-radius: 8px;
+    color: #0b1220;
+    margin: 15px 0;
+  }
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .note {
+    background: #fff3cd;
+    border-left: 4px solid #ffc107;
+    padding: 12px;
+    margin: 15px 0;
+    border-radius: 5px;
+  }
+  .tip {
+    background: #d1ecf1;
+    border-left: 4px solid #17a2b8;
+    padding: 12px;
+    margin: 15px 0;
+    border-radius: 5px;
+  }
+  .warning {
+    background: #f8d7da;
+    border-left: 4px solid #dc3545;
+    padding: 12px;
+    margin: 15px 0;
+    border-radius: 5px;
+  }
+  a {
+    color: #00539C;
+    text-decoration: none;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+  .regex-box {
+    background: #ffe6e6;
+    border: 2px solid #ff6b6b;
+    padding: 10px;
+    border-radius: 8px;
+    font-family: Consolas, monospace;
+    font-size: 16px;
+    font-weight: bold;
+    color: #c92a2a;
+    margin: 10px 0;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>🔍 Python Regular Expressions — Complete Reference</h1>
+<p class="lead">Master regex patterns, metacharacters, groups, lookaheads, flags, and real-world applications</p>
+
+<!-- 1️⃣ Regex Basics -->
+<details open>
+<summary>1️⃣ Regular Expression Basics</summary>
+<p><strong>Definition:</strong> A <b>regular expression (regex)</b> is a sequence of characters that defines a search pattern, used for pattern matching and text manipulation.</p>
+
+<div class="ascii">
+Regex Pattern Matching Flow:
+
+Pattern: r"\d{3}-\d{4}"
+Text:    "Call me at 555-1234"
+                   ^^^^^^^^
+                   MATCH!
+
+Pattern breaks down:
+\d{3}  → 3 digits (555)
+-      → literal hyphen
+\d{4}  → 4 digits (1234)
+</div>
+
+<table>
+<tr><th>Concept</th><th>Description</th><th>Example</th></tr>
+<tr><td>Pattern</td><td>The regex search pattern</td><td><code>r"\d+"</code></td></tr>
+<tr><td>String</td><td>Text to search in</td><td>"Age: 25"</td></tr>
+<tr><td>Match Object</td><td>Result of successful match</td><td>Contains matched text & position</td></tr>
+<tr><td>Metacharacter</td><td>Special character with meaning</td><td>. * + ? [ ] ^ $ | ( )</td></tr>
+<tr><td>Raw String</td><td>Prefix r to avoid escaping</td><td><code>r"\n"</code> vs <code>"\\n"</code></td></tr>
+</table>
+
+<pre>
+import re
+
+# Basic pattern matching
+pattern = r"\d+"           # One or more digits
+text = "I have 25 apples"
+
+match = re.search(pattern, text)
+if match:
+    print(match.group())   # Output: 25
+    print(match.span())    # Output: (7, 9)
+    print(match.start())   # Output: 7
+    print(match.end())     # Output: 9
+</pre>
+
+<div class="tip">
+<strong>💡 Pro Tip:</strong> Always use raw strings (r"pattern") for regex patterns to avoid escape sequence issues.
+</div>
+</details>
+
+<!-- 2️⃣ Core Functions -->
+<details>
+<summary>2️⃣ Core Regex Functions (re module)</summary>
+
+<table>
+<tr><th>Function</th><th>Description</th><th>Returns</th><th>Use Case</th></tr>
+<tr><td><code>re.search()</code></td><td>Find first match anywhere</td><td>Match object or None</td><td>Check if pattern exists</td></tr>
+<tr><td><code>re.match()</code></td><td>Match at string start only</td><td>Match object or None</td><td>Validate format</td></tr>
+<tr><td><code>re.fullmatch()</code></td><td>Match entire string</td><td>Match object or None</td><td>Exact validation</td></tr>
+<tr><td><code>re.findall()</code></td><td>Find all matches</td><td>List of strings</td><td>Extract all occurrences</td></tr>
+<tr><td><code>re.finditer()</code></td><td>Find all matches (iterator)</td><td>Iterator of Match objects</td><td>Memory-efficient extraction</td></tr>
+<tr><td><code>re.sub()</code></td><td>Replace matches</td><td>Modified string</td><td>Text substitution</td></tr>
+<tr><td><code>re.subn()</code></td><td>Replace + count</td><td>Tuple (string, count)</td><td>Replace with count</td></tr>
+<tr><td><code>re.split()</code></td><td>Split by pattern</td><td>List of strings</td><td>Advanced splitting</td></tr>
+<tr><td><code>re.compile()</code></td><td>Compile pattern</td><td>Pattern object</td><td>Reuse pattern</td></tr>
+</table>
+
+<pre>
+import re
+
+text = "Contact: john@email.com or jane@example.org"
+
+# 1. search() - Find first match anywhere
+match = re.search(r'\w+@\w+\.\w+', text)
+print(match.group())  # john@email.com
+
+# 2. match() - Match at start only
+result = re.match(r'Contact', text)
+print(result.group())  # Contact
+
+# 3. fullmatch() - Match entire string
+result = re.fullmatch(r'Hello', 'Hello')
+print(result)  # Match object
+
+# 4. findall() - Find all matches
+emails = re.findall(r'\w+@\w+\.\w+', text)
+print(emails)  # ['john@email.com', 'jane@example.org']
+
+# 5. finditer() - Iterator of matches
+for match in re.finditer(r'\w+@\w+\.\w+', text):
+    print(f"Found: {match.group()} at {match.span()}")
+
+# 6. sub() - Replace matches
+new_text = re.sub(r'\d+', 'X', 'Room 101, Floor 5')
+print(new_text)  # Room X, Floor X
+
+# 7. subn() - Replace with count
+new_text, count = re.subn(r'\d+', 'X', 'Room 101, Floor 5')
+print(f"{new_text} ({count} replacements)")
+
+# 8. split() - Split by pattern
+parts = re.split(r'[,;]', 'apple,banana;orange')
+print(parts)  # ['apple', 'banana', 'orange']
+
+# 9. compile() - Compile for reuse
+pattern = re.compile(r'\d+')
+print(pattern.findall('10 apples, 20 oranges'))  # ['10', '20']
+</pre>
+
+<div class="note">
+<strong>⚠️ search() vs match():</strong> <code>search()</code> finds pattern anywhere in string. <code>match()</code> only checks at the beginning.
+</div>
+</details>
+
+<!-- 3️⃣ Metacharacters -->
+<details>
+<summary>3️⃣ Metacharacters & Special Characters</summary>
+
+<table>
+<tr><th>Character</th><th>Name</th><th>Meaning</th><th>Example</th><th>Matches</th></tr>
+<tr><td><code>.</code></td><td>Dot</td><td>Any character (except newline)</td><td><code>a.c</code></td><td>abc, a1c, a@c</td></tr>
+<tr><td><code>^</code></td><td>Caret</td><td>Start of string</td><td><code>^Hello</code></td><td>Hello at start</td></tr>
+<tr><td><code>$</code></td><td>Dollar</td><td>End of string</td><td><code>end$</code></td><td>end at end</td></tr>
+<tr><td><code>*</code></td><td>Star</td><td>0 or more repetitions</td><td><code>ab*</code></td><td>a, ab, abb, abbb</td></tr>
+<tr><td><code>+</code></td><td>Plus</td><td>1 or more repetitions</td><td><code>ab+</code></td><td>ab, abb, abbb</td></tr>
+<tr><td><code>?</code></td><td>Question</td><td>0 or 1 repetition</td><td><code>ab?</code></td><td>a, ab</td></tr>
+<tr><td><code>{m}</code></td><td>Braces</td><td>Exactly m repetitions</td><td><code>a{3}</code></td><td>aaa</td></tr>
+<tr><td><code>{m,n}</code></td><td>Range</td><td>m to n repetitions</td><td><code>a{2,4}</code></td><td>aa, aaa, aaaa</td></tr>
+<tr><td><code>[]</code></td><td>Brackets</td><td>Character class</td><td><code>[abc]</code></td><td>a, b, or c</td></tr>
+<tr><td><code>|</code></td><td>Pipe</td><td>OR operator</td><td><code>cat|dog</code></td><td>cat or dog</td></tr>
+<tr><td><code>()</code></td><td>Parentheses</td><td>Grouping</td><td><code>(ab)+</code></td><td>ab, abab, ababab</td></tr>
+<tr><td><code>\</code></td><td>Backslash</td><td>Escape special char</td><td><code>\.</code></td><td>Literal dot</td></tr>
+</table>
+
+<pre>
+import re
+
+# . (dot) - Any character
+print(re.findall(r'a.c', 'abc a1c a@c'))  # ['abc', 'a1c', 'a@c']
+
+# ^ - Start of string
+print(re.search(r'^Hello', 'Hello World'))  # Match
+print(re.search(r'^Hello', 'Say Hello'))    # None
+
+# $ - End of string
+print(re.search(r'end$', 'The end'))        # Match
+print(re.search(r'end$', 'end game'))       # None
+
+# * - Zero or more
+print(re.findall(r'ab*', 'a ab abb abbb'))  # ['a', 'ab', 'abb', 'abbb']
+
+# + - One or more
+print(re.findall(r'ab+', 'a ab abb abbb'))  # ['ab', 'abb', 'abbb']
+
+# ? - Zero or one
+print(re.findall(r'colou?r', 'color colour'))  # ['color', 'colour']
+
+# {m,n} - Repetition range
+print(re.findall(r'\d{2,4}', '1 12 123 1234 12345'))  # ['12', '123', '1234']
+
+# [] - Character class
+print(re.findall(r'[aeiou]', 'hello'))      # ['e', 'o']
+
+# | - OR operator
+print(re.findall(r'cat|dog', 'I have a cat and a dog'))  # ['cat', 'dog']
+
+# () - Grouping
+print(re.findall(r'(ha)+', 'haha hahaha'))  # ['ha', 'ha']
+
+# \ - Escape
+print(re.findall(r'\$\d+', 'Price: $50'))   # ['$50']
+</pre>
+
+<div class="ascii">
+Quantifier Visualization:
+
+*  →  0 or more    ────●●●●●●●●●●
++  →  1 or more    ●───●●●●●●●●●●
+?  →  0 or 1       ────●──────────
+{3}→  exactly 3    ───●●●─────────
+{2,4}→ 2 to 4      ──●●●●─────────
+</div>
+</details>
+
+<!-- 4️⃣ Character Classes -->
+<details>
+<summary>4️⃣ Character Classes & Shortcuts</summary>
+
+<table>
+<tr><th>Class</th><th>Equivalent</th><th>Description</th><th>Example</th></tr>
+<tr><td><code>\d</code></td><td><code>[0-9]</code></td><td>Any digit</td><td>Matches 0-9</td></tr>
+<tr><td><code>\D</code></td><td><code>[^0-9]</code></td><td>Any non-digit</td><td>Matches a, @, space</td></tr>
+<tr><td><code>\w</code></td><td><code>[a-zA-Z0-9_]</code></td><td>Word character</td><td>Letters, digits, underscore</td></tr>
+<tr><td><code>\W</code></td><td><code>[^a-zA-Z0-9_]</code></td><td>Non-word character</td><td>Space, @, !</td></tr>
+<tr><td><code>\s</code></td><td><code>[ \t\n\r\f\v]</code></td><td>Whitespace</td><td>Space, tab, newline</td></tr>
+<tr><td><code>\S</code></td><td><code>[^ \t\n\r\f\v]</code></td><td>Non-whitespace</td><td>Any visible character</td></tr>
+<tr><td><code>\b</code></td><td>-</td><td>Word boundary</td><td>Between \w and \W</td></tr>
+<tr><td><code>\B</code></td><td>-</td><td>Non-word boundary</td><td>Not at word edge</td></tr>
+<tr><td><code>[abc]</code></td><td>-</td><td>Any of a, b, c</td><td>Character set</td></tr>
+<tr><td><code>[^abc]</code></td><td>-</td><td>Not a, b, or c</td><td>Negated set</td></tr>
+<tr><td><code>[a-z]</code></td><td>-</td><td>Lowercase letters</td><td>Range a to z</td></tr>
+<tr><td><code>[A-Z]</code></td><td>-</td><td>Uppercase letters</td><td>Range A to Z</td></tr>
+<tr><td><code>[0-9]</code></td><td>-</td><td>Digits</td><td>Range 0 to 9</td></tr>
+</table>
+
+<pre>
+import re
+
+# \d - Digits
+print(re.findall(r'\d+', 'Room 101, Floor 5'))  # ['101', '5']
+
+# \D - Non-digits
+print(re.findall(r'\D+', 'ABC123XYZ'))  # ['ABC', 'XYZ']
+
+# \w - Word characters
+print(re.findall(r'\w+', 'hello_world-123'))  # ['hello_world', '123']
+
+# \W - Non-word characters
+print(re.findall(r'\W+', 'hello, world!'))  # [', ', '!']
+
+# \s - Whitespace
+print(re.findall(r'\s+', 'hello   world'))  # ['   ']
+
+# \S - Non-whitespace
+print(re.findall(r'\S+', 'hello world'))  # ['hello', 'world']
+
+# \b - Word boundary
+print(re.findall(r'\bcat\b', 'cat cats scatter'))  # ['cat']
+
+# \B - Non-word boundary
+print(re.findall(r'\Bcat\B', 'scatter'))  # ['cat'] (inside word)
+
+# [abc] - Character set
+print(re.findall(r'[aeiou]', 'hello'))  # ['e', 'o']
+
+# [^abc] - Negated set
+print(re.findall(r'[^aeiou]', 'hello'))  # ['h', 'l', 'l']
+
+# [a-z] - Range
+print(re.findall(r'[a-z]+', 'Hello World'))  # ['ello', 'orld']
+
+# Multiple ranges
+print(re.findall(r'[a-zA-Z0-9]+', 'Test123'))  # ['Test123']
+
+# Special characters in []
+print(re.findall(r'[.?!]', 'Hello. How are you?'))  # ['.', '?']
+</pre>
+
+<div class="tip">
+<strong>💡 Remember:</strong> Inside character class <code>[]</code>, most metacharacters lose their special meaning. Only <code>-</code>, <code>^</code>, <code>]</code>, and <code>\</code> are special.
+</div>
+</details>
+
+<!-- 5️⃣ Grouping & Capturing -->
+<details>
+<summary>5️⃣ Grouping & Capturing Groups</summary>
+
+<table>
+<tr><th>Syntax</th><th>Type</th><th>Description</th><th>Example</th></tr>
+<tr><td><code>(pattern)</code></td><td>Capturing group</td><td>Captures matched text</td><td><code>(\d{3})-(\d{4})</code></td></tr>
+<tr><td><code>(?:pattern)</code></td><td>Non-capturing</td><td>Groups without capture</td><td><code>(?:abc)+</code></td></tr>
+<tr><td><code>(?P&lt;name&gt;pattern)</code></td><td>Named group</td><td>Named capture</td><td><code>(?P&lt;year&gt;\d{4})</code></td></tr>
+<tr><td><code>\1, \2</code></td><td>Backreference</td><td>Reference captured group</td><td><code>(\w+)\s\1</code></td></tr>
+<tr><td><code>(?P=name)</code></td><td>Named backref</td><td>Reference named group</td><td><code>(?P=year)</code></td></tr>
+</table>
+
+<pre>
+import re
+
+# Basic capturing group
+match = re.search(r'(\d{3})-(\d{4})', 'Phone: 555-1234')
+print(match.group(0))  # 555-1234 (entire match)
+print(match.group(1))  # 555 (first group)
+print(match.group(2))  # 1234 (second group)
+print(match.groups())  # ('555', '1234')
+
+# Non-capturing group (?:...)
+matches = re.findall(r'(?:Mr|Ms)\. (\w+)', 'Mr. Smith and Ms. Jones')
+print(matches)  # ['Smith', 'Jones'] (only captured groups)
+
+# Named groups (?P<name>...)
+pattern = r'(?P<year>\d{4})-(?P<month>\d{2})-(?P<day>\d{2})'
+match = re.search(pattern, 'Date: 2024-12-25')
+print(match.group('year'))   # 2024
+print(match.group('month'))  # 12
+print(match.group('day'))    # 25
+print(match.groupdict())     # {'year': '2024', 'month': '12', 'day': '25'}
+
+# Backreferences - find repeated words
+pattern = r'\b(\w+)\s+\1\b'
+text = 'hello hello world world'
+matches = re.findall(pattern, text)
+print(matches)  # ['hello', 'world']
+
+# Named backreference
+pattern = r'(?P<word>\w+)\s+(?P=word)'
+matches = re.findall(pattern, 'test test code code')
+print(matches)  # ['test', 'code']
+
+# Multiple groups
+pattern = r'(\w+)@(\w+)\.(\w+)'
+match = re.search(pattern, 'Email: john@example.com')
+print(match.groups())  # ('john', 'example', 'com')
+
+# Nested groups
+pattern = r'((Mr|Ms)\. (\w+))'
+match = re.search(pattern, 'Hello Mr. Smith')
+print(match.group(1))  # Mr. Smith
+print(match.group(2))  # Mr
+print(match.group(3))  # Smith
+</pre>
+
+<div class="ascii">
+Group Numbering:
+
+Pattern: ((\w+)@(\w+)\.(\w+))
+Text:    john@example.com
+
+Group 0: john@example.com  (entire match)
+Group 1: john@example.com  (outer group)
+Group 2: john              (first part)
+Group 3: example           (domain)
+Group 4: com               (extension)
+</div>
+</details>
+
+<!-- 6️⃣ Lookahead & Lookbehind -->
+<details>
+<summary>6️⃣ Lookahead & Lookbehind (Zero-Width Assertions)</summary>
+
+<table>
+<tr><th>Type</th><th>Syntax</th><th>Description</th><th>Example</th></tr>
+<tr><td>Positive Lookahead</td><td><code>(?=pattern)</code></td><td>Match if followed by</td><td><code>\d+(?= dollars)</code></td></tr>
+<tr><td>Negative Lookahead</td><td><code>(?!pattern)</code></td><td>Match if NOT followed by</td><td><code>\d+(?! dollars)</code></td></tr>
+<tr><td>Positive Lookbehind</td><td><code>(?&lt;=pattern)</code></td><td>Match if preceded by</td><td><code>(?&lt;=\$)\d+</code></td></tr>
+<tr><td>Negative Lookbehind</td><td><code>(?&lt;!pattern)</code></td><td>Match if NOT preceded by</td><td><code>(?&lt;!\$)\d+</code></td></tr>
+</table>
+
+<pre>
+import re
+
+# Positive Lookahead (?=...)
+# Match numbers followed by " dollars"
+pattern = r'\d+(?= dollars)'
+text = '50 dollars and 30 euros'
+print(re.findall(pattern, text))  # ['50']
+
+# Negative Lookahead (?!...)
+# Match numbers NOT followed by " dollars"
+pattern = r'\d+(?! dollars)'
+text = '50 dollars and 30 euros'
+print(re.findall(pattern, text))  # ['30']
+
+# Positive Lookbehind (?<=...)
+# Match numbers preceded by "$"
+pattern = r'(?<=\$)\d+'
+text = 'Price: $50 and €30'
+print(re.findall(pattern, text))  # ['50']
+
+# Negative Lookbehind (?<!...)
+# Match numbers NOT preceded by "$"
+pattern = r'(?<!\$)\d+'
+text = 'Price: $50 and 30 items'
+print(re.findall(pattern, text))  # ['0', '30'] (0 from 50, and 30)
+
+# Combined lookahead and lookbehind
+# Match word between "(" and ")"
+pattern = r'(?<=\()\w+(?=\))'
+text = 'Values: (alpha) and (beta)'
+print(re.findall(pattern, text))  # ['alpha', 'beta']
+
+# Password validation with lookaheads
+# At least 8 chars, 1 uppercase, 1 lowercase, 1 digit
+pattern = r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$'
+print(re.match(pattern, 'Password123'))  # Match
+print(re.match(pattern, 'password'))     # None
+
+# Extract domain without protocol
+pattern = r'(?<=://)\w+\.\w+'
+text = 'Visit https://example.com'
+print(re.findall(pattern, text))  # ['example.com']
+</pre>
+
+<div class="ascii">
+Lookahead/Lookbehind Visualization:
+
+Lookahead:  X(?=Y)  →  Match X if followed by Y
+Text: "X Y"
+      ↑
+      Match here (Y not consumed)
+
+Lookbehind: (?<=X)Y →  Match Y if preceded by X
+Text: "X Y"
+        ↑
+        Match here (X not consumed)
+</div>
+
+<div class="tip">
+<strong>💡 Key Point:</strong> Lookahead and lookbehind are "zero-width" — they don't consume characters, just check conditions.
+</div>
+</details>
+
+<!-- 7️⃣ Flags -->
+<details>
+<summary>7️⃣ Regex Flags (Modifiers)</summary>
+
+<table>
+<tr><th>Flag</th><th>Constant</th><th>Description</th><th>Example</th></tr>
+<tr><td><code>re.I</code></td><td><code>re.IGNORECASE</code></td><td>Case-insensitive matching</td><td>Match 'A' and 'a'</td></tr>
+<tr><td><code>re.M</code></td><td><code>re.MULTILINE</code></td><td>^ and $ match line boundaries</td><td>Multi-line text</td></tr>
+<tr><td><code>re.S</code></td><td><code>re.DOTALL</code></td><td>. matches newline too</td><td>Match across lines</td></tr>
+<tr><td><code>re.X</code></td><td><code>re.VERBOSE</code></td><td>Allow comments in pattern</td><td>Readable patterns</td></tr>
+<tr><td><code>re.A</code></td><td><code>re.ASCII</code></td><td>ASCII-only matching</td><td>\w matches [a-zA-Z0-9_]</td></tr>
+<tr><td><code>re.L</code></td><td><code>re.LOCALE</code></td><td>Locale-dependent</td><td>Rarely used</td></tr>
+</table>
+
+<pre>
+import re
+
+# re.IGNORECASE (re.I) - Case insensitive
+pattern = r'hello'
+print(re.findall(pattern, 'Hello HELLO hello', re.I))  # ['Hello', 'HELLO', 'hello']
+
+# re.MULTILINE (re.M) - ^ and $ match line start/end
+text = '''Line 1: Start
+Line 2: Start
+Line 3: End'''
+
+# Without MULTILINE
+print(re.findall(r'^Line', text))  # ['Line'] (only first line)
+
+# With MULTILINE
+print(re.findall(r'^Line', text, re.M))  # ['Line', 'Line', 'Line']
+
+# re.DOTALL (re.S) - . matches newline
+text = 'Hello\nWorld'
+print(re.search(r'Hello.World', text))      # None (. doesn't match \n)
+print(re.search(r'Hello.World', text, re.S).group())  # Hello\nWorld
+
+# re.VERBOSE (re.X) - Allow comments and whitespace
+pattern = r'''
+    \d{3}    # Area code
+    -        # Separator
+    \d{4}    # Number
+'''
+print(re.search(pattern, '555-1234', re.X).group())  # 555-1234
+
+# Combine multiple flags with |
+pattern = r'hello.world'
+text = 'HELLO\nWORLD'
+print(re.search(pattern, text, re.I | re.S).group())  # HELLO\nWORLD
+
+# Inline flags (?i), (?m), (?s), (?x)
+pattern = r'(?i)hello'  # Case insensitive
+print(re.findall(pattern, 'Hello HELLO hello'))  # ['Hello', 'HELLO', 'hello']
+
+# Multiple inline flags
+pattern = r'(?ims)^hello.world
+text = 'HELLO\nWORLD'
+print(re.search(pattern, text).group())  # HELLO\nWORLD
+</pre>
+
+<div class="note">
+<strong>⚠️ Note:</strong> Flags can be specified as function arguments or inline in the pattern using <code>(?flag)</code> syntax.
+</div>
+</details>
+
+<!-- 8️⃣ Match Object -->
+<details>
+<summary>8️⃣ Match Object Methods & Attributes</summary>
+
+<table>
+<tr><th>Method/Attribute</th><th>Description</th><th>Example</th><th>Returns</th></tr>
+<tr><td><code>.group()</code></td><td>Get matched text</td><td><code>match.group(0)</code></td><td>String</td></tr>
+<tr><td><code>.group(n)</code></td><td>Get nth group</td><td><code>match.group(1)</code></td><td>String</td></tr>
+<tr><td><code>.groups()</code></td><td>All groups as tuple</td><td><code>match.groups()</code></td><td>Tuple</td></tr>
+<tr><td><code>.groupdict()</code></td><td>Named groups as dict</td><td><code>match.groupdict()</code></td><td>Dict</td></tr>
+<tr><td><code>.start()</code></td><td>Start position</td><td><code>match.start()</code></td><td>Integer</td></tr>
+<tr><td><code>.end()</code></td><td>End position</td><td><code>match.end()</code></td><td>Integer</td></tr>
+<tr><td><code>.span()</code></td><td>Start and end</td><td><code>match.span()</code></td><td>Tuple (start, end)</td></tr>
+<tr><td><code>.string</code></td><td>Original string</td><td><code>match.string</code></td><td>String</td></tr>
+<tr><td><code>.re</code></td><td>Regex pattern object</td><td><code>match.re</code></td><td>Pattern</td></tr>
+<tr><td><code>.lastindex</code></td><td>Last matched group</td><td><code>match.lastindex</code></td><td>Integer</td></tr>
+<tr><td><code>.lastgroup</code></td><td>Last named group</td><td><code>match.lastgroup</code></td><td>String</td></tr>
+</table>
+
+<pre>
+import re
+
+pattern = r'(?P<name>\w+)@(?P<domain>\w+)\.(?P<ext>\w+)'
+text = 'Email: john@example.com'
+match = re.search(pattern, text)
+
+# group() - Get matched text
+print(match.group())       # john@example.com (entire match)
+print(match.group(0))      # john@example.com (same as above)
+print(match.group(1))      # john (first group)
+print(match.group(2))      # example (second group)
+print(match.group(3))      # com (third group)
+
+# Named groups
+print(match.group('name'))     # john
+print(match.group('domain'))   # example
+print(match.group('ext'))      # com
+
+# groups() - All groups as tuple
+print(match.groups())      # ('john', 'example', 'com')
+
+# groupdict() - Named groups as dictionary
+print(match.groupdict())   # {'name': 'john', 'domain': 'example', 'ext': 'com'}
+
+# Position methods
+print(match.start())       # 7 (start position)
+print(match.end())         # 23 (end position)
+print(match.span())        # (7, 23)
+
+# Individual group positions
+print(match.start(1))      # 7 (start of group 1)
+print(match.span('domain')) # (12, 19)
+
+# Attributes
+print(match.string)        # Original text
+print(match.re.pattern)    # Pattern used
+print(match.lastindex)     # 3 (last group index)
+print(match.lastgroup)     # ext (last named group)
+
+# Working with finditer()
+text = 'Emails: a@b.com, x@y.org'
+for match in re.finditer(r'\w+@\w+\.\w+', text):
+    print(f"Found {match.group()} at position {match.span()}")
+</pre>
+</details>
+
+<!-- 9️⃣ Substitution -->
+<details>
+<summary>9️⃣ Text Substitution & Replacement</summary>
+
+<pre>
+import re
+
+# Basic substitution
+text = 'I have 10 apples and 20 oranges'
+result = re.sub(r'\d+', 'X', text)
+print(result)  # I have X apples and X oranges
+
+# Limit replacements
+result = re.sub(r'\d+', 'X', text, count=1)
+print(result)  # I have X apples and 20 oranges
+
+# subn() - Returns (new_string, count)
+result, count = re.subn(r'\d+', 'X', text)
+print(f"{result} ({count} replacements)")
+
+# Using backreferences in replacement
+text = 'John Smith'
+result = re.sub(r'(\w+) (\w+)', r'\2, \1', text)
+print(result)  # Smith, John
+
+# Named groups in replacement
+pattern = r'(?P<first>\w+) (?P<last>\w+)'
+result = re.sub(pattern, r'\g<last>, \g<first>', text)
+print(result)  # Smith, John
+
+# Using a function for replacement
+def multiply_by_2(match):
+    num = int(match.group())
+    return str(num * 2)
+
+text = 'I have 10 apples and 20 oranges'
+result = re.sub(r'\d+', multiply_by_2, text)
+print(result)  # I have 20 apples and 40 oranges
+
+# Complex replacement with function
+def format_phone(match):
+    area = match.group(1)
+    prefix = match.group(2)
+    number = match.group(3)
+    return f'({area}) {prefix}-{number}'
+
+text = 'Call 5551234567'
+pattern = r'(\d{3})(\d{3})(\d{4})'
+result = re.sub(pattern, format_phone, text)
+print(result)  # Call (555) 123-4567
+
+# Remove all HTML tags
+html = '<p>Hello <b>World</b></p>'
+clean = re.sub(r'<[^>]+>', '', html)
+print(clean)  # Hello World
+
+# Replace multiple spaces with single space
+text = 'Hello    World     !'
+result = re.sub(r'\s+', ' ', text)
+print(result)  # Hello World !
+
+# Case conversion in replacement
+def title_case(match):
+    return match.group().title()
+
+text = 'hello world python'
+result = re.sub(r'\w+', title_case, text)
+print(result)  # Hello World Python
+</pre>
+
+<div class="tip">
+<strong>💡 Pro Tip:</strong> Use a function for complex replacements where you need to process the matched text before substituting.
+</div>
+</details>
+
+<!-- 🔟 Compilation & Performance -->
+<details>
+<summary>🔟 Pattern Compilation & Performance</summary>
+
+<pre>
+import re
+import time
+
+# Without compilation (slower for multiple uses)
+text = 'test@example.com, user@domain.org'
+for _ in range(1000):
+    re.findall(r'\w+@\w+\.\w+', text)
+
+# With compilation (faster for reuse)
+pattern = re.compile(r'\w+@\w+\.\w+')
+for _ in range(1000):
+    pattern.findall(text)
+
+# Compiled pattern methods
+pattern = re.compile(r'\d+')
+print(pattern.findall('10 20 30'))       # ['10', '20', '30']
+print(pattern.search('Age: 25').group()) # 25
+print(pattern.sub('X', '10 20 30'))      # X X X
+
+# Compile with flags
+pattern = re.compile(r'hello', re.IGNORECASE)
+print(pattern.findall('Hello HELLO hello'))  # ['Hello', 'HELLO', 'hello']
+
+# Multiple flags
+pattern = re.compile(
+    r'^start.*end,
+    re.IGNORECASE | re.MULTILINE | re.DOTALL
+)
+
+# Performance comparison
+text = 'test@example.com ' * 1000
+
+# Method 1: Without compilation
+start = time.time()
+for _ in range(100):
+    re.findall(r'\w+@\w+\.\w+', text)
+print(f"Without compile: {time.time() - start:.4f}s")
+
+# Method 2: With compilation
+pattern = re.compile(r'\w+@\w+\.\w+')
+start = time.time()
+for _ in range(100):
+    pattern.findall(text)
+print(f"With compile: {time.time() - start:.4f}s")
+
+# Compile once, use many times
+EMAIL_PATTERN = re.compile(r'\w+@\w+\.\w+')
+PHONE_PATTERN = re.compile(r'\d{3}-\d{3}-\d{4}')
+DATE_PATTERN = re.compile(r'\d{4}-\d{2}-\d{2}')
+
+def extract_info(text):
+    emails = EMAIL_PATTERN.findall(text)
+    phones = PHONE_PATTERN.findall(text)
+    dates = DATE_PATTERN.findall(text)
+    return emails, phones, dates
+</pre>
+
+<div class="tip">
+<strong>💡 Performance Tip:</strong> Compile patterns if you'll use them multiple times. Python caches recent patterns, but explicit compilation is clearer and guaranteed.
+</div>
+</details>
+
+<!-- 1️⃣1️⃣ Common Patterns -->
+<details>
+<summary>1️⃣1️⃣ Common Regex Patterns Library</summary>
+
+<table>
+<tr><th>Pattern Type</th><th>Regex</th><th>Example Match</th></tr>
+<tr><td>Email</td><td><code>r'\w+@\w+\.\w+'</code></td><td>user@example.com</td></tr>
+<tr><td>Email (better)</td><td><code>r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}'</code></td><td>user.name@example.co.uk</td></tr>
+<tr><td>URL</td><td><code>r'https?://[^\s]+'</code></td><td>https://example.com</td></tr>
+<tr><td>Phone (US)</td><td><code>r'\d{3}-\d{3}-\d{4}'</code></td><td>555-123-4567</td></tr>
+<tr><td>Phone (flexible)</td><td><code>r'\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}'</code></td><td>(555) 123-4567</td></tr>
+<tr><td>Date (YYYY-MM-DD)</td><td><code>r'\d{4}-\d{2}-\d{2}'</code></td><td>2024-12-25</td></tr>
+<tr><td>Time (HH:MM)</td><td><code>r'\d{2}:\d{2}'</code></td><td>14:30</td></tr>
+<tr><td>IP Address</td><td><code>r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}'</code></td><td>192.168.1.1</td></tr>
+<tr><td>Hex Color</td><td><code>r'#[0-9A-Fa-f]{6}'</code></td><td>#FF5733</td></tr>
+<tr><td>Credit Card</td><td><code>r'\d{4}[- ]?\d{4}[- ]?\d{4}[- ]?\d{4}'</code></td><td>1234-5678-9012-3456</td></tr>
+<tr><td>ZIP Code</td><td><code>r'\d{5}(-\d{4})?'</code></td><td>12345 or 12345-6789</td></tr>
+<tr><td>Username</td><td><code>r'^[a-zA-Z0-9_]{3,16}</code></td><td>user_123</td></tr>
+<tr><td>Password</td><td><code>r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}</code></td><td>Pass123word</td></tr>
+<tr><td>HTML Tag</td><td><code>r'<[^>]+>'</code></td><td>&lt;div&gt;</td></tr>
+<tr><td>Hashtag</td><td><code>r'#\w+'</code></td><td>#python</td></tr>
+<tr><td>Mention</td><td><code>r'@\w+'</code></td><td>@username</td></tr>
+</table>
+
+<pre>
+import re
+
+# Email validation
+EMAIL_PATTERN = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}
+def is_valid_email(email):
+    return bool(re.match(EMAIL_PATTERN, email))
+
+print(is_valid_email('user@example.com'))      # True
+print(is_valid_email('invalid.email'))         # False
+
+# Phone number extraction (flexible)
+PHONE_PATTERN = r'\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}'
+text = 'Call (555) 123-4567 or 555.987.6543'
+phones = re.findall(PHONE_PATTERN, text)
+print(phones)  # ['(555) 123-4567', '555.987.6543']
+
+# URL extraction
+URL_PATTERN = r'https?://[^\s]+'
+text = 'Visit https://example.com and http://test.org'
+urls = re.findall(URL_PATTERN, text)
+print(urls)  # ['https://example.com', 'http://test.org']
+
+# Date extraction (YYYY-MM-DD)
+DATE_PATTERN = r'\d{4}-\d{2}-\d{2}'
+text = 'Events on 2024-12-25 and 2024-12-31'
+dates = re.findall(DATE_PATTERN, text)
+print(dates)  # ['2024-12-25', '2024-12-31']
+
+# IP Address validation
+IP_PATTERN = r'^(\d{1,3}\.){3}\d{1,3}
+def is_valid_ip(ip):
+    if not re.match(IP_PATTERN, ip):
+        return False
+    parts = ip.split('.')
+    return all(0 <= int(part) <= 255 for part in parts)
+
+print(is_valid_ip('192.168.1.1'))    # True
+print(is_valid_ip('256.1.1.1'))      # False
+
+# Extract hashtags and mentions
+text = 'Check out #python and mention @user for more!'
+hashtags = re.findall(r'#\w+', text)
+mentions = re.findall(r'@\w+', text)
+print(hashtags)  # ['#python']
+print(mentions)  # ['@user']
+
+# Password validation
+# At least 8 chars, 1 uppercase, 1 lowercase, 1 digit
+PASSWORD_PATTERN = r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}
+def is_strong_password(password):
+    return bool(re.match(PASSWORD_PATTERN, password))
+
+print(is_strong_password('Pass123'))       # False (too short)
+print(is_strong_password('Password123'))   # True
+
+# Credit card masking
+def mask_credit_card(text):
+    pattern = r'\d{4}[- ]?\d{4}[- ]?\d{4}[- ]?(\d{4})'
+    return re.sub(pattern, r'****-****-****-\1', text)
+
+text = 'Card: 1234-5678-9012-3456'
+print(mask_credit_card(text))  # Card: ****-****-****-3456
+</pre>
+</details>
+
+<!-- 1️⃣2️⃣ Real-World Applications -->
+<details>
+<summary>1️⃣2️⃣ Real-World Applications & Examples</summary>
+
+<pre>
+import re
+
+# 1. LOG FILE PARSING
+log_entry = '2024-12-25 14:30:45 ERROR User login failed for user@example.com'
+pattern = r'(\d{4}-\d{2}-\d{2}) (\d{2}:\d{2}:\d{2}) (\w+) (.+)'
+match = re.match(pattern, log_entry)
+if match:
+    date, time, level, message = match.groups()
+    print(f"Date: {date}, Level: {level}")
+
+# 2. DATA CLEANING
+def clean_phone(phone):
+    """Extract only digits from phone number"""
+    return re.sub(r'\D', '', phone)
+
+print(clean_phone('(555) 123-4567'))  # 5551234567
+
+# 3. INPUT VALIDATION
+def validate_username(username):
+    """3-16 chars, letters, numbers, underscore only"""
+    pattern = r'^[a-zA-Z0-9_]{3,16}
+    return bool(re.match(pattern, username))
+
+print(validate_username('user_123'))   # True
+print(validate_username('ab'))         # False (too short)
+print(validate_username('user@123'))   # False (invalid char)
+
+# 4. TEXT EXTRACTION FROM HTML
+html = '<p>Hello <b>World</b></p>'
+text = re.sub(r'<[^>]+>', '', html)
+print(text)  # Hello World
+
+# 5. WORD FREQUENCY COUNTER
+text = 'Python is great. Python is powerful. Python is easy.'
+words = re.findall(r'\b\w+\b', text.lower())
+from collections import Counter
+freq = Counter(words)
+print(freq.most_common(3))  # [('python', 3), ('is', 3), ...]
+
+# 6. FIND AND REPLACE WITH FORMATTING
+def format_dates(text):
+    """Convert MM/DD/YYYY to YYYY-MM-DD"""
+    pattern = r'(\d{2})/(\d{2})/(\d{4})'
+    return re.sub(pattern, r'\3-\1-\2', text)
+
+text = 'Date: 12/25/2024'
+print(format_dates(text))  # Date: 2024-12-25
+
+# 7. EXTRACT STRUCTURED DATA
+invoice = '''
+Invoice #12345
+Date: 2024-12-25
+Amount: $1,234.56
+Customer: john@example.com
+'''
+
+invoice_data = {
+    'number': re.search(r'#(\d+)', invoice).group(1),
+    'date': re.search(r'Date: ([\d-]+)', invoice).group(1),
+    'amount': re.search(r'\$([\d,]+\.?\d*)', invoice).group(1),
+    'email': re.search(r'(\w+@\w+\.\w+)', invoice).group(1)
+}
+print(invoice_data)
+
+# 8. URL PARAMETER EXTRACTION
+url = 'https://example.com/search?q=python&page=2&sort=date'
+params = re.findall(r'(\w+)=([^&]+)', url)
+param_dict = dict(params)
+print(param_dict)  # {'q': 'python', 'page': '2', 'sort': 'date'}
+
+# 9. SENSITIVE DATA MASKING
+def mask_sensitive_data(text):
+    # Mask email
+    text = re.sub(r'(\w{2})\w+@', r'\1***@', text)
+    # Mask credit card
+    text = re.sub(r'\d{4}[- ]?\d{4}[- ]?\d{4}[- ]?(\d{4})', 
+                  r'****-****-****-\1', text)
+    return text
+
+data = 'Email: john@example.com, Card: 1234-5678-9012-3456'
+print(mask_sensitive_data(data))
+
+# 10. CODE SYNTAX HIGHLIGHTING (simplified)
+def highlight_python(code):
+    # Keywords
+    code = re.sub(r'\b(def|class|if|else|for|while|return)\b', 
+                  r'<b>\1</b>', code)
+    # Strings
+    code = re.sub(r"'([^']*)'", r"<i>'\1'</i>", code)
+    return code
+
+code = "def hello(): return 'world'"
+print(highlight_python(code))
+
+# 11. MARKDOWN LINK EXTRACTION
+markdown = '[Python](https://python.org) and [GitHub](https://github.com)'
+links = re.findall(r'\[([^\]]+)\]\(([^\)]+)\)', markdown)
+for text, url in links:
+    print(f"{text}: {url}")
+
+# 12. CSV PARSING (simple)
+csv_line = 'John,Doe,30,"New York, NY"'
+# Match fields (handling quoted commas)
+pattern = r'(?:^|,)(?:"([^"]*)"|([^,]*))'
+fields = [m[0] or m[1] for m in re.findall(pattern, csv_line)]
+print(fields)
+</pre>
+</details>
+
+<!-- 1️⃣3️⃣ Greedy vs Non-Greedy -->
+<details>
+<summary>1️⃣3️⃣ Greedy vs Non-Greedy Matching</summary>
+
+<table>
+<tr><th>Quantifier</th><th>Type</th><th>Behavior</th></tr>
+<tr><td><code>*</code></td><td>Greedy</td><td>Match as much as possible</td></tr>
+<tr><td><code>*?</code></td><td>Non-greedy</td><td>Match as little as possible</td></tr>
+<tr><td><code>+</code></td><td>Greedy</td><td>Match as much as possible</td></tr>
+<tr><td><code>+?</code></td><td>Non-greedy</td><td>Match as little as possible</td></tr>
+<tr><td><code>?</code></td><td>Greedy</td><td>Match 0 or 1</td></tr>
+<tr><td><code>??</code></td><td>Non-greedy</td><td>Match 0 if possible</td></tr>
+<tr><td><code>{m,n}</code></td><td>Greedy</td><td>Match as many as possible</td></tr>
+<tr><td><code>{m,n}?</code></td><td>Non-greedy</td><td>Match as few as possible</td></tr>
+</table>
+
+<pre>
+import re
+
+text = '<div>Hello</div><div>World</div>'
+
+# Greedy matching (default)
+greedy = re.findall(r'<div>.*</div>', text)
+print(greedy)  # ['<div>Hello</div><div>World</div>'] (matches everything)
+
+# Non-greedy matching
+non_greedy = re.findall(r'<div>.*?</div>', text)
+print(non_greedy)  # ['<div>Hello</div>', '<div>World</div>'] (minimal match)
+
+# Another example
+text = '"first" and "second"'
+
+# Greedy
+print(re.findall(r'".*"', text))    # ['"first" and "second"']
+
+# Non-greedy
+print(re.findall(r'".*?"', text))   # ['"first"', '"second"']
+
+# + quantifier
+text = 'aaaa'
+
+# Greedy +
+print(re.match(r'a+', text).group())   # aaaa
+
+# Non-greedy +?
+print(re.match(r'a+?', text).group())  # a
+
+# Practical example: Extract content between tags
+html = '<p>First</p><p>Second</p><p>Third</p>'
+
+# Greedy (wrong)
+print(re.findall(r'<p>.*</p>', html))   # ['<p>First</p><p>Second</p><p>Third</p>']
+
+# Non-greedy (correct)
+print(re.findall(r'<p>.*?</p>', html))  # ['<p>First</p>', '<p>Second</p>', '<p>Third</p>']
+
+# {m,n} quantifier
+text = 'aaaa'
+
+# Greedy {2,3}
+print(re.match(r'a{2,3}', text).group())   # aaa (matches 3)
+
+# Non-greedy {2,3}?
+print(re.match(r'a{2,3}?', text).group())  # aa (matches 2)
+</pre>
+
+<div class="ascii">
+Greedy vs Non-Greedy Visualization:
+
+Text: "aaaa"
+Pattern: a+
+
+Greedy (a+):
+aaaa
+^^^^  Match all
+
+Non-Greedy (a+?):
+aaaa
+^     Match minimum
+</div>
+
+<div class="tip">
+<strong>💡 Rule of Thumb:</strong> Use non-greedy (<code>*?</code>, <code>+?</code>) when extracting content between delimiters to avoid over-matching.
+</div>
+</details>
+
+<!-- 1️⃣4️⃣ Common Pitfalls -->
+<details>
+<summary>1️⃣4️⃣ Common Pitfalls & Solutions</summary>
+
+<pre>
+import re
+
+# PITFALL 1: Forgetting to escape special characters
+# ❌ Wrong
+pattern = r'price: $50'  # $ means "end of string"
+print(re.search(pattern, 'price: $50'))  # None
+
+# ✅ Correct
+pattern = r'price: \$50'
+print(re.search(pattern, 'price: $50').group())  # price: $50
+
+# PITFALL 2: Greedy matching when you want non-greedy
+# ❌ Wrong
+html = '<b>bold</b> and <b>more</b>'
+print(re.findall(r'<b>.*</b>', html))  # ['<b>bold</b> and <b>more</b>']
+
+# ✅ Correct
+print(re.findall(r'<b>.*?</b>', html))  # ['<b>bold</b>', '<b>more</b>']
+
+# PITFALL 3: Not using raw strings
+# ❌ Wrong
+pattern = '\d+'  # \d becomes \\d in string
+print(pattern)   # Confusing
+
+# ✅ Correct
+pattern = r'\d+'  # Raw string, \d stays as \d
+print(pattern)
+
+# PITFALL 4: Forgetting that . doesn't match newline
+# ❌ Wrong
+text = 'Hello\nWorld'
+print(re.search(r'Hello.World', text))  # None
+
+# ✅ Correct
+print(re.search(r'Hello.World', text, re.DOTALL).group())  # Hello\nWorld
+
+# PITFALL 5: Confusing search() and match()
+text = 'Hello World'
+
+# match() only at start
+print(re.match(r'World', text))    # None
+
+# search() anywhere
+print(re.search(r'World', text).group())  # World
+
+# PITFALL 6: Not escaping in character class when needed
+# ❌ Wrong (- is special in [])
+pattern = r'[a-z-0-9]'  # Means a to z, or -, or 0 to 9? Ambiguous!
+
+# ✅ Correct
+pattern = r'[a-z\-0-9]'  # Escaped hyphen
+# Or put hyphen at start/end
+pattern = r'[-a-z0-9]'
+
+# PITFALL 7: Using groups when you don't need capture
+# ❌ Inefficient
+pattern = r'(\d+)\.(\d+)\.(\d+)'
+print(re.findall(pattern, '1.2.3'))  # [('1', '2', '3')]
+
+# ✅ Better (if you don't need groups)
+pattern = r'\d+\.\d+\.\d+'
+print(re.findall(pattern, '1.2.3'))  # ['1.2.3']
+
+# PITFALL 8: Not compiling frequently used patterns
+# ❌ Slow for repeated use
+for line in many_lines:
+    re.search(r'\d+', line)  # Recompiles each time
+
+# ✅ Fast
+pattern = re.compile(r'\d+')
+for line in many_lines:
+    pattern.search(line)  # Uses compiled pattern
+
+# PITFALL 9: Expecting findall() to return groups when there's one group
+pattern = r'(\d+)'
+text = '10 20 30'
+print(re.findall(pattern, text))  # ['10', '20', '30'] (just groups)
+
+# If pattern has no groups
+pattern = r'\d+'
+print(re.findall(pattern, text))  # ['10', '20', '30'] (full matches)
+
+# PITFALL 10: Not handling None from search/match
+text = 'No numbers here'
+match = re.search(r'\d+', text)
+# print(match.group())  # AttributeError: 'NoneType' object has no attribute 'group'
+
+# ✅ Correct
+if match:
+    print(match.group())
+else:
+    print("No match found")
+</pre>
+</details>
+
+<!-- 1️⃣5️⃣ Interview Questions -->
+<details>
+<summary>1️⃣5️⃣ Interview Questions & Answers</summary>
+
+<h3>Conceptual Questions</h3>
+
+<ol>
+<li><strong>What is the difference between search() and match()?</strong>
+   <p><code>search()</code> finds pattern anywhere in string. <code>match()</code> only checks at the beginning of the string.</p>
+</li>
+
+<li><strong>What does the 'r' prefix mean in regex patterns?</strong>
+   <p>Raw string literal. Prevents Python from interpreting backslashes as escape sequences. <code>r"\n"</code> is two characters (\ and n), not a newline.</p>
+</li>
+
+<li><strong>Explain greedy vs non-greedy matching.</strong>
+   <p>Greedy (<code>*</code>, <code>+</code>) matches as much as possible. Non-greedy (<code>*?</code>, <code>+?</code>) matches as little as possible.</p>
+</li>
+
+<li><strong>What are lookaheads and lookbehinds?</strong>
+   <p>Zero-width assertions that check conditions without consuming characters. <code>(?=...)</code> positive lookahead, <code>(?!...)</code> negative lookahead.</p>
+</li>
+
+<li><strong>When should you compile a regex pattern?</strong>
+   <p>When using the same pattern multiple times. Compilation improves performance by avoiding repeated parsing.</p>
+</li>
+
+<li><strong>What is the difference between \d and [0-9]?</strong>
+   <p>In ASCII mode, they're equivalent. But <code>\d</code> can match Unicode digits too, while <code>[0-9]</code> only matches ASCII digits 0-9.</p>
+</li>
+
+<li><strong>How do you match a literal dot character?</strong>
+   <p>Escape it: <code>\.</code> because dot is a metacharacter that matches any character.</p>
+</li>
+
+<li><strong>What does ^ mean inside vs outside character class?</strong>
+   <p>Outside <code>[]</code>: start of string. Inside <code>[]</code>: negation (match anything except these characters).</p>
+</li>
+
+<li><strong>Difference between * and +?</strong>
+   <p><code>*</code> matches 0 or more occurrences. <code>+</code> matches 1 or more occurrences (at least one required).</p>
+</li>
+
+<li><strong>What are capturing groups?</strong>
+   <p>Parentheses <code>()</code> that capture matched text for later reference. Access via <code>.group(n)</code> or backreferences.</p>
+</li>
+</ol>
+
+<h3>Coding Problems</h3>
+
+<pre>
+import re
+
+# 1. Validate email address
+def is_valid_email(email):
+    pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}
+    return bool(re.match(pattern, email))
+
+# 2. Extract all phone numbers from text
+def extract_phones(text):
+    pattern = r'\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}'
+    return re.findall(pattern, text)
+
+# 3. Validate password (8+ chars, uppercase, lowercase, digit)
+def is_strong_password(password):
+    pattern = r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}
+    return bool(re.match(pattern, pattern))
+
+# 4. Replace multiple spaces with single space
+def normalize_spaces(text):
+    return re.sub(r'\s+', ' ', text)
+
+# 5. Extract domain from email
+def extract_domain(email):
+    match = re.search(r'@([\w.-]+)', email)
+    return match.group(1) if match else None
+
+# 6. Count word frequency
+def word_frequency(text):
+    words = re.findall(r'\b\w+\b', text.lower())
+    from collections import Counter
+    return Counter(words)
+
+# 7. Check if string contains only letters and spaces
+def only_letters_spaces(text):
+    return bool(re.match(r'^[a-zA-Z\s]+, text))
+
+# 8. Extract all URLs from text
+def extract_urls(text):
+    pattern = r'https?://[^\s]+'
+    return re.findall(pattern, text)
+
+# 9. Validate IP address
+def is_valid_ip(ip):
+    pattern = r'^(\d{1,3}\.){3}\d{1,3}
+    if not re.match(pattern, ip):
+        return False
+    return all(0 <= int(part) <= 255 for part in ip.split('.'))
+
+# 10. Remove HTML tags
+def strip_html(html):
+    return re.sub(r'<[^>]+>', '', html)
+
+# 11. Convert camelCase to snake_case
+def camel_to_snake(name):
+    pattern = r'(?<!^)(?=[A-Z])'
+    return re.sub(pattern, '_', name).lower()
+
+# 12. Find all words starting with capital letter
+def find_capitalized_words(text):
+    return re.findall(r'\b[A-Z][a-z]*\b', text)
+
+# 13. Extract hashtags from social media text
+def extract_hashtags(text):
+    return re.findall(r'#\w+', text)
+
+# 14. Validate date format YYYY-MM-DD
+def is_valid_date_format(date):
+    pattern = r'^\d{4}-\d{2}-\d{2}
+    return bool(re.match(pattern, date))
+
+# 15. Replace censored words
+def censor_words(text, words_to_censor):
+    pattern = r'\b(' + '|'.join(words_to_censor) + r')\b'
+    return re.sub(pattern, '***', text, flags=re.IGNORECASE)
+
+# Test the functions
+print(is_valid_email('user@example.com'))           # True
+print(extract_phones('Call 555-1234 or (555) 987-6543'))
+print(normalize_spaces('Hello    World'))           # Hello World
+print(extract_domain('user@example.com'))           # example.com
+print(camel_to_snake('camelCaseExample'))          # camel_case_example
+print(extract_hashtags('Check #python and #regex'))  # ['#python', '#regex']
+</pre>
+</details>
+
+<!-- 1️⃣6️⃣ Best Practices -->
+<details>
+<summary>1️⃣6️⃣ Best Practices & Guidelines</summary>
+
+<div class="tip">
+<h3>✅ DO</h3>
+<ul>
+<li>✅ Use raw strings: <code>r"\d+"</code> instead of <code>"\\d+"</code></li>
+<li>✅ Compile patterns used multiple times</li>
+<li>✅ Use non-greedy quantifiers when needed: <code>.*?</code></li>
+<li>✅ Use named groups for clarity: <code>(?P&lt;name&gt;...)</code></li>
+<li>✅ Test patterns with multiple test cases</li>
+<li>✅ Use <code>re.VERBOSE</code> for complex patterns</li>
+<li>✅ Handle None results from search/match</li>
+<li>✅ Use character classes instead of OR: <code>[abc]</code> not <code>(a|b|c)</code></li>
+<li>✅ Escape metacharacters in literal matches</li>
+<li>✅ Use anchors (^, $) for validation</li>
+</ul>
+</div>
+
+<div class="warning">
+<h3>❌ DON'T</h3>
+<ul>
+<li>❌ Don't use regex for complex parsing (use proper parsers)</li>
+<li>❌ Don't forget to escape special characters</li>
+<li>❌ Don't use capturing groups if you don't need them</li>
+<li>❌ Don't assume <code>.</code> matches newlines (use re.DOTALL)</li>
+<li>❌ Don't use <code>.*</code> when you need <code>.*?</code></li>
+<li>❌ Don't parse HTML/XML with regex (use BeautifulSoup)</li>
+<li>❌ Don't create overly complex patterns (break them down)</li>
+<li>❌ Don't ignore performance (compile for reuse)</li>
+<li>❌ Don't forget that match() only checks string start</li>
+<li>❌ Don't use regex when simple string methods suffice</li>
+</ul>
+</div>
+
+<pre>
+# ✅ Good Practices
+
+# 1. Use raw strings
+pattern = r'\d+\.\d+'  # Clear and correct
+
+# 2. Compile for reuse
+EMAIL_PATTERN = re.compile(r'\w+@\w+\.\w+')
+for email in email_list:
+    if EMAIL_PATTERN.match(email):
+        process(email)
+
+# 3. Use verbose mode for complex patterns
+pattern = re.compile(r'''
+    ^                   # Start of string
+    (?P<area>\d{3})     # Area code
+    [-.\s]?             # Optional separator
+    (?P<prefix>\d{3})   # Prefix
+    [-.\s]?             # Optional separator
+    (?P<number>\d{4})   # Number
+    $                   # End of string
+''', re.VERBOSE)
+
+# 4. Named groups for clarity
+match = re.search(r'(?P<year>\d{4})-(?P<month>\d{2})-(?P<day>\d{2})', date)
+if match:
+    print(match.group('year'))
+
+# 5. Non-greedy when extracting
+content = re.findall(r'<tag>(.*?)</tag>', html)
+
+# 6. Handle None results
+match = re.search(r'\d+', text)
+result = match.group() if match else 'No match'
+
+# ❌ Bad Practices
+
+# 1. No raw string (confusing escapes)
+pattern = '\\d+\\.\\d+'  # Hard to read
+
+# 2. Repeated compilation
+for item in items:
+    re.search(r'\d+', item)  # Compiles every time
+
+# 3. Greedy when you need non-greedy
+content = re.findall(r'<tag>(.*)</tag>', html)  # Matches too much
+
+# 4. Not escaping special chars
+price = re.search(r'$\d+', text)  # $ means end-of-string!
+
+# 5. Overly complex single pattern
+# Break into smaller, testable parts instead
+</pre>
+
+<div class="note">
+<strong>⚠️ When NOT to use regex:</strong>
+<ul>
+<li>Simple string operations (<code>in</code>, <code>startswith()</code>, <code>split()</code>)</li>
+<li>Parsing HTML/XML (use BeautifulSoup, lxml)</li>
+<li>Parsing JSON (use json module)</li>
+<li>Complex nested structures (use proper parser)</li>
+</ul>
+</div>
+</details>
+
+<!-- 1️⃣7️⃣ Quick Reference -->
+<details>
+<summary>1️⃣7️⃣ Quick Reference Cheat Sheet</summary>
+
+<table>
+<tr><th>Category</th><th>Syntax</th><th>Example</th></tr>
+<tr><td colspan="3" style="background:#00539C;color:white;"><strong>Metacharacters</strong></td></tr>
+<tr><td>Any char</td><td><code>.</code></td><td><code>a.c</code> → abc, a1c</td></tr>
+<tr><td>Start</td><td><code>^</code></td><td><code>^Hello</code></td></tr>
+<tr><td>End</td><td><code>$</code></td><td><code>end$</code></td></tr>
+<tr><td>Zero or more</td><td><code>*</code></td><td><code>ab*</code></td></tr>
+<tr><td>One or more</td><td><code>+</code></td><td><code>ab+</code></td></tr>
+<tr><td>Zero or one</td><td><code>?</code></td><td><code>ab?</code></td></tr>
+<tr><td>OR</td><td><code>|</code></td><td><code>cat|dog</code></td></tr>
+<tr><td colspan="3" style="background:#00539C;color:white;"><strong>Character Classes</strong></td></tr>
+<tr><td>Digit</td><td><code>\d</code></td><td><code>[0-9]</code></td></tr>
+<tr><td>Non-digit</td><td><code>\D</code></td><td><code>[^0-9]</code></td></tr>
+<tr><td>Word char</td><td><code>\w</code></td><td><code>[a-zA-Z0-9_]</code></td></tr>
+<tr><td>Non-word</td><td><code>\W</code></td><td><code>[^a-zA-Z0-9_]</code></td></tr>
+<tr><td>Whitespace</td><td><code>\s</code></td><td>Space, tab, newline</td></tr>
+<tr><td>Non-whitespace</td><td><code>\S</code></td><td>Visible characters</td></tr>
+<tr><td>Word boundary</td><td><code>\b</code></td><td><code>\bword\b</code></td></tr>
+<tr><td colspan="3" style="background:#00539C;color:white;"><strong>Quantifiers</strong></td></tr>
+<tr><td>Exactly n</td><td><code>{n}</code></td><td><code>a{3}</code> → aaa</td></tr>
+<tr><td>n or more</td><td><code>{n,}</code></td><td><code>a{2,}</code> → aa, aaa</td></tr>
+<tr><td>n to m</td><td><code>{n,m}</code></td><td><code>a{2,4}</code></td></tr>
+<tr><td>Non-greedy</td><td><code>*?, +?, ??</code></td><td><code>.*?</code></td></tr>
+<tr><td colspan="3" style="background:#00539C;color:white;"><strong>Groups</strong></td></tr>
+<tr><td>Capture</td><td><code>()</code></td><td><code>(\d+)</code></td></tr>
+<tr><td>Non-capture</td><td><code>(?:)</code></td><td><code>(?:abc)+</code></td></tr>
+<tr><td>Named</td><td><code>(?P&lt;n&gt;)</code></td><td><code>(?P&lt;year&gt;\d{4})</code></td></tr>
+<tr><td>Backreference</td><td><code>\1, \2</code></td><td><code>(\w+)\s\1</code></td></tr>
+<tr><td colspan="3" style="background:#00539C;color:white;"><strong>Lookaround</strong></td></tr>
+<tr><td>Lookahead</td><td><code>(?=)</code></td><td><code>\d+(?= dollars)</code></td></tr>
+<tr><td>Neg. lookahead</td><td><code>(?!)</code></td><td><code>\d+(?! dollars)</code></td></tr>
+<tr><td>Lookbehind</td><td><code>(?&lt;=)</code></td><td><code>(?&lt;=\$)\d+</code></td></tr>
+<tr><td>Neg. lookbehind</td><td><code>(?&lt;!)</code></td><td><code>(?&lt;!\$)\d+</code></td></tr>
+<tr><td colspan="3" style="background:#00539C;color:white;"><strong>Functions</strong></td></tr>
+<tr><td>Find first</td><td><code>re.search()</code></td><td>Match object or None</td></tr>
+<tr><td>Match start</td><td><code>re.match()</code></td><td>Match at beginning</td></tr>
+<tr><td>Find all</td><td><code>re.findall()</code></td><td>List of strings</td></tr>
+<tr><td>Replace</td><td><code>re.sub()</code></td><td>Modified string</td></tr>
+<tr><td>Split</td><td><code>re.split()</code></td><td>List of parts</td></tr>
+<tr><td>Compile</td><td><code>re.compile()</code></td><td>Pattern object</td></tr>
+</table>
+
+<h3>Common Patterns Quick Reference</h3>
+<table>
+<tr><th>Pattern</th><th>Regex</th></tr>
+<tr><td>Email</td><td><code>r'\w+@\w+\.\w+'</code></td></tr>
+<tr><td>Phone</td><td><code>r'\d{3}-\d{3}-\d{4}'</code></td></tr>
+<tr><td>URL</td><td><code>r'https?://[^\s]+'</code></td></tr>
+<tr><td>IP Address</td><td><code>r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}'</code></td></tr>
+<tr><td>Date</td><td><code>r'\d{4}-\d{2}-\d{2}'</code></td></tr>
+<tr><td>Hex Color</td><td><code>r'#[0-9A-Fa-f]{6}'</code></td></tr>
+<tr><td>Hashtag</td><td><code>r'#\w+'</code></td></tr>
+<tr><td>Mention</td><td><code>r'@\w+'</code></td></tr>
+</table>
+</details>
+
+<!-- 1️⃣8️⃣ Practice Exercises -->
+<details>
+<summary>1️⃣8️⃣ Practice Exercises</summary>
+
+<h3>Beginner Level</h3>
+<ol>
+<li>Match any 3-letter word</li>
+<li>Find all digits in a string</li>
+<li>Check if string starts with "Hello"</li>
+<li>Find all words starting with capital letter</li>
+<li>Extract email addresses from text</li>
+<li>Validate phone number format (XXX-XXX-XXXX)</li>
+<li>Replace all spaces with underscores</li>
+<li>Count number of vowels in text</li>
+<li>Check if string contains only letters</li>
+<li>Extract file extension from filename</li>
+</ol>
+
+<h3>Intermediate Level</h3>
+<ol>
+<li>Validate password (8+ chars, mixed case, digit)</li>
+<li>Extract all URLs from HTML</li>
+<li>Parse log file timestamps</li>
+<li>Convert dates from MM/DD/YYYY to YYYY-MM-DD</li>
+<li>Extract hashtags and mentions from tweet</li>
+<li>Validate IP address (0-255 for each octet)</li>
+<li>Remove all HTML tags from text</li>
+<li>Find duplicate words in sentence</li>
+<li>Extract credit card numbers (with masking)</li>
+<li>Parse CSV line (handling quoted commas)</li>
+</ol>
+
+<h3>Advanced Level</h3>
+<ol>
+<li>Validate complex email format (RFC compliant)</li>
+<li>Extract nested parentheses content</li>
+<li>Parse mathematical expressions</li>
+<li>Validate and parse JSON (simple)</li>
+<li>Extract SQL table names from queries</li>
+<li>Implement syntax highlighting for keywords</li>
+<li>Parse URL query parameters</li>
+<li>Validate credit card Luhn algorithm</li>
+<li>Extract function signatures from code</li>
+<li>Build a simple template engine</li>
+</ol>
+
+<h3>Solutions (Sample)</h3>
+<pre>
+import re
+
+# Beginner 1: Match any 3-letter word
+print(re.findall(r'\b\w{3}\b', 'The cat sat on mat'))  # ['The', 'cat', 'sat', 'mat']
+
+# Beginner 5: Extract emails
+text = 'Contact: john@email.com or jane@example.org'
+emails = re.findall(r'\w+@\w+\.\w+', text)
+print(emails)
+
+# Intermediate 1: Validate password
+def validate_password(pwd):
+    pattern = r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}
+    return bool(re.match(pattern, pwd))
+
+# Intermediate 4: Convert date format
+def convert_date(text):
+    return re.sub(r'(\d{2})/(\d{2})/(\d{4})', r'\3-\1-\2', text)
+
+print(convert_date('Date: 12/25/2024'))  # Date: 2024-12-25
+
+# Intermediate 8: Find duplicate words
+text = 'hello hello world world python'
+duplicates = re.findall(r'\b(\w+)\s+\1\b', text)
+print(duplicates)  # ['hello', 'world']
+
+# Advanced 7: Parse URL parameters
+url = 'https://example.com?name=John&age=30&city=NYC'
+params = dict(re.findall(r'(\w+)=([^&]+)', url))
+print(params)  # {'name': 'John', 'age': '30', 'city': 'NYC'}
+</pre>
+</details>
+
+<!-- 1️⃣9️⃣ Real-Life Analogy -->
+<details>
+<summary>1️⃣9️⃣ Real-Life Analogy</summary>
+
+<div class="ascii">
+🔍 Regex = Advanced Search Tool
+
+Think of regex like a sophisticated search filter:
+
+Basic Search:  "Find 'apple'"
+              → Finds exact word "apple"
+
+Regex Search:  "Find words starting with 'app'"
+              → Finds apple, application, append
+              
+              "Find 3-digit numbers"
+              → Finds 123, 456, 789
+
+              "Find emails"
+              → Finds user@example.com, test@mail.org
+</div>
+
+<p><strong>Real-World Comparisons:</strong></p>
+
+<table>
+<tr><th>Regex Concept</th><th>Real-World Analogy</th></tr>
+<tr><td><code>.</code> (any char)</td><td>Wildcard "?" in file search</td></tr>
+<tr><td><code>*</code> (zero or more)</td><td>"Any number of" items</td></tr>
+<tr><td><code>+</code> (one or more)</td><td>"At least one" requirement</td></tr>
+<tr><td><code>^</code> (start)</td><td>"Must begin with"</td></tr>
+<tr><td><code>$</code> (end)</td><td>"Must end with"</td></tr>
+<tr><td><code>[]</code> (set)</td><td>"Choose from these options"</td></tr>
+<tr><td><code>|</code> (OR)</td><td>"Either this or that"</td></tr>
+<tr><td><code>()</code> (group)</td><td>Parentheses in math</td></tr>
+</table>
+
+<p><strong>Examples:</strong></p>
+<ul>
+<li>📧 <strong>Email validation</strong> = Checking if address format is correct</li>
+<li>📱 <strong>Phone formatting</strong> = Converting (555) 123-4567 to 555-123-4567</li>
+<li>🔐 <strong>Password rules</strong> = Must have uppercase, lowercase, digit</li>
+<li>🔍 <strong>Log parsing</strong> = Finding specific error patterns in logs</li>
+<li>🧹 <strong>Data cleaning</strong> = Removing unwanted characters</li>
+</ul>
+</details>
+
+<!-- 2️⃣0️⃣ Testing & Debugging -->
+<details>
+<summary>2️⃣0️⃣ Testing & Debugging Regex</summary>
+
+<pre>
+import re
+
+# 1. Use re.DEBUG to see pattern compilation
+pattern = re.compile(r'\d{3}-\d{4}', re.DEBUG)
+
+# 2. Test with multiple examples
+def test_email_pattern():
+    pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}
+    
+    valid = [
+        'user@example.com',
+        'test.user@example.com',
+        'user+tag@example.co.uk'
+    ]
+    
+    invalid = [
+        'invalid',
+        '@example.com',
+        'user@',
+        'user@.com'
+    ]
+    
+    for email in valid:
+        assert re.match(pattern, email), f"Should match: {email}"
+    
+    for email in invalid:
+        assert not re.match(pattern, email), f"Should not match: {email}"
+    
+    print("All tests passed!")
+
+test_email_pattern()
+
+# 3. Use online regex testers (regex101.com, regexr.com)
+# These show step-by-step matching and provide explanations
+
+# 4. Break complex patterns into parts
+# Instead of:
+complex_pattern = r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}
+
+# Test each part separately:
+has_lowercase = r'(?=.*[a-z])'
+has_uppercase = r'(?=.*[A-Z])'
+has_digit = r'(?=.*\d)'
+has_special = r'(?=.*[@$!%*?&])'
+correct_length = r'.{8,}'
+
+# 5. Use verbose mode for documentation
+pattern = re.compile(r'''
+    ^                      # Start of string
+    (?=.*[a-z])           # At least one lowercase
+    (?=.*[A-Z])           # At least one uppercase
+    (?=.*\d)              # At least one digit
+    (?=.*[@$!%*?&])       # At least one special char
+    [A-Za-z\d@$!%*?&]{8,} # Valid characters, 8+ length
+    $                      # End of string
+''', re.VERBOSE)
+
+# 6. Create test suite
+test_cases = [
+    ('valid@email.com', True),
+    ('invalid', False),
+    ('test123', False),
+    ('Test@123', True)
+]
+
+for text, should_match in test_cases:
+    result = bool(pattern.match(text))
+    status = "✓" if result == should_match else "✗"
+    print(f"{status} {text}: {result}")
+
+# 7. Debug with print statements
+text = 'test@example.com'
+pattern = r'(\w+)@(\w+)\.(\w+)'
+match = re.search(pattern, text)
+
+if match:
+    print(f"Full match: {match.group(0)}")
+    print(f"Groups: {match.groups()}")
+    print(f"Group 1: {match.group(1)}")
+    print(f"Span: {match.span()}")
+</pre>
+
+<div class="tip">
+<strong>💡 Debugging Tips:</strong>
+<ul>
+<li>Use online tools like regex101.com for visual debugging</li>
+<li>Test with edge cases (empty strings, special characters)</li>
+<li>Use re.VERBOSE to document complex patterns</li>
+<li>Break complex patterns into testable parts</li>
+<li>Print match objects to see what's captured</li>
+</ul>
+</div>
+</details>
+
+<!-- Footer -->
+<div style="margin-top: 40px; padding: 20px; background: #e3f2fd; border-radius: 10px; text-align: center;">
+<h3>🔍 Python Regular Expressions — Complete Reference</h3>
+<p>Master pattern matching, text extraction, validation, and substitution</p>
+<p style="color: #666; font-size: 14px;">Practice with real examples • Test thoroughly • Use online tools</p>
+<p style="color: #666; font-size: 12px; margin-top: 10px;">Part of Python DSA Visuals Collection</p>
+<p style="margin-top: 15px;">
+<strong>Recommended Tools:</strong><br>
+<a href="https://regex101.com" target="_blank">regex101.com</a> • 
+<a href="https://regexr.com" target="_blank">regexr.com</a> • 
+<a href="https://pythex.org" target="_blank">pythex.org</a>
+</p>
+</div>
+
+</div>
+</body>
+</html>
