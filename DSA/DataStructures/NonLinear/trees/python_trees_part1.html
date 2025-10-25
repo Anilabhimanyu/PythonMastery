@@ -1,0 +1,1210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trees - Complete Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+            color: #333;
+            padding: 20px;
+            line-height: 1.7;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+            color: white;
+            padding: 50px;
+            text-align: center;
+        }
+        
+        h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.3em;
+            opacity: 0.95;
+        }
+        
+        nav {
+            background: #f8f9fa;
+            padding: 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .nav-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .nav-links a {
+            padding: 10px 20px;
+            background: white;
+            color: #27ae60;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .nav-links a:hover {
+            background: #27ae60;
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .content {
+            padding: 50px;
+        }
+        
+        .section {
+            margin-bottom: 50px;
+            padding: 40px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            border-left: 6px solid #27ae60;
+        }
+        
+        h2 {
+            color: #27ae60;
+            margin-bottom: 25px;
+            font-size: 2.2em;
+            border-bottom: 3px solid #27ae60;
+            padding-bottom: 10px;
+        }
+        
+        h3 {
+            color: #2ecc71;
+            margin: 25px 0 15px 0;
+            font-size: 1.6em;
+        }
+        
+        h4 {
+            color: #16a085;
+            margin: 20px 0 10px 0;
+            font-size: 1.3em;
+        }
+        
+        .visual-tree {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            margin: 25px 0;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .tree-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 30px 0;
+        }
+        
+        .tree-level {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 40px;
+            margin: 15px 0;
+            position: relative;
+        }
+        
+        .tree-node {
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            color: white;
+            padding: 18px 28px;
+            border-radius: 50%;
+            font-weight: bold;
+            font-size: 1.2em;
+            box-shadow: 0 4px 15px rgba(46, 204, 113, 0.4);
+            min-width: 60px;
+            transition: transform 0.3s ease;
+        }
+        
+        .tree-node:hover {
+            transform: scale(1.1);
+        }
+        
+        .null-node {
+            background: #95a5a6;
+            padding: 15px 20px;
+            font-size: 0.9em;
+        }
+        
+        .code-block {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 25px;
+            border-radius: 12px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+            line-height: 1.6;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            white-space: pre;
+        }
+        
+        .code-block .comment {
+            color: #95a5a6;
+        }
+        
+        .code-block .keyword {
+            color: #3498db;
+        }
+        
+        .code-block .string {
+            color: #e74c3c;
+        }
+        
+        .code-block .function {
+            color: #f39c12;
+        }
+        
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+        
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+        
+        .card h3 {
+            margin-top: 0;
+        }
+        
+        .highlight-box {
+            background: #d5f4e6;
+            border-left: 5px solid #27ae60;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        
+        .warning-box {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        
+        .info-box {
+            background: #d1ecf1;
+            border-left: 5px solid #17a2b8;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        
+        th {
+            background: #27ae60;
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #ecf0f1;
+        }
+        
+        tr:hover {
+            background: #f8f9fa;
+        }
+        
+        code {
+            background: #f4f4f4;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            color: #e74c3c;
+            font-size: 0.9em;
+        }
+        
+        ul, ol {
+            margin-left: 30px;
+            margin-top: 15px;
+        }
+        
+        li {
+            margin: 10px 0;
+        }
+        
+        strong {
+            color: #27ae60;
+        }
+        
+        @media (max-width: 768px) {
+            .content {
+                padding: 20px;
+            }
+            
+            .section {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            .tree-level {
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🌳 Trees Data Structure</h1>
+            <p class="subtitle">Complete Guide: From Basics to Implementation</p>
+        </header>
+        
+        <nav>
+            <div class="nav-links">
+                <a href="#basics">Basics</a>
+                <a href="#terminology">Terminology</a>
+                <a href="#types">Types</a>
+                <a href="#implementation">Implementation</a>
+                <a href="#traversals">Traversals</a>
+                <a href="#operations">Operations</a>
+                <a href="#complexity">Complexity</a>
+            </div>
+        </nav>
+        
+        <div class="content">
+            <!-- BASICS -->
+            <div class="section" id="basics">
+                <h2>🎯 What is a Tree?</h2>
+                <p>A <strong>Tree</strong> is a hierarchical non-linear data structure consisting of nodes connected by edges. It simulates a tree structure with a root node at the top and branches (subtrees) extending downward.</p>
+                
+                <div class="visual-tree">
+                    <h3>Basic Tree Structure</h3>
+                    <div class="tree-container">
+                        <div class="tree-level">
+                            <div class="tree-node">1</div>
+                        </div>
+                        <div class="tree-level">
+                            <div class="tree-node">2</div>
+                            <div class="tree-node">3</div>
+                            <div class="tree-node">4</div>
+                        </div>
+                        <div class="tree-level">
+                            <div class="tree-node">5</div>
+                            <div class="tree-node">6</div>
+                            <div class="tree-node">7</div>
+                            <div class="tree-node">8</div>
+                        </div>
+                    </div>
+                    <p><em>Node 1 is the root, nodes 2, 3, 4 are its children, and nodes 5-8 are leaf nodes</em></p>
+                </div>
+                
+                <div class="highlight-box">
+                    <h4>🔑 Key Properties of Trees:</h4>
+                    <ul>
+                        <li><strong>One Root:</strong> Exactly one root node (the topmost node)</li>
+                        <li><strong>No Cycles:</strong> No circular paths - you can't loop back to a node</li>
+                        <li><strong>Connected:</strong> Every node is reachable from the root</li>
+                        <li><strong>Hierarchical:</strong> Parent-child relationships between nodes</li>
+                        <li><strong>N-1 Edges:</strong> A tree with N nodes has exactly N-1 edges</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- TERMINOLOGY -->
+            <div class="section" id="terminology">
+                <h2>📚 Essential Terminology</h2>
+                
+                <div class="comparison-grid">
+                    <div class="card">
+                        <h3>Node</h3>
+                        <p>Basic unit containing data and references to child nodes</p>
+                    </div>
+                    <div class="card">
+                        <h3>Root</h3>
+                        <p>Topmost node with no parent (entry point of tree)</p>
+                    </div>
+                    <div class="card">
+                        <h3>Parent</h3>
+                        <p>Node that has one or more children</p>
+                    </div>
+                    <div class="card">
+                        <h3>Child</h3>
+                        <p>Node directly connected below another node</p>
+                    </div>
+                    <div class="card">
+                        <h3>Leaf / External Node</h3>
+                        <p>Node with no children (terminal node)</p>
+                    </div>
+                    <div class="card">
+                        <h3>Internal Node</h3>
+                        <p>Node with at least one child</p>
+                    </div>
+                    <div class="card">
+                        <h3>Edge</h3>
+                        <p>Connection/link between two nodes</p>
+                    </div>
+                    <div class="card">
+                        <h3>Sibling</h3>
+                        <p>Nodes sharing the same parent</p>
+                    </div>
+                    <div class="card">
+                        <h3>Ancestor</h3>
+                        <p>Any node on the path from root to that node</p>
+                    </div>
+                    <div class="card">
+                        <h3>Descendant</h3>
+                        <p>Any node reachable by going down the tree</p>
+                    </div>
+                    <div class="card">
+                        <h3>Subtree</h3>
+                        <p>Tree formed by a node and all its descendants</p>
+                    </div>
+                    <div class="card">
+                        <h3>Depth of Node</h3>
+                        <p>Number of edges from root to that node</p>
+                    </div>
+                    <div class="card">
+                        <h3>Height of Node</h3>
+                        <p>Number of edges in longest path from node to leaf</p>
+                    </div>
+                    <div class="card">
+                        <h3>Height of Tree</h3>
+                        <p>Height of root node (max depth in tree)</p>
+                    </div>
+                    <div class="card">
+                        <h3>Level</h3>
+                        <p>Depth + 1 (root is at level 1)</p>
+                    </div>
+                    <div class="card">
+                        <h3>Degree</h3>
+                        <p>Number of children a node has</p>
+                    </div>
+                </div>
+                
+                <div class="visual-tree">
+                    <h3>Terminology Illustrated</h3>
+                    <div class="tree-container">
+                        <div class="tree-level">
+                            <div class="tree-node">A<br><small>Root, Height=2, Depth=0</small></div>
+                        </div>
+                        <div class="tree-level">
+                            <div class="tree-node">B<br><small>Internal, Depth=1</small></div>
+                            <div class="tree-node">C<br><small>Internal, Depth=1</small></div>
+                        </div>
+                        <div class="tree-level">
+                            <div class="tree-node">D<br><small>Leaf, Depth=2</small></div>
+                            <div class="tree-node">E<br><small>Leaf, Depth=2</small></div>
+                            <div class="tree-node">F<br><small>Leaf, Depth=2</small></div>
+                        </div>
+                    </div>
+                    <p><em>B and C are siblings. D, E, F are descendants of A. Height of tree = 2</em></p>
+                </div>
+            </div>
+            
+            <!-- TYPES OF TREES -->
+            <div class="section" id="types">
+                <h2>🌲 Types of Trees</h2>
+                
+                <h3>1. Binary Tree</h3>
+                <p>Each node has <strong>at most 2 children</strong> (left child and right child)</p>
+                <div class="visual-tree">
+                    <div class="tree-container">
+                        <div class="tree-level">
+                            <div class="tree-node">10</div>
+                        </div>
+                        <div class="tree-level">
+                            <div class="tree-node">5</div>
+                            <div class="tree-node">15</div>
+                        </div>
+                        <div class="tree-level">
+                            <div class="tree-node">3</div>
+                            <div class="tree-node">7</div>
+                            <div class="tree-node">12</div>
+                            <div class="tree-node">18</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <h4>Types of Binary Trees:</h4>
+                <table>
+                    <tr>
+                        <th>Type</th>
+                        <th>Definition</th>
+                        <th>Example Use Case</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Full Binary Tree</strong></td>
+                        <td>Every node has 0 or 2 children (no node has 1 child)</td>
+                        <td>Expression trees, decision trees</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Complete Binary Tree</strong></td>
+                        <td>All levels filled except possibly last, which fills left to right</td>
+                        <td>Heaps, array representation</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Perfect Binary Tree</strong></td>
+                        <td>All internal nodes have 2 children, all leaves at same level</td>
+                        <td>Theoretical maximum efficiency</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Balanced Binary Tree</strong></td>
+                        <td>Height difference between left and right subtrees ≤ 1 for all nodes</td>
+                        <td>AVL trees, maintaining O(log n)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Degenerate/Skewed</strong></td>
+                        <td>Each parent has only one child (essentially a linked list)</td>
+                        <td>Worst case scenario to avoid</td>
+                    </tr>
+                </table>
+                
+                <h3>2. Binary Search Tree (BST)</h3>
+                <p>Binary tree with ordering property: <strong>Left < Parent < Right</strong></p>
+                <div class="info-box">
+                    <strong>BST Property:</strong> For every node:
+                    <ul>
+                        <li>All values in left subtree are smaller</li>
+                        <li>All values in right subtree are greater</li>
+                        <li>Both left and right subtrees are also BSTs</li>
+                    </ul>
+                </div>
+                
+                <div class="visual-tree">
+                    <div class="tree-container">
+                        <div class="tree-level">
+                            <div class="tree-node">50</div>
+                        </div>
+                        <div class="tree-level">
+                            <div class="tree-node">30</div>
+                            <div class="tree-node">70</div>
+                        </div>
+                        <div class="tree-level">
+                            <div class="tree-node">20</div>
+                            <div class="tree-node">40</div>
+                            <div class="tree-node">60</div>
+                            <div class="tree-node">80</div>
+                        </div>
+                    </div>
+                    <p><em>Notice: 20 < 30 < 40 < 50 < 60 < 70 < 80</em></p>
+                </div>
+                
+                <h3>3. Other Important Tree Types</h3>
+                <div class="comparison-grid">
+                    <div class="card">
+                        <h3>AVL Tree</h3>
+                        <p><strong>Self-balancing BST</strong></p>
+                        <p>Balance factor = |height(left) - height(right)| ≤ 1</p>
+                        <p>Uses rotations to maintain balance after insert/delete</p>
+                    </div>
+                    <div class="card">
+                        <h3>Red-Black Tree</h3>
+                        <p><strong>Self-balancing BST</strong></p>
+                        <p>Uses color property (red/black nodes) to ensure balance</p>
+                        <p>Used in Java TreeMap, C++ map</p>
+                    </div>
+                    <div class="card">
+                        <h3>B-Tree</h3>
+                        <p><strong>Multi-child tree</strong></p>
+                        <p>Node can have more than 2 children</p>
+                        <p>Used in databases and file systems</p>
+                    </div>
+                    <div class="card">
+                        <h3>Trie (Prefix Tree)</h3>
+                        <p><strong>String search tree</strong></p>
+                        <p>Each path represents a word/prefix</p>
+                        <p>Autocomplete, spell check, IP routing</p>
+                    </div>
+                    <div class="card">
+                        <h3>Heap</h3>
+                        <p><strong>Complete binary tree</strong></p>
+                        <p>Max-heap: parent ≥ children</p>
+                        <p>Priority queues, heap sort</p>
+                    </div>
+                    <div class="card">
+                        <h3>N-ary Tree</h3>
+                        <p><strong>Generic tree</strong></p>
+                        <p>Node can have any number of children</p>
+                        <p>File systems, organizational charts</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- IMPLEMENTATION -->
+            <div class="section" id="implementation">
+                <h2>💻 Implementation in Python</h2>
+                
+                <h3>Basic Binary Tree Node</h3>
+<div class="code-block"><span class="keyword">class</span> <span class="function">TreeNode</span>:
+    <span class="keyword">def</span> <span class="function">__init__</span>(self, data):
+        self.data = data        <span class="comment"># Value stored in node</span>
+        self.left = <span class="keyword">None</span>       <span class="comment"># Reference to left child</span>
+        self.right = <span class="keyword">None</span>      <span class="comment"># Reference to right child</span>
+
+<span class="comment"># Creating a simple tree</span>
+root = TreeNode(1)
+root.left = TreeNode(2)
+root.right = TreeNode(3)
+root.left.left = TreeNode(4)
+root.left.right = TreeNode(5)
+
+<span class="comment"># Tree structure:
+#       1
+#      / \
+#     2   3
+#    / \
+#   4   5</span>
+</div>
+                
+                <h3>Binary Search Tree Implementation</h3>
+<div class="code-block"><span class="keyword">class</span> <span class="function">BST</span>:
+    <span class="keyword">def</span> <span class="function">__init__</span>(self):
+        self.root = <span class="keyword">None</span>
+    
+    <span class="keyword">def</span> <span class="function">insert</span>(self, data):
+        <span class="comment">"""Insert a value into BST"""</span>
+        <span class="keyword">if</span> self.root <span class="keyword">is None</span>:
+            self.root = TreeNode(data)
+        <span class="keyword">else</span>:
+            self._insert_recursive(self.root, data)
+    
+    <span class="keyword">def</span> <span class="function">_insert_recursive</span>(self, node, data):
+        <span class="keyword">if</span> data < node.data:
+            <span class="keyword">if</span> node.left <span class="keyword">is None</span>:
+                node.left = TreeNode(data)
+            <span class="keyword">else</span>:
+                self._insert_recursive(node.left, data)
+        <span class="keyword">else</span>:
+            <span class="keyword">if</span> node.right <span class="keyword">is None</span>:
+                node.right = TreeNode(data)
+            <span class="keyword">else</span>:
+                self._insert_recursive(node.right, data)
+    
+    <span class="keyword">def</span> <span class="function">search</span>(self, data):
+        <span class="comment">"""Search for a value in BST"""</span>
+        <span class="keyword">return</span> self._search_recursive(self.root, data)
+    
+    <span class="keyword">def</span> <span class="function">_search_recursive</span>(self, node, data):
+        <span class="keyword">if</span> node <span class="keyword">is None</span>:
+            <span class="keyword">return False</span>
+        <span class="keyword">if</span> node.data == data:
+            <span class="keyword">return True</span>
+        <span class="keyword">elif</span> data < node.data:
+            <span class="keyword">return</span> self._search_recursive(node.left, data)
+        <span class="keyword">else</span>:
+            <span class="keyword">return</span> self._search_recursive(node.right, data)
+
+<span class="comment"># Usage</span>
+bst = BST()
+bst.insert(50)
+bst.insert(30)
+bst.insert(70)
+bst.insert(20)
+bst.insert(40)
+
+print(bst.search(40))  <span class="comment"># True</span>
+print(bst.search(100)) <span class="comment"># False</span>
+</div>
+            </div>
+            
+            <!-- TRAVERSALS -->
+            <div class="section" id="traversals">
+                <h2>🔄 Tree Traversals</h2>
+                <p>Traversal means visiting all nodes in a specific order. Critical for tree operations!</p>
+                
+                <div class="visual-tree">
+                    <h3>Sample Tree for Traversals</h3>
+                    <div class="tree-container">
+                        <div class="tree-level">
+                            <div class="tree-node">1</div>
+                        </div>
+                        <div class="tree-level">
+                            <div class="tree-node">2</div>
+                            <div class="tree-node">3</div>
+                        </div>
+                        <div class="tree-level">
+                            <div class="tree-node">4</div>
+                            <div class="tree-node">5</div>
+                            <div class="tree-node">6</div>
+                            <div class="tree-node">7</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3>1. Inorder Traversal (Left → Root → Right)</h3>
+                <div class="info-box">
+                    <strong>Order:</strong> 4, 2, 5, 1, 6, 3, 7<br>
+                    <strong>Use Case:</strong> Get sorted values from BST
+                </div>
+<div class="code-block"><span class="keyword">def</span> <span class="function">inorder</span>(node):
+    <span class="keyword">if</span> node:
+        inorder(node.left)          <span class="comment"># Visit left</span>
+        print(node.data, end=<span class="string">" "</span>)  <span class="comment"># Process root</span>
+        inorder(node.right)         <span class="comment"># Visit right</span>
+</div>
+                
+                <h3>2. Preorder Traversal (Root → Left → Right)</h3>
+                <div class="info-box">
+                    <strong>Order:</strong> 1, 2, 4, 5, 3, 6, 7<br>
+                    <strong>Use Case:</strong> Create copy of tree, prefix expressions
+                </div>
+<div class="code-block"><span class="keyword">def</span> <span class="function">preorder</span>(node):
+    <span class="keyword">if</span> node:
+        print(node.data, end=<span class="string">" "</span>)  <span class="comment"># Process root</span>
+        preorder(node.left)         <span class="comment"># Visit left</span>
+        preorder(node.right)        <span class="comment"># Visit right</span>
+</div>
+                
+                <h3>3. Postorder Traversal (Left → Right → Root)</h3>
+                <div class="info-box">
+                    <strong>Order:</strong> 4, 5, 2, 6, 7, 3, 1<br>
+                    <strong>Use Case:</strong> Delete tree, postfix expressions, calculate space
+                </div>
+<div class="code-block"><span class="keyword">def</span> <span class="function">postorder</span>(node):
+    <span class="keyword">if</span> node:
+        postorder(node.left)        <span class="comment"># Visit left</span>
+        postorder(node.right)       <span class="comment"># Visit right</span>
+        print(node.data, end=<span class="string">" "</span>)  <span class="comment"># Process root</span>
+</div>
+                
+                <h3>4. Level Order Traversal (BFS - Breadth First)</h3>
+                <div class="info-box">
+                    <strong>Order:</strong> 1, 2, 3, 4, 5, 6, 7<br>
+                    <strong>Use Case:</strong> Level-by-level processing, shortest path
+                </div>
+<div class="code-block"><span class="keyword">from</span> collections <span class="keyword">import</span> deque
+
+<span class="keyword">def</span> <span class="function">level_order</span>(root):
+    <span class="keyword">if not</span> root:
+        <span class="keyword">return</span>
+    
+    queue = deque([root])
+    
+    <span class="keyword">while</span> queue:
+        node = queue.popleft()
+        print(node.data, end=<span class="string">" "</span>)
+        
+        <span class="keyword">if</span> node.left:
+            queue.append(node.left)
+        <span class="keyword">if</span> node.right:
+            queue.append(node.right)
+</div>
+                
+                <div class="highlight-box">
+                    <h4>🎯 Quick Memory Aid:</h4>
+                    <ul>
+                        <li><strong>INorder:</strong> Left, Root, Right (IN the middle)</li>
+                        <li><strong>PREorder:</strong> Root, Left, Right (Root comes BEFORE)</li>
+                        <li><strong>POSTorder:</strong> Left, Right, Root (Root comes AFTER/POST)</li>
+                        <li><strong>Level Order:</strong> Level by level, left to right (BFS with queue)</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- COMMON OPERATIONS -->
+            <div class="section" id="operations">
+                <h2>⚙️ Common Tree Operations</h2>
+                
+                <h3>1. Insert in BST</h3>
+<div class="code-block"><span class="keyword">def</span> <span class="function">insert</span>(root, data):
+    <span class="keyword">if</span> root <span class="keyword">is None</span>:
+        <span class="keyword">return</span> TreeNode(data)
+    
+    <span class="keyword">if</span> data < root.data:
+        root.left = insert(root.left, data)
+    <span class="keyword">else</span>:
+        root.right = insert(root.right, data)
+    
+    <span class="keyword">return</span> root
+</div>
+                
+                <h3>2. Delete from BST</h3>
+<div class="code-block"><span class="keyword">def</span> <span class="function">delete</span>(root, data):
+    <span class="keyword">if</span> root <span class="keyword">is None</span>:
+        <span class="keyword">return</span> root
+    
+    <span class="comment"># Find the node to delete</span>
+    <span class="keyword">if</span> data < root.data:
+        root.left = delete(root.left, data)
+    <span class="keyword">elif</span> data > root.data:
+        root.right = delete(root.right, data)
+    <span class="keyword">else</span>:
+        <span class="comment"># Node found - 3 cases:</span>
+        
+        <span class="comment"># Case 1: Leaf node (no children)</span>
+        <span class="keyword">if</span> root.left <span class="keyword">is None and</span> root.right <span class="keyword">is None</span>:
+            <span class="keyword">return None</span>
+        
+        <span class="comment"># Case 2: One child</span>
+        <span class="keyword">if</span> root.left <span class="keyword">is None</span>:
+            <span class="keyword">return</span> root.right
+        <span class="keyword">if</span> root.right <span class="keyword">is None</span>:
+            <span class="keyword">return</span> root.left
+        
+        <span class="comment"># Case 3: Two children</span>
+        <span class="comment"># Find inorder successor (smallest in right subtree)</span>
+        min_node = find_min(root.right)
+        root.data = min_node.data
+        root.right = delete(root.right, min_node.data)
+    
+    <span class="keyword">return</span> root
+
+<span class="keyword">def</span> <span class="function">find_min</span>(node):
+    <span class="keyword">while</span> node.left:
+        node = node.left
+    <span class="keyword">return</span> node
+</div>
+                
+                <h3>3. Height of Tree</h3>
+<div class="code-block"><span class="keyword">def</span> <span class="function">height</span>(node):
+    <span class="keyword">if</span> node <span class="keyword">is None</span>:
+        <span class="keyword">return</span> -1  <span class="comment"># or 0, depending on definition</span>
+    
+    left_height = height(node.left)
+    right_height = height(node.right)
+    
+    <span class="keyword">return</span> 1 + max(left_height, right_height)
+</div>
+                
+                <h3>4. Count Nodes</h3>
+<div class="code-block"><span class="keyword">def</span> <span class="function">count_nodes</span>(node):
+    <span class="keyword">if</span> node <span class="keyword">is None</span>:
+        <span class="keyword">return</span> 0
+    <span class="keyword">return</span> 1 + count_nodes(node.left) + count_nodes(node.right)
+</div>
+                
+                <h3>5. Find Maximum Value</h3>
+<div class="code-block"><span class="keyword">def</span> <span class="function">find_max</span>(node):
+    <span class="comment"># For BST - rightmost node</span>
+    <span class="keyword">if</span> node <span class="keyword">is None</span>:
+        <span class="keyword">return None</span>
+    <span class="keyword">while</span> node.right:
+        node = node.right
+    <span class="keyword">return</span> node.data
+
+<span class="keyword">def</span> <span class="function">find_max_any_tree</span>(node):
+    <span class="comment"># For any binary tree - check all nodes</span>
+    <span class="keyword">if</span> node <span class="keyword">is None</span>:
+        <span class="keyword">return</span> float(<span class="string">'-inf'</span>)
+    
+    left_max = find_max_any_tree(node.left)
+    right_max = find_max_any_tree(node.right)
+    
+    <span class="keyword">return</span> max(node.data, left_max, right_max)
+</div>
+                
+                <h3>6. Check if Tree is BST</h3>
+<div class="code-block"><span class="keyword">def</span> <span class="function">is_bst</span>(node, min_val=float(<span class="string">'-inf'</span>), max_val=float(<span class="string">'inf'</span>)):
+    <span class="keyword">if</span> node <span class="keyword">is None</span>:
+        <span class="keyword">return True</span>
+    
+    <span class="comment"># Check if current node violates BST property</span>
+    <span class="keyword">if</span> node.data <= min_val <span class="keyword">or</span> node.data >= max_val:
+        <span class="keyword">return False</span>
+    
+    <span class="comment"># Check left and right subtrees with updated ranges</span>
+    <span class="keyword">return</span> (is_bst(node.left, min_val, node.data) <span class="keyword">and</span>
+            is_bst(node.right, node.data, max_val))
+</div>
+                
+                <h3>7. Lowest Common Ancestor (LCA)</h3>
+<div class="code-block"><span class="keyword">def</span> <span class="function">lca</span>(root, n1, n2):
+    <span class="comment">"""Find lowest common ancestor of two nodes"""</span>
+    <span class="keyword">if</span> root <span class="keyword">is None</span>:
+        <span class="keyword">return None</span>
+    
+    <span class="comment"># If both n1 and n2 are smaller, LCA is in left</span>
+    <span class="keyword">if</span> root.data > n1 <span class="keyword">and</span> root.data > n2:
+        <span class="keyword">return</span> lca(root.left, n1, n2)
+    
+    <span class="comment"># If both are greater, LCA is in right</span>
+    <span class="keyword">if</span> root.data < n1 <span class="keyword">and</span> root.data < n2:
+        <span class="keyword">return</span> lca(root.right, n1, n2)
+    
+    <span class="comment"># If one is smaller and one is greater, root is LCA</span>
+    <span class="keyword">return</span> root
+</div>
+                
+                <h3>8. Check if Trees are Identical</h3>
+<div class="code-block"><span class="keyword">def</span> <span class="function">are_identical</span>(root1, root2):
+    <span class="comment"># Both empty</span>
+    <span class="keyword">if</span> root1 <span class="keyword">is None and</span> root2 <span class="keyword">is None</span>:
+        <span class="keyword">return True</span>
+    
+    <span class="comment"># One empty, one not</span>
+    <span class="keyword">if</span> root1 <span class="keyword">is None or</span> root2 <span class="keyword">is None</span>:
+        <span class="keyword">return False</span>
+    
+    <span class="comment"># Check data and recursively check subtrees</span>
+    <span class="keyword">return</span> (root1.data == root2.data <span class="keyword">and</span>
+            are_identical(root1.left, root2.left) <span class="keyword">and</span>
+            are_identical(root1.right, root2.right))
+</div>
+                
+                <h3>9. Mirror/Invert a Tree</h3>
+<div class="code-block"><span class="keyword">def</span> <span class="function">mirror_tree</span>(node):
+    <span class="keyword">if</span> node <span class="keyword">is None</span>:
+        <span class="keyword">return None</span>
+    
+    <span class="comment"># Swap left and right children</span>
+    node.left, node.right = node.right, node.left
+    
+    <span class="comment"># Recursively mirror subtrees</span>
+    mirror_tree(node.left)
+    mirror_tree(node.right)
+    
+    <span class="keyword">return</span> node
+</div>
+                
+                <h3>10. Diameter of Tree</h3>
+<div class="code-block"><span class="keyword">def</span> <span class="function">diameter</span>(root):
+    <span class="comment">"""Longest path between any two nodes"""</span>
+    <span class="keyword">def</span> <span class="function">helper</span>(node):
+        <span class="keyword">if</span> node <span class="keyword">is None</span>:
+            <span class="keyword">return</span> 0, 0  <span class="comment"># height, diameter</span>
+        
+        left_height, left_diam = helper(node.left)
+        right_height, right_diam = helper(node.right)
+        
+        <span class="comment"># Diameter through current node</span>
+        curr_diam = left_height + right_height
+        
+        <span class="comment"># Max diameter so far</span>
+        max_diam = max(curr_diam, left_diam, right_diam)
+        
+        <span class="comment"># Height of current node</span>
+        height = 1 + max(left_height, right_height)
+        
+        <span class="keyword">return</span> height, max_diam
+    
+    _, diameter = helper(root)
+    <span class="keyword">return</span> diameter
+</div>
+            </div>
+            
+            <!-- TIME COMPLEXITY -->
+            <div class="section" id="complexity">
+                <h2>⏱️ Time & Space Complexity</h2>
+                
+                <h3>Binary Search Tree Operations</h3>
+                <table>
+                    <tr>
+                        <th>Operation</th>
+                        <th>Average Case</th>
+                        <th>Worst Case</th>
+                        <th>Notes</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Search</strong></td>
+                        <td>O(log n)</td>
+                        <td>O(n)</td>
+                        <td>Worst when tree is skewed</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Insert</strong></td>
+                        <td>O(log n)</td>
+                        <td>O(n)</td>
+                        <td>Same as search</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Delete</strong></td>
+                        <td>O(log n)</td>
+                        <td>O(n)</td>
+                        <td>Find + adjust pointers</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Find Min/Max</strong></td>
+                        <td>O(log n)</td>
+                        <td>O(n)</td>
+                        <td>Leftmost/rightmost node</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Inorder Traversal</strong></td>
+                        <td>O(n)</td>
+                        <td>O(n)</td>
+                        <td>Visit all nodes once</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Space (Recursion)</strong></td>
+                        <td>O(log n)</td>
+                        <td>O(n)</td>
+                        <td>Call stack depth = height</td>
+                    </tr>
+                </table>
+                
+                <div class="warning-box">
+                    <strong>⚠️ Important:</strong> A balanced BST guarantees O(log n) operations. An unbalanced/skewed BST degrades to O(n), essentially becoming a linked list. This is why self-balancing trees (AVL, Red-Black) exist!
+                </div>
+                
+                <h3>Traversal Complexities</h3>
+                <table>
+                    <tr>
+                        <th>Traversal Type</th>
+                        <th>Time</th>
+                        <th>Space</th>
+                        <th>Implementation</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Inorder</strong></td>
+                        <td>O(n)</td>
+                        <td>O(h)</td>
+                        <td>Recursive or stack</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Preorder</strong></td>
+                        <td>O(n)</td>
+                        <td>O(h)</td>
+                        <td>Recursive or stack</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Postorder</strong></td>
+                        <td>O(n)</td>
+                        <td>O(h)</td>
+                        <td>Recursive or stack</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Level Order</strong></td>
+                        <td>O(n)</td>
+                        <td>O(w)</td>
+                        <td>Queue (w = max width)</td>
+                    </tr>
+                </table>
+                <p><em>h = height of tree, w = maximum width (nodes at any level)</em></p>
+                
+                <h3>Tree Height Analysis</h3>
+                <div class="comparison-grid">
+                    <div class="card">
+                        <h3>Balanced Tree</h3>
+                        <p><strong>Height:</strong> O(log n)</p>
+                        <p><strong>Example:</strong> Complete binary tree with 1000 nodes has height ≈ 10</p>
+                        <p><strong>Operations:</strong> All O(log n)</p>
+                    </div>
+                    <div class="card">
+                        <h3>Skewed Tree</h3>
+                        <p><strong>Height:</strong> O(n)</p>
+                        <p><strong>Example:</strong> Inserting sorted data into BST creates linked list</p>
+                        <p><strong>Operations:</strong> All degrade to O(n)</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- PRACTICAL APPLICATIONS -->
+            <div class="section">
+                <h2>🎯 Real-World Applications</h2>
+                
+                <div class="comparison-grid">
+                    <div class="card">
+                        <h3>File Systems</h3>
+                        <p>Directory structure is a tree</p>
+                        <p>Folders → parents, Files → leaves</p>
+                    </div>
+                    <div class="card">
+                        <h3>DOM in HTML</h3>
+                        <p>HTML elements form a tree</p>
+                        <p>Document traversal, manipulation</p>
+                    </div>
+                    <div class="card">
+                        <h3>Databases</h3>
+                        <p>B-Trees for indexing</p>
+                        <p>Fast search, range queries</p>
+                    </div>
+                    <div class="card">
+                        <h3>Expression Parsing</h3>
+                        <p>Abstract Syntax Trees (AST)</p>
+                        <p>Compilers, calculators</p>
+                    </div>
+                    <div class="card">
+                        <h3>Decision Trees</h3>
+                        <p>Machine learning algorithms</p>
+                        <p>Classification, regression</p>
+                    </div>
+                    <div class="card">
+                        <h3>Routing Tables</h3>
+                        <p>IP routing with tries</p>
+                        <p>Fast prefix matching</p>
+                    </div>
+                    <div class="card">
+                        <h3>Auto-complete</h3>
+                        <p>Trie-based suggestions</p>
+                        <p>Search engines, keyboards</p>
+                    </div>
+                    <div class="card">
+                        <h3>Heap (Priority Queue)</h3>
+                        <p>Task scheduling</p>
+                        <p>Dijkstra's algorithm</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- COMMON PITFALLS -->
+            <div class="section">
+                <h2>⚠️ Common Pitfalls & Best Practices</h2>
+                
+                <div class="warning-box">
+                    <h4>❌ Common Mistakes:</h4>
+                    <ul>
+                        <li><strong>Not handling None/null:</strong> Always check if node is None before accessing properties</li>
+                        <li><strong>Forgetting base case:</strong> Recursion needs a stopping condition</li>
+                        <li><strong>Wrong BST insertion:</strong> Make sure to maintain left < root < right property</li>
+                        <li><strong>Memory leaks:</strong> In languages with manual memory management, remember to free nodes</li>
+                        <li><strong>Not balancing:</strong> Inserting sorted data creates skewed tree - use self-balancing trees</li>
+                    </ul>
+                </div>
+                
+                <div class="highlight-box">
+                    <h4>✅ Best Practices:</h4>
+                    <ul>
+                        <li><strong>Use helper functions:</strong> Keep public API simple, logic in private recursive functions</li>
+                        <li><strong>Validate BST property:</strong> When building BST, verify correctness with validation function</li>
+                        <li><strong>Consider iterative solutions:</strong> For space-critical apps, iterative with stack can save memory</li>
+                        <li><strong>Use appropriate traversal:</strong> Inorder for BST sorting, level-order for BFS, postorder for deletion</li>
+                        <li><strong>Document complexity:</strong> Always mention time/space complexity in comments</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- INTERVIEW TIPS -->
+            <div class="section">
+                <h2>📝 Interview Tips</h2>
+                
+                <div class="info-box">
+                    <h4>🎓 Common Interview Questions:</h4>
+                    <ol>
+                        <li>Implement BST insert, search, delete</li>
+                        <li>All three DFS traversals (inorder, preorder, postorder)</li>
+                        <li>Level order traversal (BFS)</li>
+                        <li>Height and diameter of tree</li>
+                        <li>Check if tree is balanced</li>
+                        <li>Validate if tree is BST</li>
+                        <li>Lowest common ancestor</li>
+                        <li>Mirror/invert a tree</li>
+                        <li>Serialize and deserialize tree</li>
+                        <li>Convert sorted array to BST</li>
+                    </ol>
+                </div>
+                
+                <div class="highlight-box">
+                    <h4>💡 Problem-Solving Approach:</h4>
+                    <ul>
+                        <li><strong>Clarify:</strong> Is it a BST or general binary tree? Can values be duplicated?</li>
+                        <li><strong>Draw it:</strong> Sketch the tree, visualize the problem</li>
+                        <li><strong>Think recursive:</strong> Most tree problems have recursive solutions</li>
+                        <li><strong>Base case first:</strong> What happens with null node or single node?</li>
+                        <li><strong>Test edge cases:</strong> Empty tree, single node, skewed tree, perfect tree</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- NEXT STEPS -->
+            <div class="section">
+                <h2>🚀 Next Steps in Your Learning Journey</h2>
+                
+                <div class="comparison-grid">
+                    <div class="card">
+                        <h3>1. Practice Basics</h3>
+                        <p>✦ Implement all traversals</p>
+                        <p>✦ Build a working BST class</p>
+                        <p>✦ Solve 10-15 easy tree problems</p>
+                    </div>
+                    <div class="card">
+                        <h3>2. Advanced Trees</h3>
+                        <p>✦ AVL Trees (self-balancing)</p>
+                        <p>✦ Red-Black Trees</p>
+                        <p>✦ B-Trees for databases</p>
+                    </div>
+                    <div class="card">
+                        <h3>3. Special Trees</h3>
+                        <p>✦ Heaps (Min/Max Heap)</p>
+                        <p>✦ Tries (Prefix Trees)</p>
+                        <p>✦ Segment Trees</p>
+                    </div>
+                    <div class="card">
+                        <h3>4. Move to Graphs</h3>
+                        <p>✦ Similar concepts</p>
+                        <p>✦ More complex relationships</p>
+                        <p>✦ DFS and BFS mastery</p>
+                    </div>
+                </div>
+                
+                <div class="highlight-box" style="margin-top: 30px;">
+                    <h4>📚 Recommended Practice Sites:</h4>
+                    <ul>
+                        <li><strong>LeetCode:</strong> Tree tag problems (Easy → Medium → Hard)</li>
+                        <li><strong>HackerRank:</strong> Tree challenges section</li>
+                        <li><strong>GeeksforGeeks:</strong> Comprehensive tree articles</li>
+                        <li><strong>Educative.io:</strong> Visual tree course</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- SUMMARY -->
+            <div class="section">
+                <h2>🎓 Key Takeaways</h2>
+                <div style="background: white; padding: 30px; border-radius: 12px;">
+                    <p style="font-size: 1.1em; line-height: 2;">
+                        ✦ <strong>Trees are hierarchical:</strong> One root, parent-child relationships, no cycles<br>
+                        ✦ <strong>Binary trees:</strong> At most 2 children per node - foundation of most tree structures<br>
+                        ✦ <strong>BST property:</strong> Left < Parent < Right - enables O(log n) operations<br>
+                        ✦ <strong>Master traversals:</strong> Inorder, Preorder, Postorder (DFS) + Level Order (BFS)<br>
+                        ✦ <strong>Think recursively:</strong> Trees naturally lend themselves to recursive solutions<br>
+                        ✦ <strong>Balance matters:</strong> Skewed trees degrade to O(n), balanced trees keep O(log n)<br>
+                        ✦ <strong>Everywhere in code:</strong> File systems, DOM, databases, compilers - trees are fundamental<br>
+                        ✦ <strong>Practice, practice:</strong> Understanding comes from solving problems, not just reading
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
