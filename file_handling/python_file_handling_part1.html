@@ -1,0 +1,2064 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Python File Handling — Complete Reference</title>
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 30px;
+    background: #fafafa;
+    color: #222;
+    line-height: 1.6;
+  }
+  h1, h2, h3 {
+    color: #00539C;
+  }
+  h1 {
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  .lead {
+    text-align: center;
+    color: #6b7280;
+    margin-bottom: 30px;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+  }
+  th, td {
+    border: 1px solid #ddd;
+    padding: 10px 15px;
+    text-align: left;
+  }
+  th {
+    background-color: #00539C;
+    color: white;
+  }
+  tr:nth-child(even) { background-color: #f9f9f9; }
+  details {
+    background: #fff;
+    padding: 10px 15px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  }
+  summary {
+    font-weight: bold;
+    cursor: pointer;
+    color: #00539C;
+    font-size: 18px;
+    padding: 5px 0;
+  }
+  code {
+    background: #eee;
+    padding: 2px 6px;
+    border-radius: 5px;
+    font-family: Consolas, monospace;
+    font-size: 13px;
+  }
+  pre {
+    background: #0b1220;
+    color: #9fffb0;
+    padding: 15px;
+    border-radius: 8px;
+    overflow-x: auto;
+    font-family: Consolas, monospace;
+    font-size: 13px;
+  }
+  .ascii {
+    font-family: monospace;
+    background: #f3f6fb;
+    padding: 15px;
+    border-radius: 8px;
+    color: #0b1220;
+    margin: 15px 0;
+  }
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .note {
+    background: #fff3cd;
+    border-left: 4px solid #ffc107;
+    padding: 12px;
+    margin: 15px 0;
+    border-radius: 5px;
+  }
+  .tip {
+    background: #d1ecf1;
+    border-left: 4px solid #17a2b8;
+    padding: 12px;
+    margin: 15px 0;
+    border-radius: 5px;
+  }
+  .warning {
+    background: #f8d7da;
+    border-left: 4px solid #dc3545;
+    padding: 12px;
+    margin: 15px 0;
+    border-radius: 5px;
+  }
+  a {
+    color: #00539C;
+    text-decoration: none;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>📁 Python File Handling — Complete Reference</h1>
+<p class="lead">Everything about files: reading, writing, modes, methods, context managers, paths, CSV, JSON, binary files, and best practices</p>
+
+<!-- 1️⃣ File Basics -->
+<details open>
+<summary>1️⃣ File Handling Basics</summary>
+<p><strong>Definition:</strong> File handling is the process of reading from and writing to files on disk using Python's built-in file operations.</p>
+
+<div class="ascii">
+File Operations Flow:
+
+┌─────────────┐
+│  Your Code  │
+└──────┬──────┘
+       │
+       ▼
+┌─────────────┐    open()     ┌──────────────┐
+│   Python    │ ────────────> │  File Object │
+│  Interpreter│               └──────┬───────┘
+└─────────────┘                      │
+       ▲                             │
+       │                             ▼
+       │                      ┌──────────────┐
+       └──────────────────────│  Disk File   │
+            close()           └──────────────┘
+</div>
+
+<table>
+<tr><th>Concept</th><th>Description</th><th>Example</th></tr>
+<tr><td>File Object</td><td>Interface to interact with file</td><td><code>f = open('file.txt')</code></td></tr>
+<tr><td>File Pointer</td><td>Current position in file</td><td>Moves as you read/write</td></tr>
+<tr><td>Buffer</td><td>Temporary memory for I/O</td><td>Automatic buffering</td></tr>
+<tr><td>File Modes</td><td>How to open file</td><td>r, w, a, rb, etc.</td></tr>
+<tr><td>Context Manager</td><td>Auto-close files</td><td><code>with open(...)</code></td></tr>
+</table>
+
+<pre>
+# Basic file operations
+# Open file
+f = open('data.txt', 'r')
+
+# Read content
+content = f.read()
+print(content)
+
+# Close file (IMPORTANT!)
+f.close()
+
+# Better way: Context manager (auto-closes)
+with open('data.txt', 'r') as f:
+    content = f.read()
+    print(content)
+# File automatically closed here
+</pre>
+
+<div class="tip">
+<strong>💡 Best Practice:</strong> Always use <code>with</code> statement (context manager) to ensure files are properly closed, even if errors occur.
+</div>
+</details>
+
+<!-- 2️⃣ File Modes -->
+<details>
+<summary>2️⃣ File Modes (Complete Reference)</summary>
+
+<table>
+<tr><th>Mode</th><th>Name</th><th>Description</th><th>Creates File?</th><th>File Must Exist?</th></tr>
+<tr><td><code>'r'</code></td><td>Read</td><td>Read only (default)</td><td>❌</td><td>✅ Yes</td></tr>
+<tr><td><code>'w'</code></td><td>Write</td><td>Write only, truncates file</td><td>✅</td><td>❌ No</td></tr>
+<tr><td><code>'a'</code></td><td>Append</td><td>Append to end</td><td>✅</td><td>❌ No</td></tr>
+<tr><td><code>'x'</code></td><td>Exclusive</td><td>Create new, fail if exists</td><td>✅</td><td>❌ Must not exist</td></tr>
+<tr><td><code>'r+'</code></td><td>Read+Write</td><td>Read and write</td><td>❌</td><td>✅ Yes</td></tr>
+<tr><td><code>'w+'</code></td><td>Write+Read</td><td>Write and read, truncates</td><td>✅</td><td>❌ No</td></tr>
+<tr><td><code>'a+'</code></td><td>Append+Read</td><td>Append and read</td><td>✅</td><td>❌ No</td></tr>
+<tr><td><code>'rb'</code></td><td>Read Binary</td><td>Read binary file</td><td>❌</td><td>✅ Yes</td></tr>
+<tr><td><code>'wb'</code></td><td>Write Binary</td><td>Write binary file</td><td>✅</td><td>❌ No</td></tr>
+<tr><td><code>'ab'</code></td><td>Append Binary</td><td>Append binary file</td><td>✅</td><td>❌ No</td></tr>
+<tr><td><code>'rt'</code></td><td>Read Text</td><td>Read text (explicit)</td><td>❌</td><td>✅ Yes</td></tr>
+<tr><td><code>'wt'</code></td><td>Write Text</td><td>Write text (explicit)</td><td>✅</td><td>❌ No</td></tr>
+</table>
+
+<div class="ascii">
+Mode Behavior Visual:
+
+'r'  →  Read existing file          [====READ====]
+'w'  →  Erase & write new           [====WRITE===] (Truncates!)
+'a'  →  Append to end               [EXISTING][APPEND]
+'x'  →  Create new (error if exists) [====NEW====]
+'r+' →  Read & modify               [==READ/WRITE==]
+</div>
+
+<pre>
+# Mode examples
+
+# 'r' - Read only
+with open('data.txt', 'r') as f:
+    content = f.read()
+
+# 'w' - Write (overwrites entire file!)
+with open('output.txt', 'w') as f:
+    f.write('New content')
+
+# 'a' - Append (adds to end)
+with open('log.txt', 'a') as f:
+    f.write('New log entry\n')
+
+# 'x' - Exclusive create
+try:
+    with open('unique.txt', 'x') as f:
+        f.write('First time only')
+except FileExistsError:
+    print("File already exists!")
+
+# 'r+' - Read and write
+with open('data.txt', 'r+') as f:
+    content = f.read()
+    f.write('\nAppended text')
+
+# Binary mode
+with open('image.png', 'rb') as f:
+    binary_data = f.read()
+</pre>
+
+<div class="warning">
+<strong>⚠️ Warning:</strong> Mode <code>'w'</code> will <strong>erase entire file</strong> content! Use <code>'a'</code> to preserve existing data.
+</div>
+</details>
+
+<!-- 3️⃣ Reading Files -->
+<details>
+<summary>3️⃣ Reading Files — All Methods</summary>
+
+<table>
+<tr><th>Method</th><th>Description</th><th>Returns</th><th>Use Case</th><th>Memory</th></tr>
+<tr><td><code>read()</code></td><td>Read entire file</td><td>String</td><td>Small files</td><td>Loads all in RAM</td></tr>
+<tr><td><code>read(n)</code></td><td>Read n characters</td><td>String</td><td>Chunks</td><td>Limited</td></tr>
+<tr><td><code>readline()</code></td><td>Read one line</td><td>String</td><td>Line by line</td><td>One line</td></tr>
+<tr><td><code>readlines()</code></td><td>Read all lines</td><td>List</td><td>Process all lines</td><td>Loads all</td></tr>
+<tr><td>Iteration</td><td>Loop through lines</td><td>String per line</td><td>Large files</td><td>Memory efficient</td></tr>
+</table>
+
+<pre>
+# Method 1: read() - Entire file
+with open('data.txt', 'r') as f:
+    content = f.read()
+    print(content)
+
+# Method 2: read(n) - n characters
+with open('data.txt', 'r') as f:
+    chunk1 = f.read(10)  # First 10 chars
+    chunk2 = f.read(10)  # Next 10 chars
+
+# Method 3: readline() - One line at a time
+with open('data.txt', 'r') as f:
+    line1 = f.readline()
+    line2 = f.readline()
+
+# Method 4: readlines() - All lines as list
+with open('data.txt', 'r') as f:
+    lines = f.readlines()  # ['line1\n', 'line2\n', ...]
+    for line in lines:
+        print(line.strip())
+
+# Method 5: Iteration (BEST for large files)
+with open('data.txt', 'r') as f:
+    for line in f:
+        print(line.strip())
+
+# Method 6: Read specific number of lines
+with open('data.txt', 'r') as f:
+    first_five = [next(f) for _ in range(5)]
+</pre>
+
+<div class="ascii">
+File Pointer Movement:
+
+File: "Hello\nWorld\n"
+      ↑
+      Pointer starts at 0
+
+read(5) → "Hello"
+              ↑
+              Pointer at 5
+
+readline() → "\n"
+               ↑
+               Pointer at 6
+</div>
+
+<pre>
+# Reading with encoding
+with open('data.txt', 'r', encoding='utf-8') as f:
+    content = f.read()
+
+# Reading binary files
+with open('image.png', 'rb') as f:
+    binary_data = f.read()
+    print(type(binary_data))  # &lt;class 'bytes'&gt;
+
+# Safe reading with error handling
+try:
+    with open('file.txt', 'r') as f:
+        content = f.read()
+except FileNotFoundError:
+    print("File not found!")
+except PermissionError:
+    print("Permission denied!")
+except Exception as e:
+    print(f"Error: {e}")
+</pre>
+</details>
+
+<!-- 4️⃣ Writing Files -->
+<details>
+<summary>4️⃣ Writing Files — All Methods</summary>
+
+<table>
+<tr><th>Method</th><th>Description</th><th>Example</th><th>Adds Newline?</th></tr>
+<tr><td><code>write()</code></td><td>Write string</td><td><code>f.write('text')</code></td><td>❌ No</td></tr>
+<tr><td><code>writelines()</code></td><td>Write list of strings</td><td><code>f.writelines(lines)</code></td><td>❌ No</td></tr>
+<tr><td><code>print()</code></td><td>Print to file</td><td><code>print('text', file=f)</code></td><td>✅ Yes</td></tr>
+</table>
+
+<pre>
+# Method 1: write() - Write string
+with open('output.txt', 'w') as f:
+    f.write('Hello World\n')
+    f.write('Second line\n')
+
+# Method 2: writelines() - Write list
+lines = ['Line 1\n', 'Line 2\n', 'Line 3\n']
+with open('output.txt', 'w') as f:
+    f.writelines(lines)
+
+# Method 3: print() to file
+with open('output.txt', 'w') as f:
+    print('Hello World', file=f)
+    print('Second line', file=f)
+
+# Append mode
+with open('log.txt', 'a') as f:
+    f.write('New log entry\n')
+
+# Write multiple data types
+with open('data.txt', 'w') as f:
+    f.write(str(123) + '\n')
+    f.write(str(45.67) + '\n')
+    f.write(str([1,2,3]) + '\n')
+
+# Writing binary data
+data = b'\x00\x01\x02\x03'
+with open('binary.bin', 'wb') as f:
+    f.write(data)
+
+# Efficient writing with join
+lines = ['Line 1', 'Line 2', 'Line 3']
+with open('output.txt', 'w') as f:
+    f.write('\n'.join(lines))
+</pre>
+
+<div class="note">
+<strong>⚠️ Important:</strong> <code>write()</code> and <code>writelines()</code> do NOT add newlines automatically. You must add <code>\n</code> manually!
+</div>
+
+<pre>
+# Write and read in same program
+# Write
+with open('temp.txt', 'w') as f:
+    f.write('Some data\n')
+
+# Read
+with open('temp.txt', 'r') as f:
+    print(f.read())
+
+# Write with buffering control
+with open('output.txt', 'w', buffering=1) as f:
+    f.write('Line buffered\n')
+</pre>
+</details>
+
+<!-- 5️⃣ File Object Methods -->
+<details>
+<summary>5️⃣ File Object Methods & Attributes</summary>
+
+<table>
+<tr><th>Method/Attribute</th><th>Description</th><th>Example</th><th>Returns</th></tr>
+<tr><td><code>read()</code></td><td>Read entire file</td><td><code>f.read()</code></td><td>String</td></tr>
+<tr><td><code>readline()</code></td><td>Read one line</td><td><code>f.readline()</code></td><td>String</td></tr>
+<tr><td><code>readlines()</code></td><td>Read all lines</td><td><code>f.readlines()</code></td><td>List</td></tr>
+<tr><td><code>write()</code></td><td>Write string</td><td><code>f.write(s)</code></td><td>Characters written</td></tr>
+<tr><td><code>writelines()</code></td><td>Write list</td><td><code>f.writelines(list)</code></td><td>None</td></tr>
+<tr><td><code>seek()</code></td><td>Move file pointer</td><td><code>f.seek(0)</code></td><td>New position</td></tr>
+<tr><td><code>tell()</code></td><td>Current position</td><td><code>f.tell()</code></td><td>Integer</td></tr>
+<tr><td><code>close()</code></td><td>Close file</td><td><code>f.close()</code></td><td>None</td></tr>
+<tr><td><code>flush()</code></td><td>Flush buffer</td><td><code>f.flush()</code></td><td>None</td></tr>
+<tr><td><code>truncate()</code></td><td>Resize file</td><td><code>f.truncate(size)</code></td><td>New size</td></tr>
+<tr><td><code>closed</code></td><td>Check if closed</td><td><code>f.closed</code></td><td>Boolean</td></tr>
+<tr><td><code>name</code></td><td>File name</td><td><code>f.name</code></td><td>String</td></tr>
+<tr><td><code>mode</code></td><td>File mode</td><td><code>f.mode</code></td><td>String</td></tr>
+<tr><td><code>readable()</code></td><td>Is readable?</td><td><code>f.readable()</code></td><td>Boolean</td></tr>
+<tr><td><code>writable()</code></td><td>Is writable?</td><td><code>f.writable()</code></td><td>Boolean</td></tr>
+<tr><td><code>seekable()</code></td><td>Is seekable?</td><td><code>f.seekable()</code></td><td>Boolean</td></tr>
+</table>
+
+<pre>
+# seek() and tell() - Navigate file
+with open('data.txt', 'r') as f:
+    print(f.tell())        # 0 (start)
+    
+    data = f.read(5)       # Read 5 chars
+    print(f.tell())        # 5
+    
+    f.seek(0)              # Go back to start
+    print(f.tell())        # 0
+    
+    f.seek(10)             # Jump to position 10
+    data = f.read()
+
+# File attributes
+with open('data.txt', 'r') as f:
+    print(f.name)          # 'data.txt'
+    print(f.mode)          # 'r'
+    print(f.closed)        # False
+    print(f.readable())    # True
+    print(f.writable())    # False
+
+print(f.closed)            # True (after with block)
+
+# truncate() - Resize file
+with open('data.txt', 'r+') as f:
+    f.truncate(10)         # Keep only first 10 bytes
+
+# flush() - Force write to disk
+with open('log.txt', 'a') as f:
+    f.write('Important log\n')
+    f.flush()              # Ensure written immediately
+</pre>
+
+<div class="ascii">
+seek() positions:
+
+seek(offset, whence)
+whence = 0 (default): from start
+whence = 1: from current position
+whence = 2: from end
+
+File: "Hello World"
+       01234567891011
+
+seek(0, 0)  → Position 0 (start)
+seek(6, 0)  → Position 6 ('W')
+seek(-5, 2) → 5 chars from end
+</div>
+</details>
+
+<!-- 6️⃣ File Position & Navigation -->
+<details>
+<summary>6️⃣ File Position & Navigation (seek, tell)</summary>
+
+<table>
+<tr><th>Method</th><th>Syntax</th><th>Description</th><th>Example</th></tr>
+<tr><td>tell()</td><td><code>f.tell()</code></td><td>Get current position</td><td>Returns integer</td></tr>
+<tr><td>seek()</td><td><code>f.seek(offset, whence)</code></td><td>Move to position</td><td>whence: 0=start, 1=current, 2=end</td></tr>
+</table>
+
+<pre>
+# Basic seek and tell
+with open('data.txt', 'r') as f:
+    print(f.tell())         # 0
+    
+    f.read(5)
+    print(f.tell())         # 5
+    
+    f.seek(0)               # Back to start
+    f.seek(10)              # Jump to position 10
+    f.seek(0, 2)            # Jump to end
+
+# Reading specific sections
+with open('data.txt', 'r') as f:
+    # Read first 100 characters
+    f.seek(0)
+    chunk1 = f.read(100)
+    
+    # Read next 100 characters
+    chunk2 = f.read(100)
+    
+    # Go back and re-read first 50
+    f.seek(0)
+    chunk3 = f.read(50)
+
+# Binary file navigation
+with open('file.bin', 'rb') as f:
+    f.seek(0, 2)            # Go to end
+    size = f.tell()         # Get file size
+    print(f"File size: {size} bytes")
+    
+    f.seek(0)               # Back to start
+    header = f.read(10)     # Read first 10 bytes
+
+# Reading file in reverse
+with open('data.txt', 'rb') as f:
+    f.seek(0, 2)            # Go to end
+    position = f.tell()
+    
+    while position >= 0:
+        f.seek(position)
+        print(f.read(1))
+        position -= 1
+</pre>
+
+<div class="tip">
+<strong>💡 Pro Tip:</strong> Use <code>seek(0, 2)</code> then <code>tell()</code> to get file size without loading entire file!
+</div>
+</details>
+
+<!-- 7️⃣ Context Managers -->
+<details>
+<summary>7️⃣ Context Managers (with statement)</summary>
+
+<p><strong>Why use context managers?</strong> Automatically close files even if errors occur. Prevents resource leaks.</p>
+
+<pre>
+# ❌ Without context manager (manual close)
+f = open('data.txt', 'r')
+try:
+    content = f.read()
+finally:
+    f.close()              # Must remember to close!
+
+# ✅ With context manager (auto-close)
+with open('data.txt', 'r') as f:
+    content = f.read()
+# File automatically closed here
+
+# Multiple files
+with open('input.txt', 'r') as infile, open('output.txt', 'w') as outfile:
+    for line in infile:
+        outfile.write(line.upper())
+
+# Nested context managers
+with open('file1.txt', 'r') as f1:
+    with open('file2.txt', 'w') as f2:
+        f2.write(f1.read())
+
+# Custom context manager
+class FileHandler:
+    def __init__(self, filename, mode):
+        self.filename = filename
+        self.mode = mode
+        self.file = None
+    
+    def __enter__(self):
+        self.file = open(self.filename, self.mode)
+        return self.file
+    
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        if self.file:
+            self.file.close()
+
+with FileHandler('data.txt', 'r') as f:
+    print(f.read())
+</pre>
+
+<div class="tip">
+<strong>💡 Best Practice:</strong> Always use <code>with</code> statement for file operations. It guarantees proper cleanup.
+</div>
+</details>
+
+<!-- 8️⃣ File Path Operations -->
+<details>
+<summary>8️⃣ File Path Operations (os & pathlib)</summary>
+
+<table>
+<tr><th>Module</th><th>Method</th><th>Description</th><th>Example</th></tr>
+<tr><td rowspan="8">os</td><td><code>os.path.exists()</code></td><td>Check if exists</td><td><code>os.path.exists('file.txt')</code></td></tr>
+<tr><td><code>os.path.isfile()</code></td><td>Is file?</td><td><code>os.path.isfile('file.txt')</code></td></tr>
+<tr><td><code>os.path.isdir()</code></td><td>Is directory?</td><td><code>os.path.isdir('folder')</code></td></tr>
+<tr><td><code>os.path.getsize()</code></td><td>File size</td><td><code>os.path.getsize('file.txt')</code></td></tr>
+<tr><td><code>os.path.abspath()</code></td><td>Absolute path</td><td><code>os.path.abspath('file.txt')</code></td></tr>
+<tr><td><code>os.path.dirname()</code></td><td>Directory name</td><td><code>os.path.dirname('/a/b/c.txt')</code></td></tr>
+<tr><td><code>os.path.basename()</code></td><td>File name</td><td><code>os.path.basename('/a/b/c.txt')</code></td></tr>
+<tr><td><code>os.path.join()</code></td><td>Join paths</td><td><code>os.path.join('dir', 'file.txt')</code></td></tr>
+<tr><td rowspan="6">pathlib</td><td><code>Path.exists()</code></td><td>Check if exists</td><td><code>Path('file.txt').exists()</code></td></tr>
+<tr><td><code>Path.is_file()</code></td><td>Is file?</td><td><code>Path('file.txt').is_file()</code></td></tr>
+<tr><td><code>Path.is_dir()</code></td><td>Is directory?</td><td><code>Path('folder').is_dir()</code></td></tr>
+<tr><td><code>Path.stat().st_size</code></td><td>File size</td><td><code>Path('file.txt').stat().st_size</code></td></tr>
+<tr><td><code>Path.absolute()</code></td><td>Absolute path</td><td><code>Path('file.txt').absolute()</code></td></tr>
+<tr><td><code>Path / 'name'</code></td><td>Join paths</td><td><code>Path('dir') / 'file.txt'</code></td></tr>
+</table>
+
+<pre>
+import os
+from pathlib import Path
+
+# Using os module
+print(os.path.exists('data.txt'))        # True/False
+print(os.path.isfile('data.txt'))        # True/False
+print(os.path.isdir('folder'))           # True/False
+print(os.path.getsize('data.txt'))       # Size in bytes
+print(os.path.abspath('data.txt'))       # Full path
+
+path = '/home/user/data.txt'
+print(os.path.dirname(path))             # '/home/user'
+print(os.path.basename(path))            # 'data.txt'
+print(os.path.split(path))               # ('/home/user', 'data.txt')
+
+# Join paths (cross-platform)
+filepath = os.path.join('folder', 'subfolder', 'file.txt')
+
+# Using pathlib (RECOMMENDED - Modern Python)
+p = Path('data.txt')
+print(p.exists())                        # True/False
+print(p.is_file())                       # True/False
+print(p.stat().st_size)                  # Size in bytes
+print(p.absolute())                      # Full path
+print(p.name)                            # 'data.txt'
+print(p.stem)                            # 'data' (without extension)
+print(p.suffix)                          # '.txt'
+print(p.parent)                          # Parent directory
+
+# Path operations with pathlib
+p = Path('folder') / 'subfolder' / 'file.txt'
+print(p)
+
+# Read/write with pathlib
+Path('output.txt').write_text('Hello World')
+content = Path('data.txt').read_text()
+
+# List directory contents
+for item in Path('.').iterdir():
+    print(item)
+
+# Glob patterns
+for txt_file in Path('.').glob('*.txt'):
+    print(txt_file)
+</pre>
+
+<div class="tip">
+<strong>💡 Recommendation:</strong> Use <code>pathlib.Path</code> for modern, object-oriented path handling. It's more readable and cross-platform.
+</div>
+</details>
+
+<!-- 9️⃣ File Management Operations -->
+<details>
+<summary>9️⃣ File Management (Create, Delete, Rename, Copy)</summary>
+
+<table>
+<tr><th>Operation</th><th>Method</th><th>Example</th><th>Module</th></tr>
+<tr><td>Create file</td><td><code>open()</code></td><td><code>open('new.txt', 'w').close()</code></td><td>Built-in</td></tr>
+<tr><td>Delete file</td><td><code>os.remove()</code></td><td><code>os.remove('file.txt')</code></td><td>os</td></tr>
+<tr><td>Rename file</td><td><code>os.rename()</code></td><td><code>os.rename('old.txt', 'new.txt')</code></td><td>os</td></tr>
+<tr><td>Copy file</td><td><code>shutil.copy()</code></td><td><code>shutil.copy('src.txt', 'dst.txt')</code></td><td>shutil</td></tr>
+<tr><td>Move file</td><td><code>shutil.move()</code></td><td><code>shutil.move('file.txt', 'folder/')</code></td><td>shutil</td></tr>
+<tr><td>Check exists</td><td><code>os.path.exists()</code></td><td><code>os.path.exists('file.txt')</code></td><td>os</td></tr>
+</table>
+
+<pre>
+import os
+import shutil
+from pathlib import Path
+
+# Create empty file
+open('new_file.txt', 'w').close()
+# Or with pathlib
+Path('new_file.txt').touch()
+
+# Delete file
+if os.path.exists('file.txt'):
+    os.remove('file.txt')
+else:
+    print("File doesn't exist")
+
+# Delete with pathlib
+Path('file.txt').unlink(missing_ok=True)  # No error if missing
+
+# Rename file
+os.rename('old_name.txt', 'new_name.txt')
+# Or with pathlib
+Path('old_name.txt').rename('new_name.txt')
+
+# Copy file
+shutil.copy('source.txt', 'destination.txt')
+shutil.copy2('source.txt', 'dest.txt')  # Preserves metadata
+
+# Copy with pathlib
+shutil.copy(Path('source.txt'), Path('dest.txt'))
+
+# Move file
+shutil.move('file.txt', 'new_folder/')
+shutil.move('file.txt', 'new_folder/new_name.txt')
+
+# Copy entire directory
+shutil.copytree('source_dir', 'dest_dir')
+
+# Remove directory
+shutil.rmtree('directory')  # Removes entire tree
+
+# Safe file deletion
+try:
+    os.remove('file.txt')
+except FileNotFoundError:
+    print("File not found")
+except PermissionError:
+    print("Permission denied")
+</pre>
+</details>
+
+<!-- 🔟 Directory Operations -->
+<details>
+<summary>🔟 Directory Operations</summary>
+
+<table>
+<tr><th>Operation</th><th>Method</th><th>Example</th></tr>
+<tr><td>Create directory</td><td><code>os.mkdir()</code></td><td><code>os.mkdir('folder')</code></td></tr>
+<tr><td>Create nested dirs</td><td><code>os.makedirs()</code></td><td><code>os.makedirs('a/b/c')</code></td></tr>
+<tr><td>Remove directory</td><td><code>os.rmdir()</code></td><td><code>os.rmdir('folder')</code></td></tr>
+<tr><td>Remove tree</td><td><code>shutil.rmtree()</code></td><td><code>shutil.rmtree('folder')</code></td></tr>
+<tr><td>List directory</td><td><code>os.listdir()</code></td><td><code>os.listdir('.')</code></td></tr>
+<tr><td>Change directory</td><td><code>os.chdir()</code></td><td><code>os.chdir('/path')</code></td></tr>
+<tr><td>Get current dir</td><td><code>os.getcwd()</code></td><td><code>os.getcwd()</code></td></tr>
+<tr><td>Walk directory</td><td><code>os.walk()</code></td><td><code>os.walk('.')</code></td></tr>
+</table>
+
+<pre>
+import os
+import shutil
+from pathlib import Path
+
+# Create single directory
+os.mkdir('new_folder')
+Path('new_folder').mkdir()
+
+# Create nested directories
+os.makedirs('parent/child/grandchild', exist_ok=True)
+Path('parent/child/grandchild').mkdir(parents=True, exist_ok=True)
+
+# Remove empty directory
+os.rmdir('empty_folder')
+Path('empty_folder').rmdir()
+
+# Remove directory with contents
+shutil.rmtree('folder_with_files')
+
+# List directory contents
+files = os.listdir('.')
+for file in files:
+    print(file)
+
+# List with pathlib
+for item in Path('.').iterdir():
+    if item.is_file():
+        print(f"File: {item}")
+    elif item.is_dir():
+        print(f"Dir: {item}")
+
+# Get current directory
+current = os.getcwd()
+print(f"Current directory: {current}")
+
+# Change directory
+os.chdir('/tmp')
+os.chdir('..')  # Go up one level
+
+# Walk directory tree
+for root, dirs, files in os.walk('.'):
+    print(f"Directory: {root}")
+    for file in files:
+        filepath = os.path.join(root, file)
+        print(f"  File: {filepath}")
+
+# Find all .txt files recursively
+txt_files = list(Path('.').rglob('*.txt'))
+for file in txt_files:
+    print(file)
+
+# Get all Python files
+py_files = [f for f in Path('.').glob('**/*.py')]
+</pre>
+</details>
+
+<!-- 1️⃣1️⃣ CSV Files -->
+<details>
+<summary>1️⃣1️⃣ Working with CSV Files</summary>
+
+<pre>
+import csv
+
+# ===== WRITING CSV =====
+
+# Method 1: Using csv.writer
+data = [
+    ['Name', 'Age', 'City'],
+    ['Alice', 25, 'NYC'],
+    ['Bob', 30, 'LA'],
+    ['Charlie', 35, 'Chicago']
+]
+
+with open('data.csv', 'w', newline='') as f:
+    writer = csv.writer(f)
+    writer.writerow(['Name', 'Age', 'City'])  # Single row
+    writer.writerows(data[1:])                # Multiple rows
+
+# Method 2: Using csv.DictWriter
+data_dict = [
+    {'Name': 'Alice', 'Age': 25, 'City': 'NYC'},
+    {'Name': 'Bob', 'Age': 30, 'City': 'LA'},
+]
+
+with open('data.csv', 'w', newline='') as f:
+    fieldnames = ['Name', 'Age', 'City']
+    writer = csv.DictWriter(f, fieldnames=fieldnames)
+    writer.writeheader()
+    writer.writerows(data_dict)
+
+# ===== READING CSV =====
+
+# Method 1: Using csv.reader
+with open('data.csv', 'r') as f:
+    reader = csv.reader(f)
+    header = next(reader)  # Skip header
+    for row in reader:
+        print(row)  # ['Alice', '25', 'NYC']
+
+# Method 2: Using csv.DictReader
+with open('data.csv', 'r') as f:
+    reader = csv.DictReader(f)
+    for row in reader:
+        print(row)  # {'Name': 'Alice', 'Age': '25', 'City': 'NYC'}
+        print(row['Name'], row['Age'])
+
+# Custom delimiter
+with open('data.tsv', 'w', newline='') as f:
+    writer = csv.writer(f, delimiter='\t')
+    writer.writerow(['Name', 'Age'])
+
+# Handling quotes
+with open('data.csv', 'w', newline='') as f:
+    writer = csv.writer(f, quoting=csv.QUOTE_ALL)
+    writer.writerow(['Name', 'City'])
+
+# Read CSV into list of dictionaries
+def read_csv_to_dict(filename):
+    with open(filename, 'r') as f:
+        return list(csv.DictReader(f))
+
+data = read_csv_to_dict('data.csv')
+print(data)
+</pre>
+
+<div class="tip">
+<strong>💡 Pro Tip:</strong> Always use <code>newline=''</code> when opening CSV files in write mode to avoid extra blank lines on Windows.
+</div>
+</details>
+
+<!-- 1️⃣2️⃣ JSON Files -->
+<details>
+<summary>1️⃣2️⃣ Working with JSON Files</summary>
+
+<pre>
+import json
+
+# ===== WRITING JSON =====
+
+data = {
+    'name': 'Alice',
+    'age': 25,
+    'city': 'NYC',
+    'hobbies': ['reading', 'coding', 'gaming'],
+    'address': {
+        'street': '123 Main St',
+        'zip': '10001'
+    }
+}
+
+# Method 1: Write to file
+with open('data.json', 'w') as f:
+    json.dump(data, f)
+
+# Method 2: Write with formatting (pretty print)
+with open('data.json', 'w') as f:
+    json.dump(data, f, indent=4, sort_keys=True)
+
+# Method 3: Convert to JSON string
+json_string = json.dumps(data, indent=2)
+print(json_string)
+
+# ===== READING JSON =====
+
+# Method 1: Read from file
+with open('data.json', 'r') as f:
+    data = json.load(f)
+    print(data['name'])  # Alice
+
+# Method 2: Parse JSON string
+json_string = '{"name": "Bob", "age": 30}'
+data = json.loads(json_string)
+print(data)
+
+# ===== WORKING WITH LISTS =====
+
+users = [
+    {'name': 'Alice', 'age': 25},
+    {'name': 'Bob', 'age': 30},
+    {'name': 'Charlie', 'age': 35}
+]
+
+# Write list to JSON
+with open('users.json', 'w') as f:
+    json.dump(users, f, indent=2)
+
+# Read list from JSON
+with open('users.json', 'r') as f:
+    users = json.load(f)
+    for user in users:
+        print(user['name'])
+
+# ===== ERROR HANDLING =====
+
+try:
+    with open('data.json', 'r') as f:
+        data = json.load(f)
+except json.JSONDecodeError as e:
+    print(f"Invalid JSON: {e}")
+except FileNotFoundError:
+    print("File not found")
+
+# ===== CUSTOM ENCODING =====
+
+from datetime import datetime
+
+class DateTimeEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, datetime):
+            return obj.isoformat()
+        return super().default(obj)
+
+data = {'timestamp': datetime.now()}
+json_str = json.dumps(data, cls=DateTimeEncoder)
+</pre>
+
+<div class="tip">
+<strong>💡 JSON vs CSV:</strong> Use JSON for complex nested data structures. Use CSV for tabular data.
+</div>
+</details>
+
+<!-- 1️⃣3️⃣ Binary Files -->
+<details>
+<summary>1️⃣3️⃣ Working with Binary Files</summary>
+
+<pre>
+# ===== READING BINARY FILES =====
+
+# Read entire binary file
+with open('image.png', 'rb') as f:
+    data = f.read()
+    print(type(data))  # &lt;class 'bytes'&gt;
+    print(len(data))   # Size in bytes
+
+# Read binary in chunks
+with open('large_file.bin', 'rb') as f:
+    while chunk := f.read(1024):  # Read 1KB at a time
+        process(chunk)
+
+# ===== WRITING BINARY FILES =====
+
+# Write bytes
+data = b'\x00\x01\x02\x03\x04'
+with open('output.bin', 'wb') as f:
+    f.write(data)
+
+# Copy binary file
+with open('source.png', 'rb') as src:
+    with open('dest.png', 'wb') as dst:
+        dst.write(src.read())
+
+# Copy in chunks (memory efficient)
+with open('large_video.mp4', 'rb') as src:
+    with open('copy.mp4', 'wb') as dst:
+        while chunk := src.read(8192):  # 8KB chunks
+            dst.write(chunk)
+
+# ===== WORKING WITH BYTES =====
+
+# Convert string to bytes
+text = "Hello"
+bytes_data = text.encode('utf-8')
+print(bytes_data)  # b'Hello'
+
+# Convert bytes to string
+text = bytes_data.decode('utf-8')
+print(text)  # Hello
+
+# Byte array (mutable)
+ba = bytearray(b'Hello')
+ba[0] = ord('J')
+print(ba)  # bytearray(b'Jello')
+
+# ===== STRUCT MODULE (Binary Data) =====
+
+import struct
+
+# Pack data into binary format
+data = struct.pack('i', 42)          # Integer
+data = struct.pack('f', 3.14)        # Float
+data = struct.pack('if', 42, 3.14)   # Int + Float
+
+# Unpack binary data
+values = struct.unpack('if', data)
+print(values)  # (42, 3.14)
+
+# Write structured binary data
+with open('data.bin', 'wb') as f:
+    f.write(struct.pack('iii', 10, 20, 30))
+
+# Read structured binary data
+with open('data.bin', 'rb') as f:
+    data = f.read()
+    values = struct.unpack('iii', data)
+    print(values)  # (10, 20, 30)
+
+# ===== PICKLE MODULE (Python Objects) =====
+
+import pickle
+
+# Serialize Python object
+data = {'name': 'Alice', 'scores': [90, 85, 92]}
+with open('data.pkl', 'wb') as f:
+    pickle.dump(data, f)
+
+# Deserialize Python object
+with open('data.pkl', 'rb') as f:
+    data = pickle.load(f)
+    print(data)
+
+# Multiple objects
+with open('data.pkl', 'wb') as f:
+    pickle.dump(obj1, f)
+    pickle.dump(obj2, f)
+
+with open('data.pkl', 'rb') as f:
+    obj1 = pickle.load(f)
+    obj2 = pickle.load(f)
+</pre>
+
+<div class="warning">
+<strong>⚠️ Security Warning:</strong> Never unpickle data from untrusted sources. Pickle can execute arbitrary code!
+</div>
+</details>
+
+<!-- 1️⃣4️⃣ File Compression -->
+<details>
+<summary>1️⃣4️⃣ File Compression (ZIP, GZIP)</summary>
+
+<pre>
+import zipfile
+import gzip
+import shutil
+
+# ===== ZIP FILES =====
+
+# Create ZIP archive
+with zipfile.ZipFile('archive.zip', 'w') as zipf:
+    zipf.write('file1.txt')
+    zipf.write('file2.txt')
+    zipf.write('folder/file3.txt', 'file3.txt')  # Custom name
+
+# Add all files from directory
+with zipfile.ZipFile('backup.zip', 'w') as zipf:
+    for file in Path('.').rglob('*.txt'):
+        zipf.write(file)
+
+# Extract ZIP archive
+with zipfile.ZipFile('archive.zip', 'r') as zipf:
+    zipf.extractall('extracted_folder')
+
+# Extract specific file
+with zipfile.ZipFile('archive.zip', 'r') as zipf:
+    zipf.extract('file1.txt', 'output_folder')
+
+# List ZIP contents
+with zipfile.ZipFile('archive.zip', 'r') as zipf:
+    print(zipf.namelist())
+    for info in zipf.infolist():
+        print(f"{info.filename}: {info.file_size} bytes")
+
+# Read file from ZIP without extracting
+with zipfile.ZipFile('archive.zip', 'r') as zipf:
+    with zipf.open('file1.txt') as f:
+        content = f.read().decode('utf-8')
+        print(content)
+
+# ===== GZIP FILES =====
+
+# Compress file with gzip
+with open('large_file.txt', 'rb') as f_in:
+    with gzip.open('large_file.txt.gz', 'wb') as f_out:
+        shutil.copyfileobj(f_in, f_out)
+
+# Decompress gzip file
+with gzip.open('file.txt.gz', 'rb') as f_in:
+    with open('file.txt', 'wb') as f_out:
+        shutil.copyfileobj(f_in, f_out)
+
+# Read gzip file directly
+with gzip.open('file.txt.gz', 'rt') as f:  # 'rt' for text mode
+    content = f.read()
+    print(content)
+
+# Write to gzip file
+with gzip.open('output.txt.gz', 'wt') as f:
+    f.write('Hello World\n')
+
+# Compress string
+import gzip
+text = "Hello World" * 1000
+compressed = gzip.compress(text.encode('utf-8'))
+print(f"Original: {len(text)} bytes")
+print(f"Compressed: {len(compressed)} bytes")
+
+# Decompress
+decompressed = gzip.decompress(compressed).decode('utf-8')
+</pre>
+</details>
+
+<!-- 1️⃣5️⃣ File Encoding -->
+<details>
+<summary>1️⃣5️⃣ File Encoding & Character Sets</summary>
+
+<pre>
+# ===== SPECIFY ENCODING =====
+
+# UTF-8 (default, recommended)
+with open('file.txt', 'r', encoding='utf-8') as f:
+    content = f.read()
+
+# Other encodings
+with open('file.txt', 'r', encoding='latin-1') as f:
+    content = f.read()
+
+with open('file.txt', 'r', encoding='cp1252') as f:  # Windows
+    content = f.read()
+
+# ===== HANDLE ENCODING ERRORS =====
+
+# Ignore errors
+with open('file.txt', 'r', encoding='utf-8', errors='ignore') as f:
+    content = f.read()
+
+# Replace errors with ?
+with open('file.txt', 'r', encoding='utf-8', errors='replace') as f:
+    content = f.read()
+
+# Strict mode (default - raises exception)
+try:
+    with open('file.txt', 'r', encoding='utf-8', errors='strict') as f:
+        content = f.read()
+except UnicodeDecodeError as e:
+    print(f"Encoding error: {e}")
+
+# ===== DETECT ENCODING =====
+
+# Using chardet library (pip install chardet)
+import chardet
+
+with open('unknown.txt', 'rb') as f:
+    raw_data = f.read()
+    result = chardet.detect(raw_data)
+    encoding = result['encoding']
+    confidence = result['confidence']
+    print(f"Detected: {encoding} ({confidence*100:.1f}% confidence)")
+
+# Read with detected encoding
+with open('unknown.txt', 'r', encoding=encoding) as f:
+    content = f.read()
+
+# ===== CONVERT ENCODING =====
+
+# Read with one encoding, write with another
+with open('input.txt', 'r', encoding='latin-1') as f_in:
+    content = f_in.read()
+    with open('output.txt', 'w', encoding='utf-8') as f_out:
+        f_out.write(content)
+
+# ===== BOM (Byte Order Mark) =====
+
+# Write UTF-8 with BOM
+with open('file.txt', 'w', encoding='utf-8-sig') as f:
+    f.write('Hello World')
+
+# Read UTF-8 with BOM
+with open('file.txt', 'r', encoding='utf-8-sig') as f:
+    content = f.read()
+</pre>
+
+<div class="tip">
+<strong>💡 Best Practice:</strong> Always explicitly specify <code>encoding='utf-8'</code> to avoid platform-dependent behavior.
+</div>
+</details>
+
+<!-- 1️⃣6️⃣ File Exceptions -->
+<details>
+<summary>1️⃣6️⃣ File Exceptions & Error Handling</summary>
+
+<table>
+<tr><th>Exception</th><th>When Raised</th><th>Example</th></tr>
+<tr><td>FileNotFoundError</td><td>File doesn't exist</td><td><code>open('missing.txt', 'r')</code></td></tr>
+<tr><td>PermissionError</td><td>No permission</td><td>Read-only file in write mode</td></tr>
+<tr><td>IsADirectoryError</td><td>Path is directory</td><td><code>open('folder', 'r')</code></td></tr>
+<tr><td>OSError</td><td>General OS error</td><td>Disk full, invalid path</td></tr>
+<tr><td>IOError</td><td>I/O operation failed</td><td>Hardware failure</td></tr>
+<tr><td>UnicodeDecodeError</td><td>Encoding mismatch</td><td>Wrong encoding specified</td></tr>
+</table>
+
+<pre>
+# ===== SPECIFIC EXCEPTION HANDLING =====
+
+# FileNotFoundError
+try:
+    with open('missing.txt', 'r') as f:
+        content = f.read()
+except FileNotFoundError:
+    print("File not found!")
+    # Create file or use default
+
+# PermissionError
+try:
+    with open('/root/protected.txt', 'w') as f:
+        f.write('data')
+except PermissionError:
+    print("Permission denied!")
+
+# IsADirectoryError
+try:
+    with open('my_folder', 'r') as f:
+        content = f.read()
+except IsADirectoryError:
+    print("That's a directory, not a file!")
+
+# ===== COMPREHENSIVE ERROR HANDLING =====
+
+def safe_read_file(filename):
+    try:
+        with open(filename, 'r', encoding='utf-8') as f:
+            return f.read()
+    except FileNotFoundError:
+        print(f"Error: {filename} not found")
+        return None
+    except PermissionError:
+        print(f"Error: No permission to read {filename}")
+        return None
+    except UnicodeDecodeError:
+        print(f"Error: Encoding problem in {filename}")
+        return None
+    except Exception as e:
+        print(f"Unexpected error: {e}")
+        return None
+
+# ===== MULTIPLE EXCEPTIONS =====
+
+try:
+    with open('file.txt', 'r') as f:
+        content = f.read()
+except (FileNotFoundError, PermissionError) as e:
+    print(f"File access error: {e}")
+
+# ===== FINALLY BLOCK =====
+
+f = None
+try:
+    f = open('file.txt', 'r')
+    content = f.read()
+except FileNotFoundError:
+    print("File not found")
+finally:
+    if f:
+        f.close()  # Always closes
+    print("Cleanup done")
+
+# ===== ELSE BLOCK =====
+
+try:
+    f = open('file.txt', 'r')
+except FileNotFoundError:
+    print("File not found")
+else:
+    # Runs only if no exception
+    content = f.read()
+    f.close()
+    print("File read successfully")
+
+# ===== CHECK BEFORE OPERATION =====
+
+import os
+
+filename = 'data.txt'
+
+# Check if file exists
+if os.path.exists(filename):
+    with open(filename, 'r') as f:
+        content = f.read()
+else:
+    print(f"{filename} doesn't exist")
+
+# Check if readable
+if os.access(filename, os.R_OK):
+    with open(filename, 'r') as f:
+        content = f.read()
+else:
+    print("Cannot read file")
+</pre>
+</details>
+
+<!-- 1️⃣7️⃣ File Performance -->
+<details>
+<summary>1️⃣7️⃣ File Performance & Best Practices</summary>
+
+<pre>
+import time
+
+# ===== BUFFERING =====
+
+# Line buffered (1)
+with open('output.txt', 'w', buffering=1) as f:
+    f.write('line 1\n')  # Flushed immediately
+
+# Fully buffered (>1)
+with open('output.txt', 'w', buffering=8192) as f:
+    f.write('data')  # Buffered
+
+# Unbuffered (0) - binary only
+with open('output.bin', 'wb', buffering=0) as f:
+    f.write(b'data')  # No buffering
+
+# ===== READING LARGE FILES =====
+
+# ❌ Bad: Loads entire file into memory
+with open('huge_file.txt', 'r') as f:
+    content = f.read()  # Memory intensive!
+
+# ✅ Good: Read line by line
+with open('huge_file.txt', 'r') as f:
+    for line in f:
+        process(line)  # Memory efficient
+
+# ✅ Good: Read in chunks
+with open('huge_file.txt', 'r') as f:
+    while chunk := f.read(8192):
+        process(chunk)
+
+# ===== WRITING LARGE FILES =====
+
+# ❌ Bad: Concatenate strings
+data = ""
+for i in range(10000):
+    data += f"Line {i}\n"  # O(n²)
+
+with open('output.txt', 'w') as f:
+    f.write(data)
+
+# ✅ Good: Write incrementally
+with open('output.txt', 'w') as f:
+    for i in range(10000):
+        f.write(f"Line {i}\n")  # O(n)
+
+# ✅ Best: Use writelines with generator
+with open('output.txt', 'w') as f:
+    f.writelines(f"Line {i}\n" for i in range(10000))
+
+# ===== PERFORMANCE COMPARISON =====
+
+import time
+
+# Method 1: read() - Fast for small files
+start = time.time()
+with open('file.txt', 'r') as f:
+    content = f.read()
+print(f"read(): {time.time() - start:.4f}s")
+
+# Method 2: readlines() - More memory
+start = time.time()
+with open('file.txt', 'r') as f:
+    lines = f.readlines()
+print(f"readlines(): {time.time() - start:.4f}s")
+
+# Method 3: Iteration - Most efficient
+start = time.time()
+with open('file.txt', 'r') as f:
+    for line in f:
+        pass
+print(f"iteration: {time.time() - start:.4f}s")
+
+# ===== MEMORY-MAPPED FILES =====
+
+import mmap
+
+# For very large files
+with open('huge_file.bin', 'r+b') as f:
+    with mmap.mmap(f.fileno(), 0) as mmapped:
+        # Access like bytes object
+        data = mmapped[0:100]
+        mmapped[0:5] = b'Hello'
+
+# ===== TEMPORARY FILES =====
+
+import tempfile
+
+# Temporary file (auto-deleted)
+with tempfile.TemporaryFile(mode='w+t') as f:
+    f.write('temporary data')
+    f.seek(0)
+    print(f.read())
+# File deleted here
+
+# Named temporary file
+with tempfile.NamedTemporaryFile(mode='w', delete=False) as f:
+    f.write('data')
+    temp_name = f.name
+
+# Temporary directory
+with tempfile.TemporaryDirectory() as tmpdir:
+    print(f"Created temp dir: {tmpdir}")
+    # Do work in tmpdir
+# Directory deleted here
+</pre>
+
+<div class="tip">
+<strong>💡 Performance Tips:</strong>
+<ul>
+<li>Use iteration for large files (not read() or readlines())</li>
+<li>Use writelines() with generators instead of string concatenation</li>
+<li>Specify appropriate buffer size for your use case</li>
+<li>Close files promptly or use context managers</li>
+</ul>
+</div>
+</details>
+
+<!-- 1️⃣8️⃣ Real-world Patterns -->
+<details>
+<summary>1️⃣8️⃣ Common Real-World Patterns</summary>
+
+<pre>
+# ===== PATTERN 1: Read, Process, Write =====
+
+def process_file(input_path, output_path):
+    with open(input_path, 'r') as fin:
+        with open(output_path, 'w') as fout:
+            for line in fin:
+                processed = line.upper()
+                fout.write(processed)
+
+# ===== PATTERN 2: Append to Log File =====
+
+import datetime
+
+def log_message(message, logfile='app.log'):
+    timestamp = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    with open(logfile, 'a') as f:
+        f.write(f"[{timestamp}] {message}\n")
+
+log_message("Application started")
+log_message("User logged in")
+
+# ===== PATTERN 3: Read Configuration =====
+
+import json
+
+def load_config(config_file='config.json'):
+    try:
+        with open(config_file, 'r') as f:
+            return json.load(f)
+    except FileNotFoundError:
+        # Return default config
+        return {'debug': False, 'port': 8080}
+
+config = load_config()
+
+# ===== PATTERN 4: Batch Processing =====
+
+def process_batch(input_files, output_file):
+    with open(output_file, 'w') as fout:
+        for input_file in input_files:
+            with open(input_file, 'r') as fin:
+                fout.write(fin.read())
+                fout.write('\n---\n')
+
+# ===== PATTERN 5: Filter Lines =====
+
+def filter_file(input_file, output_file, condition):
+    with open(input_file, 'r') as fin:
+        with open(output_file, 'w') as fout:
+            for line in fin:
+                if condition(line):
+                    fout.write(line)
+
+# Usage
+filter_file('data.txt', 'errors.txt', lambda line: 'ERROR' in line)
+
+# ===== PATTERN 6: Count Statistics =====
+
+def file_stats(filename):
+    stats = {
+        'lines': 0,
+        'words': 0,
+        'chars': 0
+    }
+    
+    with open(filename, 'r') as f:
+        for line in f:
+            stats['lines'] += 1
+            stats['words'] += len(line.split())
+            stats['chars'] += len(line)
+    
+    return stats
+
+print(file_stats('document.txt'))
+
+# ===== PATTERN 7: Search and Replace =====
+
+def search_replace(filename, search_text, replace_text):
+    with open(filename, 'r') as f:
+        content = f.read()
+    
+    content = content.replace(search_text, replace_text)
+    
+    with open(filename, 'w') as f:
+        f.write(content)
+
+# ===== PATTERN 8: Backup Before Modify =====
+
+import shutil
+from datetime import datetime
+
+def safe_modify(filename, modification_func):
+    # Create backup
+    backup = f"{filename}.backup.{datetime.now().strftime('%Y%m%d_%H%M%S')}"
+    shutil.copy(filename, backup)
+    
+    try:
+        with open(filename, 'r') as f:
+            content = f.read()
+        
+        modified = modification_func(content)
+        
+        with open(filename, 'w') as f:
+            f.write(modified)
+        
+        return True
+    except Exception as e:
+        # Restore backup on error
+        shutil.copy(backup, filename)
+        print(f"Error: {e}. Restored from backup.")
+        return False
+
+# ===== PATTERN 9: Process Multiple Files =====
+
+from pathlib import Path
+
+def process_directory(directory, extension='.txt'):
+    for filepath in Path(directory).rglob(f'*{extension}'):
+        print(f"Processing: {filepath}")
+        with open(filepath, 'r') as f:
+            # Process file
+            content = f.read()
+            # Do something with content
+
+# ===== PATTERN 10: Merge Files =====
+
+def merge_files(file_list, output_file, separator='\n'):
+    with open(output_file, 'w') as fout:
+        for i, filename in enumerate(file_list):
+            with open(filename, 'r') as fin:
+                fout.write(fin.read())
+                if i < len(file_list) - 1:
+                    fout.write(separator)
+</pre>
+</details>
+
+<!-- 1️⃣9️⃣ File I/O Comparison -->
+<details>
+<summary>1️⃣9️⃣ File Operations Comparison Table</summary>
+
+<table>
+<tr><th>Operation</th><th>Time Complexity</th><th>Memory Usage</th><th>Best For</th></tr>
+<tr><td>read()</td><td>O(n)</td><td>O(n) - loads all</td><td>Small files</td></tr>
+<tr><td>readline()</td><td>O(1) per line</td><td>O(1) per line</td><td>Line-by-line processing</td></tr>
+<tr><td>readlines()</td><td>O(n)</td><td>O(n) - loads all</td><td>Need all lines as list</td></tr>
+<tr><td>Iteration</td><td>O(n)</td><td>O(1) per line</td><td>Large files (best)</td></tr>
+<tr><td>write()</td><td>O(n)</td><td>O(1)</td><td>Single write</td></tr>
+<tr><td>writelines()</td><td>O(n)</td><td>O(1)</td><td>Multiple lines</td></tr>
+<tr><td>seek()</td><td>O(1)</td><td>O(1)</td><td>Random access</td></tr>
+<tr><td>tell()</td><td>O(1)</td><td>O(1)</td><td>Get position</td></tr>
+</table>
+
+<div class="ascii">
+Memory Consumption Comparison:
+
+read()          ████████████████████  (Entire file)
+readlines()     ████████████████████  (All lines)
+readline()      █                     (One line)
+Iteration       █                     (One line)
+
+Best Practice: Use iteration for large files!
+</div>
+</details>
+
+<!-- 2️⃣0️⃣ Interview Questions -->
+<details>
+<summary>2️⃣0️⃣ Interview Questions & Answers</summary>
+
+<h3>Conceptual Questions</h3>
+
+<ol>
+<li><strong>What is the difference between 'r' and 'r+' modes?</strong>
+   <p><code>'r'</code> is read-only. <code>'r+'</code> allows both reading and writing. File must exist for both.</p>
+</li>
+
+<li><strong>Why use context managers (with statement)?</strong>
+   <p>Automatically closes files even if exceptions occur. Prevents resource leaks and ensures proper cleanup.</p>
+</li>
+
+<li><strong>What happens if you open a file in 'w' mode?</strong>
+   <p>File is truncated (emptied) immediately. All existing content is lost. Creates file if doesn't exist.</p>
+</li>
+
+<li><strong>Difference between write() and writelines()?</strong>
+   <p><code>write()</code> writes a string. <code>writelines()</code> writes a list of strings. Neither adds newlines automatically.</p>
+</li>
+
+<li><strong>How to read a file without loading it entirely into memory?</strong>
+   <p>Use iteration: <code>for line in f:</code> or read in chunks with <code>f.read(size)</code>.</p>
+</li>
+
+<li><strong>What is file buffering?</strong>
+   <p>Temporary memory storage for I/O operations. Improves performance by reducing system calls.</p>
+</li>
+
+<li><strong>Difference between text and binary modes?</strong>
+   <p>Text mode handles encoding/decoding. Binary mode works with raw bytes. Use 'b' flag for binary.</p>
+</li>
+
+<li><strong>How to handle encoding issues?</strong>
+   <p>Specify encoding explicitly: <code>encoding='utf-8'</code>. Use error handlers: <code>errors='ignore'</code> or <code>'replace'</code>.</p>
+</li>
+
+<li><strong>What is seek() and tell()?</strong>
+   <p><code>seek()</code> moves file pointer to position. <code>tell()</code> returns current position.</p>
+</li>
+
+<li><strong>How to check if file exists before opening?</strong>
+   <p>Use <code>os.path.exists()</code> or <code>Path.exists()</code>. Or handle <code>FileNotFoundError</code>.</p>
+</li>
+</ol>
+
+<h3>Coding Problems</h3>
+
+<pre>
+# 1. Count lines, words, characters
+def count_stats(filename):
+    lines = words = chars = 0
+    with open(filename, 'r') as f:
+        for line in f:
+            lines += 1
+            words += len(line.split())
+            chars += len(line)
+    return lines, words, chars
+
+# 2. Find and replace text in file
+def find_replace(filename, old, new):
+    with open(filename, 'r') as f:
+        content = f.read()
+    content = content.replace(old, new)
+    with open(filename, 'w') as f:
+        f.write(content)
+
+# 3. Copy file content
+def copy_file(source, dest):
+    with open(source, 'r') as src:
+        with open(dest, 'w') as dst:
+            dst.write(src.read())
+
+# 4. Read last N lines
+def read_last_n_lines(filename, n):
+    with open(filename, 'r') as f:
+        lines = f.readlines()
+    return lines[-n:]
+
+# 5. Remove empty lines
+def remove_empty_lines(filename):
+    with open(filename, 'r') as f:
+        lines = f.readlines()
+    with open(filename, 'w') as f:
+        for line in lines:
+            if line.strip():
+                f.write(line)
+
+# 6. Merge multiple files
+def merge_files(files, output):
+    with open(output, 'w') as out:
+        for file in files:
+            with open(file, 'r') as f:
+                out.write(f.read())
+
+# 7. Count word frequency
+def word_frequency(filename):
+    freq = {}
+    with open(filename, 'r') as f:
+        for line in f:
+            for word in line.split():
+                word = word.lower().strip('.,!?')
+                freq[word] = freq.get(word, 0) + 1
+    return freq
+
+# 8. Split large file into chunks
+def split_file(filename, chunk_size=1000):
+    with open(filename, 'r') as f:
+        chunk_num = 0
+        while True:
+            lines = [f.readline() for _ in range(chunk_size)]
+            lines = [l for l in lines if l]
+            if not lines:
+                break
+            with open(f'chunk_{chunk_num}.txt', 'w') as out:
+                out.writelines(lines)
+            chunk_num += 1
+
+# 9. Find duplicates in file
+def find_duplicate_lines(filename):
+    seen = set()
+    duplicates = []
+    with open(filename, 'r') as f:
+        for line in f:
+            line = line.strip()
+            if line in seen:
+                duplicates.append(line)
+            else:
+                seen.add(line)
+    return duplicates
+
+# 10. Reverse file content
+def reverse_file(filename):
+    with open(filename, 'r') as f:
+        lines = f.readlines()
+    with open(filename, 'w') as f:
+        f.writelines(reversed(lines))
+</pre>
+</details>
+
+<!-- 2️⃣1️⃣ Best Practices -->
+<details>
+<summary>2️⃣1️⃣ Best Practices & Guidelines</summary>
+
+<div class="tip">
+<h3>✅ DO</h3>
+<ul>
+<li>✅ Always use <code>with</code> statement (context manager)</li>
+<li>✅ Specify encoding explicitly: <code>encoding='utf-8'</code></li>
+<li>✅ Use iteration for large files: <code>for line in f:</code></li>
+<li>✅ Handle exceptions: <code>FileNotFoundError</code>, <code>PermissionError</code></li>
+<li>✅ Close files promptly (or use context manager)</li>
+<li>✅ Use pathlib.Path for modern path operations</li>
+<li>✅ Check file existence before operations</li>
+<li>✅ Use binary mode for non-text files</li>
+<li>✅ Create backups before modifying important files</li>
+<li>✅ Use appropriate buffer size for your use case</li>
+</ul>
+</div>
+
+<div class="warning">
+<h3>❌ DON'T</h3>
+<ul>
+<li>❌ Don't forget to close files (use <code>with</code>)</li>
+<li>❌ Don't use <code>read()</code> on large files (use iteration)</li>
+<li>❌ Don't open file in 'w' mode unless you want to erase it</li>
+<li>❌ Don't assume default encoding (always specify)</li>
+<li>❌ Don't ignore exceptions (handle them properly)</li>
+<li>❌ Don't concatenate strings in loops for file writing</li>
+<li>❌ Don't open files in try block without finally</li>
+<li>❌ Don't trust user-provided file paths (validate them)</li>
+<li>❌ Don't unpickle data from untrusted sources</li>
+<li>❌ Don't mix text and binary modes</li>
+</ul>
+</div>
+
+<pre>
+# ✅ Good Practices Example
+
+def process_file_safely(input_file, output_file):
+    """
+    Safely process a file with proper error handling.
+    """
+    # Check if input exists
+    if not Path(input_file).exists():
+        raise FileNotFoundError(f"{input_file} not found")
+    
+    try:
+        # Use context manager
+        with open(input_file, 'r', encoding='utf-8') as fin:
+            with open(output_file, 'w', encoding='utf-8') as fout:
+                # Process line by line (memory efficient)
+                for line in fin:
+                    processed = line.upper()
+                    fout.write(processed)
+        
+        print("Processing completed successfully")
+        return True
+        
+    except PermissionError:
+        print(f"Permission denied: {input_file}")
+        return False
+    except UnicodeDecodeError:
+        print(f"Encoding error in {input_file}")
+        return False
+    except Exception as e:
+        print(f"Unexpected error: {e}")
+        return False
+
+# ❌ Bad Practices Example
+
+def process_file_badly(input_file, output_file):
+    # No error handling
+    # No encoding specified
+    # Loads entire file (memory intensive)
+    # Doesn't close files properly
+    
+    f1 = open(input_file, 'r')
+    content = f1.read()  # Loads all into memory
+    
+    f2 = open(output_file, 'w')
+    f2.write(content.upper())
+    
+    # Files not closed!
+</pre>
+</details>
+
+<!-- 2️⃣2️⃣ Quick Reference -->
+<details>
+<summary>2️⃣2️⃣ Quick Reference Cheat Sheet</summary>
+
+<table>
+<tr><th>Task</th><th>Code</th></tr>
+<tr><td>Read entire file</td><td><code>open('f.txt').read()</code></td></tr>
+<tr><td>Read lines</td><td><code>open('f.txt').readlines()</code></td></tr>
+<tr><td>Read line by line</td><td><code>for line in open('f.txt'):</code></td></tr>
+<tr><td>Write text</td><td><code>open('f.txt','w').write('text')</code></td></tr>
+<tr><td>Append text</td><td><code>open('f.txt','a').write('text')</code></td></tr>
+<tr><td>Read JSON</td><td><code>json.load(open('f.json'))</code></td></tr>
+<tr><td>Write JSON</td><td><code>json.dump(data, open('f.json','w'))</code></td></tr>
+<tr><td>Read CSV</td><td><code>csv.reader(open('f.csv'))</code></td></tr>
+<tr><td>Write CSV</td><td><code>csv.writer(open('f.csv','w'))</code></td></tr>
+<tr><td>Check exists</td><td><code>Path('f.txt').exists()</code></td></tr>
+<tr><td>Delete file</td><td><code>Path('f.txt').unlink()</code></td></tr>
+<tr><td>Copy file</td><td><code>shutil.copy('src','dst')</code></td></tr>
+<tr><td>Get file size</td><td><code>Path('f.txt').stat().st_size</code></td></tr>
+</table>
+
+<h3>Common Mode Combinations</h3>
+<table>
+<tr><th>Mode</th><th>Read</th><th>Write</th><th>Append</th><th>Truncate</th><th>Create</th></tr>
+<tr><td>r</td><td>✅</td><td>❌</td><td>❌</td><td>❌</td><td>❌</td></tr>
+<tr><td>w</td><td>❌</td><td>✅</td><td>❌</td><td>✅</td><td>✅</td></tr>
+<tr><td>a</td><td>❌</td><td>✅</td><td>✅</td><td>❌</td><td>✅</td></tr>
+<tr><td>r+</td><td>✅</td><td>✅</td><td>❌</td><td>❌</td><td>❌</td></tr>
+<tr><td>w+</td><td>✅</td><td>✅</td><td>❌</td><td>✅</td><td>✅</td></tr>
+<tr><td>a+</td><td>✅</td><td>✅</td><td>✅</td><td>❌</td><td>✅</td></tr>
+</table>
+</details>
+
+<!-- 2️⃣3️⃣ Real-Life Analogy -->
+<details>
+<summary>2️⃣3️⃣ Real-Life Analogy</summary>
+
+<div class="ascii">
+📁 File Handling = Library Book System
+
+┌─────────────────────────────────┐
+│  Opening File = Check out book  │
+│  Reading = Reading pages        │
+│  Writing = Writing in notebook  │
+│  Closing = Return book          │
+│  Context Manager = Auto-return  │
+└─────────────────────────────────┘
+
+File Modes = Book Access Types:
+
+'r'  → Read only (reference book)
+'w'  → New blank notebook (erase existing)
+'a'  → Continue writing in journal
+'r+' → Read & take notes
+</div>
+
+<p><strong>Think of a file like a physical document:</strong></p>
+<ul>
+<li>📖 <strong>Opening</strong> = Taking document from filing cabinet</li>
+<li>👀 <strong>Reading</strong> = Looking at the content</li>
+<li>✍️ <strong>Writing</strong> = Adding information</li>
+<li>📌 <strong>File Pointer</strong> = Your finger on the page</li>
+<li>🔒 <strong>Closing</strong> = Putting document back</li>
+<li>⚙️ <strong>Context Manager</strong> = Secretary who automatically files it back</li>
+</ul>
+
+<p><strong>File Modes Analogy:</strong></p>
+<ul>
+<li><code>'r'</code> = Reading a published book (can't change it)</li>
+<li><code>'w'</code> = Starting a new diary (previous entries erased)</li>
+<li><code>'a'</code> = Adding new entry to existing diary</li>
+<li><code>'x'</code> = Creating brand new notebook (error if already exists)</li>
+</ul>
+</details>
+
+<!-- 2️⃣4️⃣ Common Pitfalls -->
+<details>
+<summary>2️⃣4️⃣ Common Pitfalls & Solutions</summary>
+
+<table>
+<tr><th>Pitfall</th><th>Problem</th><th>Solution</th></tr>
+<tr><td>Not closing files</td><td>Resource leak</td><td>Use <code>with</code> statement</td></tr>
+<tr><td>Using 'w' accidentally</td><td>Data loss</td><td>Use 'a' for append, check before 'w'</td></tr>
+<tr><td>Reading large files</td><td>Memory overflow</td><td>Use iteration, not <code>read()</code></td></tr>
+<tr><td>Encoding issues</td><td>UnicodeDecodeError</td><td>Specify <code>encoding='utf-8'</code></td></tr>
+<tr><td>File not found</td><td>Crash</td><td>Handle <code>FileNotFoundError</code></td></tr>
+<tr><td>Permission denied</td><td>Crash</td><td>Handle <code>PermissionError</code></td></tr>
+<tr><td>Mixing text/binary</td><td>Type errors</td><td>Use 'b' flag consistently</td></tr>
+<tr><td>String concatenation</td><td>Slow performance</td><td>Use <code>writelines()</code> or <code>join()</code></td></tr>
+<tr><td>No newlines</td><td>Single line output</td><td>Add '\n' manually</td></tr>
+<tr><td>Windows paths</td><td>Backslash issues</td><td>Use <code>Path</code> or raw strings</td></tr>
+</table>
+
+<pre>
+# Pitfall 1: File not closed
+# ❌ Bad
+f = open('file.txt', 'r')
+content = f.read()
+# f.close() forgotten!
+
+# ✅ Good
+with open('file.txt', 'r') as f:
+    content = f.read()
+
+# Pitfall 2: Erasing file accidentally
+# ❌ Bad - erases file!
+with open('important.txt', 'w') as f:
+    f.write('new data')
+
+# ✅ Good - check first or use append
+if os.path.exists('important.txt'):
+    mode = 'a'  # append
+else:
+    mode = 'w'  # create
+
+with open('important.txt', mode) as f:
+    f.write('new data\n')
+
+# Pitfall 3: Memory issue with large files
+# ❌ Bad - loads entire file
+with open('huge_file.txt', 'r') as f:
+    content = f.read()  # OutOfMemoryError!
+
+# ✅ Good - process line by line
+with open('huge_file.txt', 'r') as f:
+    for line in f:
+        process(line)
+
+# Pitfall 4: Encoding not specified
+# ❌ Bad - platform dependent
+with open('file.txt', 'r') as f:
+    content = f.read()
+
+# ✅ Good - explicit encoding
+with open('file.txt', 'r', encoding='utf-8') as f:
+    content = f.read()
+
+# Pitfall 5: No exception handling
+# ❌ Bad - crashes on error
+with open('file.txt', 'r') as f:
+    content = f.read()
+
+# ✅ Good - handles errors
+try:
+    with open('file.txt', 'r', encoding='utf-8') as f:
+        content = f.read()
+except FileNotFoundError:
+    print("File not found")
+    content = ""
+</pre>
+</details>
+
+<!-- 2️⃣5️⃣ Practice Exercises -->
+<details>
+<summary>2️⃣5️⃣ Practice Exercises</summary>
+
+<h3>Beginner Level</h3>
+<ol>
+<li>Write a program to create a file and write 10 lines to it</li>
+<li>Read a file and print its contents</li>
+<li>Count number of lines in a file</li>
+<li>Copy content from one file to another</li>
+<li>Append text to an existing file</li>
+<li>Read and print first 5 lines of a file</li>
+<li>Check if a file exists before opening</li>
+<li>Create a file with user input</li>
+<li>Read a file and convert all text to uppercase</li>
+<li>Count number of words in a file</li>
+</ol>
+
+<h3>Intermediate Level</h3>
+<ol>
+<li>Find and replace specific text in a file</li>
+<li>Merge multiple text files into one</li>
+<li>Split a large file into smaller chunks</li>
+<li>Remove empty lines from a file</li>
+<li>Count frequency of each word in a file</li>
+<li>Read CSV file and calculate column sum</li>
+<li>Write dictionary to JSON file and read it back</li>
+<li>Find longest line in a file</li>
+<li>Create a simple logging system</li>
+<li>Compare two files and find differences</li>
+</ol>
+
+<h3>Advanced Level</h3>
+<ol>
+<li>Implement a file-based database (CRUD operations)</li>
+<li>Create a text-based search engine for files</li>
+<li>Build a log file analyzer</li>
+<li>Implement file compression/decompression</li>
+<li>Create a backup system with versioning</li>
+<li>Parse and analyze large log files efficiently</li>
+<li>Implement a simple CSV to JSON converter</li>
+<li>Build a file synchronization tool</li>
+<li>Create a configuration file manager</li>
+<li>Implement a simple file encryption/decryption</li>
+</ol>
+</details>
+
+<!-- Footer -->
+<div style="margin-top: 40px; padding: 20px; background: #e3f2fd; border-radius: 10px; text-align: center;">
+<h3>📚 Python File Handling — Complete Reference</h3>
+<p>Master file I/O, CSV, JSON, binary files, and best practices</p>
+<p style="color: #666; font-size: 14px;">Practice daily • Handle files safely • Always use context managers</p>
+<p style="color: #666; font-size: 12px; margin-top: 10px;">Part of Python DSA Visuals Collection</p>
+</div>
+
+</div>
+</body>
+</html>

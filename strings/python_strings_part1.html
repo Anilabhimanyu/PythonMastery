@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Python Strings — Complete DSA Reference</title>
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 30px;
+    background: #fafafa;
+    color: #222;
+    line-height: 1.6;
+  }
+  h1, h2, h3 {
+    color: #00539C;
+  }
+  h1 {
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  .lead {
+    text-align: center;
+    color: #6b7280;
+    margin-bottom: 30px;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+  }
+  th, td {
+    border: 1px solid #ddd;
+    padding: 10px 15px;
+    text-align: left;
+  }
+  th {
+    background-color: #00539C;
+    color: white;
+  }
+  tr:nth-child(even) { background-color: #f9f9f9; }
+  details {
+    background: #fff;
+    padding: 10px 15px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  }
+  summary {
+    font-weight: bold;
+    cursor: pointer;
+    color: #00539C;
+    font-size: 18px;
+    padding: 5px 0;
+  }
+  code {
+    background: #eee;
+    padding: 2px 6px;
+    border-radius: 5px;
+    font-family: Consolas, monospace;
+    font-size: 13px;
+  }
+  pre {
+    background: #0b1220;
+    color: #9fffb0;
+    padding: 15px;
+    border-radius: 8px;
+    overflow-x: auto;
+    font-family: Consolas, monospace;
+    font-size: 13px;
+  }
+  .ascii {
+    font-family: monospace;
+    background: #f3f6fb;
+    padding: 15px;
+    border-radius: 8px;
+    color: #0b1220;
+    margin: 15px 0;
+  }
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .note {
+    background: #fff3cd;
+    border-left: 4px solid #ffc107;
+    padding: 12px;
+    margin: 15px 0;
+    border-radius: 5px;
+  }
+  .tip {
+    background: #d1ecf1;
+    border-left: 4px solid #17a2b8;
+    padding: 12px;
+    margin: 15px 0;
+    border-radius: 5px;
+  }
+  a {
+    color: #00539C;
+    text-decoration: none;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>🎯 Python Strings — Complete DSA Reference</h1>
+<p class="lead">Everything you need: creation, methods, slicing, operations, patterns, complexity, interview questions, and LeetCode practice</p>
+
+<!-- 1️⃣ String Basics -->
+<details open>
+<summary>1️⃣ String Basics & Definition</summary>
+<p><strong>Definition:</strong> A <b>string</b> is an <b>immutable, ordered sequence</b> of Unicode characters. Once created, it cannot be modified in place.</p>
+
+<div class="ascii">
+String Indexing (Both Directions):
+
+Forward:   0   1   2   3   4   5   6   7   8   9   10
+String:   'P'  y'  t'  h'  o'  n'  ' '  3' '.'  1'  '1'
+Reverse: -11 -10  -9  -8  -7  -6  -5  -4  -3  -2  -1
+</div>
+
+<table>
+<tr><th>Property</th><th>Description</th><th>Example</th></tr>
+<tr><td>Immutable</td><td>Cannot modify characters in place</td><td><code>s[0] = 'X'</code> ❌ TypeError</td></tr>
+<tr><td>Ordered</td><td>Maintains insertion order</td><td><code>'abc'[1] → 'b'</code></td></tr>
+<tr><td>Iterable</td><td>Can loop through characters</td><td><code>for c in s:</code></td></tr>
+<tr><td>Indexed</td><td>Access via index (0-based)</td><td><code>s[0], s[-1]</code></td></tr>
+<tr><td>Unicode</td><td>Supports all Unicode characters</td><td><code>'Hello 🐍'</code></td></tr>
+</table>
+
+<pre>
+# Basic string creation
+s = "Hello Python"
+print(type(s))           # &lt;class 'str'&gt;
+print(len(s))            # 12
+print(s[0])              # 'H'
+print(s[-1])             # 'n'
+</pre>
+
+<div class="note">
+<strong>⚠️ Immutability:</strong> Every string operation that "modifies" actually creates a new string object. Original string remains unchanged.
+</div>
+</details>
+
+<!-- 2️⃣ Creation Methods -->
+<details>
+<summary>2️⃣ String Creation Methods</summary>
+
+<table>
+<tr><th>Method</th><th>Description</th><th>Example</th><th>Output</th></tr>
+<tr><td>Single quotes</td><td>Simple string</td><td><code>'Hello'</code></td><td>Hello</td></tr>
+<tr><td>Double quotes</td><td>Simple string</td><td><code>"World"</code></td><td>World</td></tr>
+<tr><td>Triple quotes</td><td>Multiline string</td><td><code>'''Line1\nLine2'''</code></td><td>Multiple lines</td></tr>
+<tr><td>str() constructor</td><td>Convert to string</td><td><code>str(123)</code></td><td>'123'</td></tr>
+<tr><td>Raw string</td><td>Ignore escape chars</td><td><code>r"C:\new"</code></td><td>C:\new</td></tr>
+<tr><td>f-string</td><td>Formatted string</td><td><code>f"Value: {x}"</code></td><td>Value: 5</td></tr>
+<tr><td>join()</td><td>From iterable</td><td><code>''.join(['a','b'])</code></td><td>ab</td></tr>
+<tr><td>Repetition</td><td>Repeat pattern</td><td><code>'Hi' * 3</code></td><td>HiHiHi</td></tr>
+</table>
+
+<pre>
+# Different creation methods
+s1 = 'Single quotes'
+s2 = "Double quotes"
+s3 = '''Multi
+line
+string'''
+s4 = str(100)                    # '100'
+s5 = r"Raw\nstring"              # Raw\nstring
+s6 = f"Formatted {5 + 3}"        # Formatted 8
+s7 = "abc" * 3                   # abcabcabc
+s8 = "-".join(['a','b','c'])    # a-b-c
+</pre>
+</details>
+
+<!-- 3️⃣ Accessing & Slicing -->
+<details>
+<summary>3️⃣ Accessing Characters & Slicing</summary>
+
+<table>
+<tr><th>Operation</th><th>Syntax</th><th>Example</th><th>Result</th><th>Time</th></tr>
+<tr><td>Index access</td><td><code>s[i]</code></td><td><code>s[0]</code></td><td>'P'</td><td>O(1)</td></tr>
+<tr><td>Negative index</td><td><code>s[-i]</code></td><td><code>s[-1]</code></td><td>'n'</td><td>O(1)</td></tr>
+<tr><td>Slice [start:end]</td><td><code>s[i:j]</code></td><td><code>s[0:3]</code></td><td>'Pyt'</td><td>O(k)</td></tr>
+<tr><td>Slice with step</td><td><code>s[i:j:k]</code></td><td><code>s[::2]</code></td><td>'Pto'</td><td>O(n)</td></tr>
+<tr><td>Reverse</td><td><code>s[::-1]</code></td><td><code>s[::-1]</code></td><td>'nohtyP'</td><td>O(n)</td></tr>
+<tr><td>From start</td><td><code>s[:i]</code></td><td><code>s[:4]</code></td><td>'Pyth'</td><td>O(i)</td></tr>
+<tr><td>To end</td><td><code>s[i:]</code></td><td><code>s[4:]</code></td><td>'on'</td><td>O(n-i)</td></tr>
+</table>
+
+<pre>
+s = "Python"
+
+# Indexing
+print(s[0])        # 'P'
+print(s[-1])       # 'n'
+
+# Slicing
+print(s[0:3])      # 'Pyt'
+print(s[2:5])      # 'tho'
+print(s[:3])       # 'Pyt'
+print(s[3:])       # 'hon'
+print(s[:])        # 'Python' (copy)
+
+# Step slicing
+print(s[::2])      # 'Pto' (every 2nd char)
+print(s[1::2])     # 'yhn' (start at 1, every 2nd)
+print(s[::-1])     # 'nohtyP' (reverse)
+</pre>
+
+<div class="ascii">
+Slicing Visualization: s = "Python"
+
+s[1:4]  →   y t h
+            ↑   ↑
+         start end(excluded)
+
+s[::2]  →   P   t   o   (step=2)
+            ↑   ↑   ↑
+
+s[::-1] →   n o h t y P  (reverse)
+</div>
+</details>
+
+<!-- 4️⃣ String Methods - Case Conversion -->
+<details>
+<summary>4️⃣ String Methods — Case Conversion</summary>
+
+<table>
+<tr><th>Method</th><th>Description</th><th>Example</th><th>Output</th><th>Time</th></tr>
+<tr><td>upper()</td><td>Convert to uppercase</td><td><code>'hello'.upper()</code></td><td>HELLO</td><td>O(n)</td></tr>
+<tr><td>lower()</td><td>Convert to lowercase</td><td><code>'WORLD'.lower()</code></td><td>world</td><td>O(n)</td></tr>
+<tr><td>capitalize()</td><td>First char uppercase</td><td><code>'hello'.capitalize()</code></td><td>Hello</td><td>O(n)</td></tr>
+<tr><td>title()</td><td>Title case (each word)</td><td><code>'hello world'.title()</code></td><td>Hello World</td><td>O(n)</td></tr>
+<tr><td>swapcase()</td><td>Swap upper/lower</td><td><code>'Hello'.swapcase()</code></td><td>hELLO</td><td>O(n)</td></tr>
+<tr><td>casefold()</td><td>Aggressive lowercase</td><td><code>'ß'.casefold()</code></td><td>ss</td><td>O(n)</td></tr>
+</table>
+
+<pre>
+text = "Hello World"
+
+print(text.upper())        # HELLO WORLD
+print(text.lower())        # hello world
+print(text.capitalize())   # Hello world
+print(text.title())        # Hello World
+print(text.swapcase())     # hELLO wORLD
+print(text.casefold())     # hello world (better for comparisons)
+</pre>
+</details>
+
+<!-- 5️⃣ Searching Methods -->
+<details>
+<summary>5️⃣ String Methods — Searching & Checking</summary>
+
+<table>
+<tr><th>Method</th><th>Description</th><th>Example</th><th>Output</th><th>Time</th></tr>
+<tr><td>find(sub)</td><td>First occurrence index</td><td><code>'hello'.find('l')</code></td><td>2</td><td>O(n*m)</td></tr>
+<tr><td>rfind(sub)</td><td>Last occurrence index</td><td><code>'hello'.rfind('l')</code></td><td>3</td><td>O(n*m)</td></tr>
+<tr><td>index(sub)</td><td>Like find, raises error</td><td><code>'hello'.index('l')</code></td><td>2</td><td>O(n*m)</td></tr>
+<tr><td>rindex(sub)</td><td>Like rfind, raises error</td><td><code>'hello'.rindex('l')</code></td><td>3</td><td>O(n*m)</td></tr>
+<tr><td>count(sub)</td><td>Count occurrences</td><td><code>'hello'.count('l')</code></td><td>2</td><td>O(n*m)</td></tr>
+<tr><td>startswith()</td><td>Check prefix</td><td><code>'hello'.startswith('he')</code></td><td>True</td><td>O(m)</td></tr>
+<tr><td>endswith()</td><td>Check suffix</td><td><code>'hello'.endswith('lo')</code></td><td>True</td><td>O(m)</td></tr>
+<tr><td>in operator</td><td>Membership test</td><td><code>'el' in 'hello'</code></td><td>True</td><td>O(n*m)</td></tr>
+</table>
+
+<pre>
+text = "Python Programming"
+
+# Finding
+print(text.find('Pro'))         # 7
+print(text.find('xyz'))         # -1 (not found)
+print(text.rfind('m'))          # 17 (last 'm')
+print(text.index('Pro'))        # 7
+# print(text.index('xyz'))      # ValueError
+
+# Counting
+print(text.count('m'))          # 2
+print(text.count('Python'))     # 1
+
+# Checking
+print(text.startswith('Py'))    # True
+print(text.endswith('ing'))     # True
+print('gram' in text)           # True
+print('Java' not in text)       # True
+</pre>
+
+<div class="note">
+<strong>⚠️ find() vs index():</strong> Use <code>find()</code> when unsure if substring exists (returns -1). Use <code>index()</code> when you're certain (raises ValueError if not found).
+</div>
+</details>
+
+<!-- 6️⃣ Replacing & Splitting -->
+<details>
+<summary>6️⃣ String Methods — Replacing & Splitting</summary>
+
+<table>
+<tr><th>Method</th><th>Description</th><th>Example</th><th>Output</th><th>Time</th></tr>
+<tr><td>replace(old, new)</td><td>Replace substring</td><td><code>'hello'.replace('l','L')</code></td><td>heLLo</td><td>O(n)</td></tr>
+<tr><td>split(sep)</td><td>Split by separator</td><td><code>'a-b-c'.split('-')</code></td><td>['a','b','c']</td><td>O(n)</td></tr>
+<tr><td>rsplit(sep)</td><td>Split from right</td><td><code>'a-b-c'.rsplit('-',1)</code></td><td>['a-b','c']</td><td>O(n)</td></tr>
+<tr><td>splitlines()</td><td>Split by line breaks</td><td><code>'a\nb'.splitlines()</code></td><td>['a','b']</td><td>O(n)</td></tr>
+<tr><td>partition(sep)</td><td>Split into 3 parts</td><td><code>'a-b-c'.partition('-')</code></td><td>('a','-','b-c')</td><td>O(n)</td></tr>
+<tr><td>rpartition(sep)</td><td>Partition from right</td><td><code>'a-b-c'.rpartition('-')</code></td><td>('a-b','-','c')</td><td>O(n)</td></tr>
+<tr><td>join(iterable)</td><td>Join with separator</td><td><code>'-'.join(['a','b'])</code></td><td>a-b</td><td>O(n)</td></tr>
+</table>
+
+<pre>
+text = "Hello World Python"
+
+# Replace
+print(text.replace('o', '0'))           # Hell0 W0rld Pyth0n
+print(text.replace('o', '0', 1))        # Hell0 World Python (max 1)
+
+# Split
+print(text.split())                     # ['Hello', 'World', 'Python']
+print(text.split(' ', 1))               # ['Hello', 'World Python']
+print('a,b,c,d'.split(','))             # ['a', 'b', 'c', 'd']
+
+# Join
+words = ['Python', 'is', 'awesome']
+print(' '.join(words))                  # Python is awesome
+print('-'.join(['a','b','c']))          # a-b-c
+
+# Partition
+print('a=b=c'.partition('='))           # ('a', '=', 'b=c')
+print('a=b=c'.rpartition('='))          # ('a=b', '=', 'c')
+</pre>
+</details>
+
+<!-- 7️⃣ Validation Methods -->
+<details>
+<summary>7️⃣ String Methods — Validation & Checking</summary>
+
+<table>
+<tr><th>Method</th><th>Description</th><th>Example</th><th>Output</th><th>Time</th></tr>
+<tr><td>isalpha()</td><td>All alphabetic</td><td><code>'abc'.isalpha()</code></td><td>True</td><td>O(n)</td></tr>
+<tr><td>isdigit()</td><td>All digits</td><td><code>'123'.isdigit()</code></td><td>True</td><td>O(n)</td></tr>
+<tr><td>isalnum()</td><td>Alphanumeric</td><td><code>'abc123'.isalnum()</code></td><td>True</td><td>O(n)</td></tr>
+<tr><td>isspace()</td><td>All whitespace</td><td><code>'   '.isspace()</code></td><td>True</td><td>O(n)</td></tr>
+<tr><td>isupper()</td><td>All uppercase</td><td><code>'ABC'.isupper()</code></td><td>True</td><td>O(n)</td></tr>
+<tr><td>islower()</td><td>All lowercase</td><td><code>'abc'.islower()</code></td><td>True</td><td>O(n)</td></tr>
+<tr><td>istitle()</td><td>Title case</td><td><code>'Hello World'.istitle()</code></td><td>True</td><td>O(n)</td></tr>
+<tr><td>isdecimal()</td><td>Decimal characters</td><td><code>'123'.isdecimal()</code></td><td>True</td><td>O(n)</td></tr>
+<tr><td>isnumeric()</td><td>Numeric characters</td><td><code>'①②③'.isnumeric()</code></td><td>True</td><td>O(n)</td></tr>
+<tr><td>isidentifier()</td><td>Valid identifier</td><td><code>'var_1'.isidentifier()</code></td><td>True</td><td>O(n)</td></tr>
+<tr><td>isprintable()</td><td>All printable</td><td><code>'abc'.isprintable()</code></td><td>True</td><td>O(n)</td></tr>
+<tr><td>isascii()</td><td>All ASCII</td><td><code>'abc'.isascii()</code></td><td>True</td><td>O(n)</td></tr>
+</table>
+
+<pre>
+# Validation examples
+print('Hello'.isalpha())         # True
+print('Hello123'.isalpha())      # False
+print('123'.isdigit())           # True
+print('Hello123'.isalnum())      # True
+print('   '.isspace())           # True
+print('HELLO'.isupper())         # True
+print('hello'.islower())         # True
+print('Hello World'.istitle())   # True
+print('var_name'.isidentifier()) # True
+print('2var'.isidentifier())     # False
+</pre>
+
+<div class="tip">
+<strong>💡 Pro Tip:</strong> Use validation methods for input sanitization and data cleaning before processing.
+</div>
+</details>
+
+<!-- 8️⃣ Formatting Methods -->
+<details>
+<summary>8️⃣ String Methods — Formatting & Alignment</summary>
+
+<table>
+<tr><th>Method</th><th>Description</th><th>Example</th><th>Output</th><th>Time</th></tr>
+<tr><td>strip()</td><td>Remove leading/trailing</td><td><code>'  hi  '.strip()</code></td><td>hi</td><td>O(n)</td></tr>
+<tr><td>lstrip()</td><td>Remove left whitespace</td><td><code>'  hi'.lstrip()</code></td><td>hi</td><td>O(n)</td></tr>
+<tr><td>rstrip()</td><td>Remove right whitespace</td><td><code>'hi  '.rstrip()</code></td><td>hi</td><td>O(n)</td></tr>
+<tr><td>center(width)</td><td>Center align</td><td><code>'hi'.center(6)</code></td><td>'  hi  '</td><td>O(n)</td></tr>
+<tr><td>ljust(width)</td><td>Left justify</td><td><code>'hi'.ljust(5)</code></td><td>'hi   '</td><td>O(n)</td></tr>
+<tr><td>rjust(width)</td><td>Right justify</td><td><code>'hi'.rjust(5)</code></td><td>'   hi'</td><td>O(n)</td></tr>
+<tr><td>zfill(width)</td><td>Pad with zeros</td><td><code>'42'.zfill(5)</code></td><td>00042</td><td>O(n)</td></tr>
+<tr><td>expandtabs()</td><td>Expand tabs</td><td><code>'a\tb'.expandtabs(4)</code></td><td>'a   b'</td><td>O(n)</td></tr>
+</table>
+
+<pre>
+# Trimming
+s = "   Hello World   "
+print(s.strip())         # 'Hello World'
+print(s.lstrip())        # 'Hello World   '
+print(s.rstrip())        # '   Hello World'
+print('...hi...'.strip('.'))  # 'hi'
+
+# Alignment
+print('Python'.center(10))     # '  Python  '
+print('Python'.ljust(10, '-')) # 'Python----'
+print('Python'.rjust(10, '-')) # '----Python'
+print('42'.zfill(5))           # '00042'
+print('-42'.zfill(5))          # '-0042'
+</pre>
+</details>
+
+<!-- 9️⃣ String Formatting -->
+<details>
+<summary>9️⃣ String Formatting Techniques</summary>
+
+<table>
+<tr><th>Method</th><th>Syntax</th><th>Example</th><th>Output</th></tr>
+<tr><td>% formatting</td><td><code>"%s %d" % (s, n)</code></td><td><code>"Hi %s" % "Bob"</code></td><td>Hi Bob</td></tr>
+<tr><td>format()</td><td><code>"{} {}".format(a,b)</code></td><td><code>"Hi {}".format("Bob")</code></td><td>Hi Bob</td></tr>
+<tr><td>f-strings</td><td><code>f"{var}"</code></td><td><code>f"Hi {name}"</code></td><td>Hi Bob</td></tr>
+<tr><td>Template</td><td><code>Template("$var")</code></td><td><code>t.substitute(var=5)</code></td><td>5</td></tr>
+</table>
+
+<pre>
+name = "Alice"
+age = 25
+score = 95.5
+
+# Old style (%)
+print("Name: %s, Age: %d" % (name, age))
+
+# format() method
+print("Name: {}, Age: {}".format(name, age))
+print("Name: {0}, Age: {1}".format(name, age))
+print("Name: {n}, Age: {a}".format(n=name, a=age))
+
+# f-strings (Python 3.6+) - RECOMMENDED
+print(f"Name: {name}, Age: {age}")
+print(f"Score: {score:.1f}")           # 95.5
+print(f"Name: {name.upper()}")         # ALICE
+print(f"{age:05d}")                    # 00025
+
+# Advanced formatting
+print(f"{score:10.2f}")                # '     95.50'
+print(f"{name:<10}")                   # 'Alice     '
+print(f"{name:>10}")                   # '     Alice'
+print(f"{name:^10}")                   # '  Alice   '
+</pre>
+
+<div class="tip">
+<strong>💡 Best Practice:</strong> Use f-strings for modern Python code. They're faster, more readable, and support expressions.
+</div>
+</details>
+
+<!-- 🔟 String Operations -->
+<details>
+<summary>🔟 String Operations & Operators</summary>
+
+<table>
+<tr><th>Operation</th><th>Operator</th><th>Example</th><th>Output</th><th>Time</th></tr>
+<tr><td>Concatenation</td><td>+</td><td><code>'Hi' + ' ' + 'Bob'</code></td><td>Hi Bob</td><td>O(n+m)</td></tr>
+<tr><td>Repetition</td><td>*</td><td><code>'Ha' * 3</code></td><td>HaHaHa</td><td>O(n*k)</td></tr>
+<tr><td>Membership</td><td>in</td><td><code>'a' in 'abc'</code></td><td>True</td><td>O(n*m)</td></tr>
+<tr><td>Not in</td><td>not in</td><td><code>'x' not in 'abc'</code></td><td>True</td><td>O(n*m)</td></tr>
+<tr><td>Comparison</td><td>==, !=</td><td><code>'a' == 'a'</code></td><td>True</td><td>O(n)</td></tr>
+<tr><td>Lexicographic</td><td>&lt;, &gt;, &lt;=, &gt;=</td><td><code>'a' < 'b'</code></td><td>True</td><td>O(n)</td></tr>
+<tr><td>Length</td><td>len()</td><td><code>len('hello')</code></td><td>5</td><td>O(1)</td></tr>
+</table>
+
+<pre>
+# Concatenation
+s1 = "Hello"
+s2 = "World"
+print(s1 + " " + s2)        # Hello World
+
+# Repetition
+print("=" * 20)             # ====================
+print("Ha" * 3)             # HaHaHa
+
+# Membership
+print('o' in 'Hello')       # True
+print('x' not in 'Hello')   # True
+
+# Comparison (lexicographic order)
+print('apple' < 'banana')   # True
+print('abc' == 'abc')       # True
+print('Zoo' < 'apple')      # True (uppercase < lowercase)
+
+# Iteration
+for char in "Python":
+    print(char, end=' ')    # P y t h o n
+</pre>
+
+<div class="note">
+<strong>⚠️ Performance:</strong> Avoid repeated concatenation in loops. Use <code>join()</code> instead for better performance.
+</div>
+
+<pre>
+# ❌ Slow (creates new string each time)
+result = ""
+for i in range(1000):
+    result += str(i)
+
+# ✅ Fast (single join operation)
+result = ''.join(str(i) for i in range(1000))
+</pre>
+</details>
+
+<!-- 1️⃣1️⃣ Encoding & Decoding -->
+<details>
+<summary>1️⃣1️⃣ Encoding & Decoding</summary>
+
+<table>
+<tr><th>Method</th><th>Description</th><th>Example</th><th>Output Type</th></tr>
+<tr><td>encode()</td><td>String to bytes</td><td><code>'hello'.encode('utf-8')</code></td><td>bytes</td></tr>
+<tr><td>decode()</td><td>Bytes to string</td><td><code>b'hello'.decode('utf-8')</code></td><td>str</td></tr>
+<tr><td>bytes()</td><td>Create bytes object</td><td><code>bytes('hi', 'utf-8')</code></td><td>bytes</td></tr>
+</table>
+
+<pre>
+# Encoding
+text = "Hello 🐍"
+encoded = text.encode('utf-8')
+print(encoded)              # b'Hello \xf0\x9f\x90\x8d'
+print(type(encoded))        # &lt;class 'bytes'&gt;
+
+# Decoding
+decoded = encoded.decode('utf-8')
+print(decoded)              # Hello 🐍
+print(type(decoded))        # &lt;class 'str'&gt;
+
+# Different encodings
+print(text.encode('ascii', errors='ignore'))  # b'Hello '
+print(text.encode('utf-16'))
+</pre>
+</details>
+
+<!-- 1️⃣2️⃣ Advanced String Methods -->
+<details>
+<summary>1️⃣2️⃣ Advanced String Methods</summary>
+
+<table>
+<tr><th>Method</th><th>Description</th><th>Example</th><th>Output</th></tr>
+<tr><td>translate()</td><td>Character mapping</td><td><code>s.translate(table)</code></td><td>Mapped string</td></tr>
+<tr><td>maketrans()</td><td>Create translation table</td><td><code>str.maketrans('abc','123')</code></td><td>Translation dict</td></tr>
+<tr><td>removeprefix()</td><td>Remove prefix (3.9+)</td><td><code>'Hello'.removeprefix('He')</code></td><td>llo</td></tr>
+<tr><td>removesuffix()</td><td>Remove suffix (3.9+)</td><td><code>'Hello'.removesuffix('lo')</code></td><td>Hel</td></tr>
+</table>
+
+<pre>
+# Translation
+text = "hello world"
+trans_table = str.maketrans('helo', '1234')
+print(text.translate(trans_table))  # 1233 w4r3d
+
+# Remove vowels
+trans = str.maketrans('', '', 'aeiou')
+print("hello world".translate(trans))  # hll wrld
+
+# Prefix/Suffix removal (Python 3.9+)
+s = "TestString"
+print(s.removeprefix('Test'))    # String
+print(s.removesuffix('ing'))     # TestStr
+</pre>
+</details>
+
+<!-- 1️⃣3️⃣ String Iteration -->
+<details>
+<summary>1️⃣3️⃣ Iteration Techniques</summary>
+
+<pre>
+text = "Python"
+
+# Basic iteration
+for char in text:
+    print(char)
+
+# With index using enumerate
+for i, char in enumerate(text):
+    print(f"Index {i}: {char}")
+
+# Reverse iteration
+for char in reversed(text):
+    print(char)
+
+# Zip multiple strings
+s1 = "abc"
+s2 = "123"
+for c1, c2 in zip(s1, s2):
+    print(f"{c1}-{c2}")    # a-1, b-2, c-3
+
+# Iterate with step
+for i in range(0, len(text), 2):
+    print(text[i])         # P, t, o
+</pre>
+</details>
+
+<!-- 1️⃣4️⃣ String Comprehensions -->
+<details>
+<summary>1️⃣4️⃣ String Comprehensions & Generators</summary>
+
+<pre>
+# List comprehension with strings
+text = "Hello World"
+vowels = [c for c in text if c.lower() in 'aeiou']
+print(vowels)  # ['e', 'o', 'o']
+
+# Convert to uppercase
+upper_chars = [c.upper() for c in text]
+print(''.join(upper_chars))  # HELLO WORLD
+
+# Get ASCII values
+ascii_vals = [ord(c) for c in "abc"]
+print(ascii_vals)  # [97, 98, 99]
+
+# Filter and transform
+digits = [c for c in "a1b2c3" if c.isdigit()]
+print(digits)  # ['1', '2', '3']
+
+# Generator expression (memory efficient)
+gen = (c.upper() for c in "hello")
+print(''.join(gen))  # HELLO
+</pre>
+</details>
+
+<!-- 1️⃣5️⃣ Memory & Optimization -->
+<details>
+<summary>1️⃣5️⃣ Memory Management & Optimization</summary>
+
+<div class="ascii">
+String Interning (Optimization):
+
+s1 = "hello"     Address: 0x1000
+s2 = "hello"     Address: 0x1000  (same!)
+
+Python reuses identical string objects
+</div>
+
+<pre>
+import sys
+
+# String interning
+s1 = "hello"
+s2 = "hello"
+print(id(s1) == id(s2))      # True (same object)
+print(s1 is s2)              # True
+
+# Memory size
+print(sys.getsizeof(""))     # 49 bytes (empty)
+print(sys.getsizeof("a"))    # 50 bytes
+print(sys.getsizeof("hello")) # 54 bytes
+
+# Intern strings manually
+s3 = sys.intern("test" + "ing")
+s4 = sys.intern("test" + "ing")
+print(s3 is s4)              # True
+
+# String buffer vs concatenation
+# ❌ Inefficient: O(n²)
+result = ""
+for i in range(1000):
+    result += str(i)
+
+# ✅ Efficient: O(n)
+result = ''.join(str(i) for i in range(1000))
+</pre>
+
+<div class="tip">
+<strong>💡 Optimization Tips:</strong>
+<ul>
+<li>Use <code>join()</code> instead of <code>+=</code> for multiple concatenations</li>
+<li>Use string interning for frequently compared strings</li>
+<li>Use f-strings for formatting (faster than %)</li>
+<li>Use generators for large text processing</li>
+</ul>
+</div>
+</details>
+
+<!-- 1️⃣6️⃣ Common String Patterns -->
+<details>
+<summary>1️⃣6️⃣ Common String Patterns & Algorithms</summary>
+
+<pre>
+# 1. Reverse a string
+def reverse_string(s):
+    return s[::-1]
+# Or: ''.join(reversed(s))
+
+# 2. Check palindrome
+def is_palindrome(s):
+    return s == s[::-1]
+
+# 3. Count character frequency
+def char_frequency(s):
+    freq = {}
+    for c in s:
+        freq[c] = freq.get(c, 0) + 1
+    return freq
+# Or: from collections import Counter; Counter(s)
+
+# 4. Remove duplicates (preserve order)
+def remove_duplicates(s):
+    seen = set()
+    result = []
+    for c in s:
+        if c not in seen:
+            seen.add(c)
+            result.append(c)
+    return ''.join(result)
+
+# 5. Check anagram
+def are_anagrams(s1, s2):
+    return sorted(s1) == sorted(s2)
+
+# 6. First non-repeating character
+def first_unique_char(s):
+    freq = {}
+    for c in s:
+        freq[c] = freq.get(c, 0) + 1
+    for c in s:
+        if freq[c] == 1:
+            return c
+    return None
+
+# 7. Longest substring without repeating chars
+def longest_unique_substring(s):
+    seen = {}
+    start = max_len = 0
+    for i, c in enumerate(s):
+        if c in seen and seen[c] >= start:
+            start = seen[c] + 1
+        seen[c] = i
+        max_len = max(max_len, i - start + 1)
+    return max_len
+
+# 8. String rotation check
+def is_rotation(s1, s2):
+    return len(s1) == len(s2) and s2 in (s1 + s1)
+</pre>
+</details>
+
+<!-- 1️⃣7️⃣ Time Complexity Reference -->
+<details>
+<summary>1️⃣7️⃣ Time Complexity Reference</summary>
+
+<table>
+<tr><th>Operation</th><th>Time Complexity</th><th>Notes</th></tr>
+<tr><td>Access by index</td><td>O(1)</td><td>Direct memory access</td></tr>
+<tr><td>Length len()</td><td>O(1)</td><td>Stored as metadata</td></tr>
+<tr><td>Concatenation (+)</td><td>O(n+m)</td><td>Creates new string</td></tr>
+<tr><td>Slicing [i:j]</td><td>O(k)</td><td>k = slice length</td></tr>
+<tr><td>find() / in</td><td>O(n*m)</td><td>n=string, m=pattern</td></tr>
+<tr><td>replace()</td><td>O(n)</td><td>Single pass</td></tr>
+<tr><td>split()</td><td>O(n)</td><td>Single pass</td></tr>
+<tr><td>join()</td><td>O(n)</td><td>n = total chars</td></tr>
+<tr><td>upper() / lower()</td><td>O(n)</td><td>Process each char</td></tr>
+<tr><td>strip()</td><td>O(n)</td><td>Two passes (worst)</td></tr>
+<tr><td>Comparison (==)</td><td>O(n)</td><td>Character by character</td></tr>
+</table>
+
+<div class="ascii">
+Concatenation Complexity:
+
+# O(n²) - Avoid!
+result = ""
+for i in range(n):
+    result += str(i)    # Creates new string each time
+
+# O(n) - Preferred
+result = ''.join(str(i) for i in range(n))
+</div>
+</details>
+
+<!-- 1️⃣8️⃣ String vs Other Types -->
+<details>
+<summary>1️⃣8️⃣ Comparison: String vs List vs Tuple</summary>
+
+<table>
+<tr><th>Feature</th><th>String</th><th>List</th><th>Tuple</th></tr>
+<tr><td>Mutable</td><td>❌ No</td><td>✅ Yes</td><td>❌ No</td></tr>
+<tr><td>Ordered</td><td>✅ Yes</td><td>✅ Yes</td><td>✅ Yes</td></tr>
+<tr><td>Indexed</td><td>✅ Yes</td><td>✅ Yes</td><td>✅ Yes</td></tr>
+<tr><td>Duplicates</td><td>✅ Allowed</td><td>✅ Allowed</td><td>✅ Allowed</td></tr>
+<tr><td>Stores</td><td>Characters only</td><td>Any type</td><td>Any type</td></tr>
+<tr><td>Slicing</td><td>✅ Yes</td><td>✅ Yes</td><td>✅ Yes</td></tr>
+<tr><td>Methods</td><td>50+ string methods</td><td>11 list methods</td><td>2 tuple methods</td></tr>
+<tr><td>Memory</td><td>Efficient</td><td>More overhead</td><td>Most efficient</td></tr>
+<tr><td>Use Case</td><td>Text processing</td><td>Dynamic collections</td><td>Fixed collections</td></tr>
+</table>
+</details>
+
+<!-- 1️⃣9️⃣ LeetCode Practice -->
+<details open>
+<summary>1️⃣9️⃣ LeetCode Practice Problems</summary>
+
+<h3>🟢 Easy Problems</h3>
+<ul>
+<li><a href="https://leetcode.com/problems/reverse-string/">#344 Reverse String</a></li>
+<li><a href="https://leetcode.com/problems/valid-palindrome/">#125 Valid Palindrome</a></li>
+<li><a href="https://leetcode.com/problems/valid-anagram/">#242 Valid Anagram</a></li>
+<li><a href="https://leetcode.com/problems/first-unique-character-in-a-string/">#387 First Unique Character</a></li>
+<li><a href="https://leetcode.com/problems/ransom-note/">#383 Ransom Note</a></li>
+<li><a href="https://leetcode.com/problems/reverse-vowels-of-a-string/">#345 Reverse Vowels</a></li>
+<li><a href="https://leetcode.com/problems/longest-common-prefix/">#14 Longest Common Prefix</a></li>
+</ul>
+
+<h3>🟡 Medium Problems</h3>
+<ul>
+<li><a href="https://leetcode.com/problems/longest-substring-without-repeating-characters/">#3 Longest Substring Without Repeating Characters</a></li>
+<li><a href="https://leetcode.com/problems/longest-palindromic-substring/">#5 Longest Palindromic Substring</a></li>
+<li><a href="https://leetcode.com/problems/group-anagrams/">#49 Group Anagrams</a></li>
+<li><a href="https://leetcode.com/problems/string-to-integer-atoi/">#8 String to Integer (atoi)</a></li>
+<li><a href="https://leetcode.com/problems/zigzag-conversion/">#6 Zigzag Conversion</a></li>
+<li><a href="https://leetcode.com/problems/decode-string/">#394 Decode String</a></li>
+<li><a href="https://leetcode.com/problems/longest-repeating-character-replacement/">#424 Longest Repeating Character Replacement</a></li>
+</ul>
+
+<h3>🔴 Hard Problems</h3>
+<ul>
+<li><a href="https://leetcode.com/problems/regular-expression-matching/">#10 Regular Expression Matching</a></li>
+<li><a href="https://leetcode.com/problems/minimum-window-substring/">#76 Minimum Window Substring</a></li>
+<li><a href="https://leetcode.com/problems/edit-distance/">#72 Edit Distance</a></li>
+<li><a href="https://leetcode.com/problems/distinct-subsequences/">#115 Distinct Subsequences</a></li>
+</ul>
+</details>
+
+<!-- 2️⃣0️⃣ Interview Questions -->
+<details>
+<summary>2️⃣0️⃣ Top Interview Questions</summary>
+
+<h3>Conceptual Questions</h3>
+<ol>
+<li><strong>Why are strings immutable in Python?</strong>
+   <p>Strings are immutable for hashability (use in dicts/sets), optimization (string interning), thread safety, and security (prevent unauthorized changes).</p>
+</li>
+
+<li><strong>Difference between find() and index()?</strong>
+   <p><code>find()</code> returns -1 if not found; <code>index()</code> raises ValueError.</p>
+</li>
+
+<li><strong>What is string interning?</strong>
+   <p>Python reuses identical string objects to save memory. Small strings are automatically interned.</p>
+</li>
+
+<li><strong>Difference between str() and repr()?</strong>
+   <p><code>str()</code> is human-readable; <code>repr()</code> is developer-friendly (shows quotes, escape chars).</p>
+</li>
+
+<li><strong>How are Unicode strings stored?</strong>
+   <p>Python 3 uses flexible string representation: Latin-1, UCS-2, or UCS-4 based on characters present.</p>
+</li>
+</ol>
+
+<h3>Coding Problems</h3>
+<ol>
+<li>Reverse a string without using slicing</li>
+<li>Check if two strings are anagrams</li>
+<li>Count vowels and consonants efficiently</li>
+<li>Find the most frequent character</li>
+<li>Remove all duplicate characters</li>
+<li>Check if string is rotation of another</li>
+<li>Implement string compression (e.g., "aabcc" → "a2b1c2")</li>
+<li>Find all permutations of a string</li>
+<li>Longest palindromic substring</li>
+<li>Validate parentheses/brackets</li>
+</ol>
+</details>
+
+<!-- 2️⃣1️⃣ Practice Exercises -->
+<details>
+<summary>2️⃣1️⃣ Practice Exercises (with Solutions)</summary>
+
+<pre>
+# Exercise 1: Reverse string without slicing
+def reverse_manual(s):
+    result = ""
+    for c in s:
+        result = c + result
+    return result
+
+# Exercise 2: Count words
+def count_words(s):
+    return len(s.split())
+
+# Exercise 3: Title case manually
+def manual_title(s):
+    words = s.split()
+    return ' '.join(w[0].upper() + w[1:].lower() for w in words)
+
+# Exercise 4: Remove duplicates (preserve order)
+def remove_dups(s):
+    seen = set()
+    result = []
+    for c in s:
+        if c not in seen:
+            seen.add(c)
+            result.append(c)
+    return ''.join(result)
+
+# Exercise 5: Character frequency
+def char_freq(s):
+    freq = {}
+    for c in s:
+        freq[c] = freq.get(c, 0) + 1
+    return freq
+
+# Exercise 6: Is rotation?
+def is_rotation(s1, s2):
+    return len(s1) == len(s2) and s1 in (s2 + s2)
+
+# Exercise 7: String compression
+def compress(s):
+    if not s:
+        return ""
+    result = []
+    count = 1
+    for i in range(1, len(s)):
+        if s[i] == s[i-1]:
+            count += 1
+        else:
+            result.append(s[i-1] + str(count))
+            count = 1
+    result.append(s[-1] + str(count))
+    compressed = ''.join(result)
+    return compressed if len(compressed) < len(s) else s
+
+# Exercise 8: Find all digits
+def extract_digits(s):
+    return ''.join(c for c in s if c.isdigit())
+
+# Exercise 9: Replace spaces with underscores
+def replace_spaces(s):
+    return s.replace(' ', '_')
+
+# Exercise 10: Check palindrome (ignore case & spaces)
+def is_palindrome_clean(s):
+    s = ''.join(c.lower() for c in s if c.isalnum())
+    return s == s[::-1]
+</pre>
+</details>
+
+<!-- 2️⃣2️⃣ Real-Life Analogy -->
+<details>
+<summary>2️⃣2️⃣ Real-Life Analogy</summary>
+
+<div class="ascii">
+🎫 String = Printed Name Tag
+
+┌─────────────────┐
+│   HELLO WORLD   │  ← Cannot edit letters on printed tag
+└─────────────────┘
+
+To "change" it:
+✗ Cannot erase/modify existing tag
+✓ Must create entirely new tag
+
+This is why strings are IMMUTABLE!
+</div>
+
+<p>Think of a string like a <strong>printed document</strong> 📄. You can:</p>
+<ul>
+<li>✅ Read it (indexing)</li>
+<li>✅ Make copies (slicing)</li>
+<li>✅ Print a modified version (methods)</li>
+<li>❌ Edit the original document</li>
+</ul>
+
+<p>Every "modification" creates a <strong>new document</strong>, leaving the original intact.</p>
+</details>
+
+<!-- 2️⃣3️⃣ Quick Reference -->
+<details>
+<summary>2️⃣3️⃣ Quick Method Reference Cheat Sheet</summary>
+
+<table>
+<tr><th>Category</th><th>Methods</th></tr>
+<tr><td><strong>Case</strong></td><td>upper(), lower(), title(), capitalize(), swapcase()</td></tr>
+<tr><td><strong>Search</strong></td><td>find(), rfind(), index(), rindex(), count()</td></tr>
+<tr><td><strong>Check</strong></td><td>startswith(), endswith(), in</td></tr>
+<tr><td><strong>Validate</strong></td><td>isalpha(), isdigit(), isalnum(), isspace(), isupper(), islower()</td></tr>
+<tr><td><strong>Split/Join</strong></td><td>split(), rsplit(), splitlines(), join(), partition()</td></tr>
+<tr><td><strong>Replace</strong></td><td>replace(), translate(), maketrans()</td></tr>
+<tr><td><strong>Trim</strong></td><td>strip(), lstrip(), rstrip()</td></tr>
+<tr><td><strong>Align</strong></td><td>center(), ljust(), rjust(), zfill()</td></tr>
+<tr><td><strong>Encode</strong></td><td>encode(), decode()</td></tr>
+</table>
+</details>
+
+<!-- 2️⃣4️⃣ Best Practices -->
+<details>
+<summary>2️⃣4️⃣ Best Practices & Tips</summary>
+
+<div class="tip">
+<h3>✅ DO</h3>
+<ul>
+<li>Use f-strings for formatting (Python 3.6+)</li>
+<li>Use <code>join()</code> for concatenating multiple strings</li>
+<li>Use <code>startswith()</code>/<code>endswith()</code> instead of slicing for checks</li>
+<li>Use <code>in</code> operator for substring checking</li>
+<li>Use raw strings (r"...") for regex patterns</li>
+<li>Cache compiled regex patterns if used repeatedly</li>
+<li>Use generators for large text processing</li>
+</ul>
+</div>
+
+<div class="note">
+<h3>❌ DON'T</h3>
+<ul>
+<li>Don't use <code>+=</code> in loops for concatenation</li>
+<li>Don't check <code>len(s) == 0</code>, use <code>not s</code></li>
+<li>Don't use <code>str[0:1]</code> when <code>str[0]</code> works</li>
+<li>Don't ignore encoding when reading files</li>
+<li>Don't use <code>s[len(s)-1]</code>, use <code>s[-1]</code></li>
+</ul>
+</div>
+
+<pre>
+# ✅ Good practices
+name = "Alice"
+age = 30
+message = f"Hello {name}, you are {age}"  # f-string
+
+words = ["Python", "is", "awesome"]
+sentence = " ".join(words)                # join()
+
+if text.startswith("Hello"):              # startswith()
+    print("Greeting found")
+
+# ❌ Bad practices
+message = "Hello " + name + ", you are " + str(age)  # slow
+sentence = words[0] + " " + words[1] + " " + words[2]  # tedious
+if text[0:5] == "Hello":                  # slice comparison
+    print("Greeting found")
+</pre>
+</details>
+
+<!-- Footer -->
+<div style="margin-top: 40px; padding: 20px; background: #e3f2fd; border-radius: 10px; text-align: center;">
+<h3>📚 Part of Python DSA Visuals Collection</h3>
+<p>Complete, visual, and practice-ready • Perfect for interviews and competitive programming</p>
+<p style="color: #666; font-size: 14px;">Practice 2-3 string problems daily • Master patterns before moving to advanced topics</p>
+</div>
+
+</div>
+</body>
+</html>
