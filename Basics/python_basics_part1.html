@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Python Fundamentals — Complete Hub (All Basic Data Types & Core Concepts)</title>
+<style>
+  :root{
+    --accent:#0070f3;
+    --card:#ffffff;
+    --muted:#6b7280;
+    --mono-bg:#0b1220;
+    --mono-color:#9fffb0;
+    --bg:#f8fafc;
+    --radius:10px;
+  }
+  body{
+    font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, Arial;
+    margin:28px;
+    background:var(--bg);
+    color:#111;
+  }
+  .container{max-width:1100px;margin:0 auto}
+  h1{color:var(--accent);text-align:left;margin:6px 0 8px;font-size:28px}
+  p.lead{color:var(--muted);margin-top:0;margin-bottom:12px}
+  .card{background:var(--card);border-radius:var(--radius);padding:16px;margin-bottom:12px;box-shadow:0 6px 18px rgba(10,20,40,0.06)}
+  details{border:1px solid rgba(3,102,214,0.06);border-radius:8px;padding:10px;background:#fff;margin:10px 0;}
+  summary{cursor:pointer;font-weight:600;color:var(--accent);outline:none;padding:6px 4px;font-size:16px}
+  .section-meta{color:var(--muted);font-size:13px;margin-top:6px}
+  table{width:100%;border-collapse:collapse;margin-top:12px}
+  th,td{padding:10px;border:1px solid #e6eef6;text-align:left;font-size:14px}
+  th{background:var(--accent);color:#fff}
+  pre.code{background:var(--mono-bg);color:var(--mono-color);padding:12px;border-radius:8px;overflow:auto;font-family:Consolas,monospace;font-size:13px}
+  .ascii{font-family:monospace;background:#f3f6fb;padding:10px;border-radius:8px;color:#0b1220;margin-top:8px}
+  ul{margin:8px 0 0 18px}
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .small{font-size:13px;color:var(--muted)}
+  .grid{display:grid;grid-template-columns:1fr 320px;gap:18px}
+  .side{position:sticky;top:20px}
+  .pill{display:inline-block;background:#eef6ff;color:var(--accent);padding:6px 8px;border-radius:999px;font-weight:600;font-size:13px;margin-right:6px}
+  @media (max-width:940px){.grid{grid-template-columns:1fr}.side{position:static}}
+  .quick-table td{vertical-align:top}
+  .footer{color:var(--muted);text-align:center;margin-top:18px}
+</style>
+</head>
+<body>
+  <div class="container">
+    <h1>🌈 Python Fundamentals — Complete Hub (All Basic Data Types & Core Concepts)</h1>
+    <p class="lead">One single HTML file containing core Python fundamentals: types, operators, control flow, functions, I/O, exceptions, memory, and practice — ready for GitHub Pages.</p>
+
+    <div class="grid">
+      <main>
+
+        <!-- 1 Python Basics -->
+        <div class="card">
+          <details open>
+            <summary>1 ▸ Python Basics</summary>
+            <div style="margin-top:10px">
+              <p><strong>What is Python?</strong> A high-level, interpreted, general-purpose language emphasizing readability and productivity.</p>
+              <ul>
+                <li>Interpreted → run code directly with `python file.py`</li>
+                <li>Dynamic typing → variable types determined at runtime</li>
+                <li>Popular for web, automation, data science, scripting and more</li>
+              </ul>
+
+              <h4 class="small">Quick playground (script vs interactive)</h4>
+              <pre class="code">
+# script: save to file and run `python script.py`
+print("Hello from script")
+
+# interactive: run `python` or use REPL/IDLE
+>>> x = 5
+>>> print(x)
+              </pre>
+
+              <p class="section-meta">Keywords, identifiers, comments & docstrings</p>
+              <pre class="code">
+# comment
+# This is a single line comment
+
+"""
+This is a docstring for modules/classes/functions.
+"""
+def greet():
+    """Return greeting string"""
+    return "Hello"
+              </pre>
+            </div>
+          </details>
+        </div>
+
+        <!-- 2 Variables & Data Types -->
+        <div class="card">
+          <details>
+            <summary>2 ▸ Variables & Data Types</summary>
+            <div style="margin-top:10px">
+              <p>Variables are labels referencing objects. Python variables are dynamically typed.</p>
+
+              <pre class="code">
+a = 10       # int
+a = "hello"  # now a references a str
+b = 3.14     # float
+              </pre>
+
+              <p class="small">Mutable vs Immutable</p>
+              <table>
+                <tr><th>Mutable</th><th>Immutable</th></tr>
+                <tr><td>list, dict, set, bytearray</td><td>int, float, bool, str, tuple, bytes</td></tr>
+              </table>
+
+              <h4 class="small">Useful functions</h4>
+              <pre class="code">
+x = 5
+print(type(x))   # <class 'int'>
+print(id(x))     # object memory identity (unique during lifetime)
+              </pre>
+            </div>
+          </details>
+        </div>
+
+        <!-- 3 Primitive Types -->
+        <div class="card">
+          <details>
+            <summary>3 ▸ Primitive (Basic) Data Types</summary>
+            <div style="margin-top:10px">
+              <table>
+                <tr><th>Category</th><th>Type</th><th>Example</th></tr>
+                <tr><td>Numeric</td><td><code>int, float, complex, bool</code></td><td><code>10, 3.14, 2+3j, True</code></td></tr>
+                <tr><td>Text</td><td><code>str</code></td><td><code>'hello'</code></td></tr>
+                <tr><td>Binary</td><td><code>bytes, bytearray, memoryview</code></td><td>Low-level data</td></tr>
+                <tr><td>None</td><td><code>NoneType</code></td><td><code>None</code></td></tr>
+              </table>
+
+              <h4 style="margin-top:10px">Examples</h4>
+              <pre class="code">
+# integers & floats
+i = 42
+f = 3.1415
+
+# complex
+c = 1 + 2j
+
+# boolean
+b1 = True
+b2 = False
+
+# bytes
+bb = b'hello'
+              </pre>
+            </div>
+          </details>
+        </div>
+
+        <!-- 4 Type Conversion -->
+        <div class="card">
+          <details>
+            <summary>4 ▸ Type Conversion</summary>
+            <div style="margin-top:10px">
+              <p>Implicit vs explicit casting</p>
+              <pre class="code">
+# implicit: during operations (int + float -> float)
+x = 5 + 2.0   # 7.0
+
+# explicit
+s = "123"
+n = int(s)    # 123
+f = float("3.14")
+txt = str(100)
+              </pre>
+
+              <p class="small">Common pitfalls</p>
+              <pre class="code">
+# invalid literal
+int("10a")   # ValueError
+              </pre>
+            </div>
+          </details>
+        </div>
+
+        <!-- 5 Operators -->
+        <div class="card">
+          <details>
+            <summary>5 ▸ Operators (Arithmetic, Comparison, Logical, Bitwise, Assignment, Identity, Membership)</summary>
+            <div style="margin-top:10px">
+              <table>
+                <tr><th>Category</th><th>Operators</th><th>Example</th></tr>
+                <tr><td>Arithmetic</td><td><code>+ - * / // % **</code></td><td><code>5//2 -> 2, 2**3 -> 8</code></td></tr>
+                <tr><td>Comparison</td><td><code>== != &gt; &lt; &gt;= &lt;=</code></td><td><code>5 &gt; 3 -> True</code></td></tr>
+                <tr><td>Logical</td><td><code>and or not</code></td><td><code>True and False -> False</code></td></tr>
+                <tr><td>Bitwise</td><td><code>& | ^ ~ &lt;&lt; &gt;&gt;</code></td><td><code>5 &amp; 3 -> 1</code></td></tr>
+                <tr><td>Assignment</td><td><code>= += -= *= /= //=</code></td><td><code>x += 1</code></td></tr>
+                <tr><td>Identity</td><td><code>is, is not</code></td><td><code>a is b</code></td></tr>
+                <tr><td>Membership</td><td><code>in, not in</code></td><td><code>'a' in 'cat' -> True</code></td></tr>
+              </table>
+
+              <h4 class="small" style="margin-top:10px">Operator precedence (top few)</h4>
+              <pre class="code">
+# precedence (high -> low): **
+# then *, /, //, %
+# then +, -
+# then <<, >>
+# then &, ^, |
+# then comparisons, then not, and, or
+              </pre>
+            </div>
+          </details>
+        </div>
+
+        <!-- 6 Strings -->
+        <div class="card">
+          <details>
+            <summary>6 ▸ Strings</summary>
+            <div style="margin-top:10px">
+              <p>Strings are immutable sequences of Unicode characters.</p>
+
+              <pre class="code">
+s = "Hello, World"
+# indexing & slicing
+print(s[0])     # H
+print(s[2:7])   # llo, 
+print(s[-1])    # d
+
+# f-strings
+name = "Anil"
+print(f"Hi {name}, score={95}")  # Hi Anil, score=95
+              </pre>
+
+              <p class="small">Common string methods</p>
+              <table>
+                <tr><th>Method</th><th>Example</th><th>Output</th></tr>
+                <tr><td><code>upper()</code></td><td><code>'a'.upper()</code></td><td><code>'A'</code></td></tr>
+                <tr><td><code>find()</code></td><td><code>'abc'.find('b')</code></td><td><code>1</code></td></tr>
+                <tr><td><code>replace()</code></td><td><code>'aab'.replace('a','x')</code></td><td><code>'xxb'</code></td></tr>
+              </table>
+            </div>
+          </details>
+        </div>
+
+        <!-- 7 Data Structures preview -->
+        <div class="card">
+          <details>
+            <summary>7 ▸ Data Structures (Quick Preview & Links)</summary>
+            <div style="margin-top:10px">
+              <p>Core collection types (full pages exist):</p>
+              <ul>
+                <li><span class="pill">List</span> Ordered, mutable — <a href="list.html">list reference</a></li>
+                <li><span class="pill">Tuple</span> Ordered, immutable — <a href="tuples.html">tuple reference</a></li>
+                <li><span class="pill">Set</span> Unordered, unique — <a href="sets.html">set reference</a></li>
+                <li><span class="pill">Dictionary</span> Key→value mapping — <a href="dictionary.html">dict reference</a></li>
+              </ul>
+
+              <h4 class="small">Quick code</h4>
+              <pre class="code">
+lst = [1,2,3]
+tup = (1,2)
+s = {1,2,3}
+d = {'a':1, 'b':2}
+              </pre>
+            </div>
+          </details>
+        </div>
+
+        <!-- 8 Control Flow -->
+        <div class="card">
+          <details>
+            <summary>8 ▸ Control Flow (if / for / while)</summary>
+            <div style="margin-top:10px">
+              <h4 class="small">If / elif / else</h4>
+              <pre class="code">
+x = 5
+if x &gt; 10:
+    print("Large")
+elif x &gt;= 5:
+    print("Medium")
+else:
+    print("Small")
+              </pre>
+
+              <h4 class="small" style="margin-top:8px">For loop & range()</h4>
+              <pre class="code">
+for i in range(5):   # 0..4
+    print(i)
+
+for i, val in enumerate(['a','b']):
+    print(i, val)
+              </pre>
+
+              <h4 class="small" style="margin-top:8px">While & control keywords</h4>
+              <pre class="code">
+i = 0
+while i &lt; 3:
+    i += 1
+    if i == 2:
+        continue
+    if i == 3:
+        break
+else:
+    # else runs if loop completes without break
+    pass
+              </pre>
+
+              <div class="ascii">
+Loop flow:
+start -> condition? -> true -> body -> update -> back to condition
+                    -> false -> exit
+              </div>
+            </div>
+          </details>
+        </div>
+
+        <!-- 9 Functions -->
+        <div class="card">
+          <details>
+            <summary>9 ▸ Functions</summary>
+            <div style="margin-top:10px">
+              <p>Define with <code>def</code>. Functions are first-class objects.</p>
+
+              <pre class="code">
+def add(a, b=0):
+    return a + b
+
+print(add(2,3))    # 5
+
+# variable arguments
+def f(*args, **kwargs):
+    print(args, kwargs)
+
+f(1,2,x=3)
+              </pre>
+
+              <h4 class="small" style="margin-top:8px">Lambda, map, filter, reduce</h4>
+              <pre class="code">
+# lambda
+square = lambda x: x*x
+print(square(3))   # 9
+
+# map & filter
+nums = [1,2,3,4]
+print(list(map(lambda x: x*2, nums)))
+print(list(filter(lambda x: x%2==0, nums)))
+
+# reduce (from functools)
+from functools import reduce
+print(reduce(lambda a,b: a+b, nums))  # 10
+              </pre>
+            </div>
+          </details>
+        </div>
+
+        <!-- 10 Input / Output -->
+        <div class="card">
+          <details>
+            <summary>10 ▸ Input / Output (I/O)</summary>
+            <div style="margin-top:10px">
+              <h4 class="small">Console I/O</h4>
+              <pre class="code">
+name = input("Name: ")
+age = int(input("Age: "))
+print(f"Hello {name}, age {age}")
+              </pre>
+
+              <h4 class="small" style="margin-top:8px">File I/O</h4>
+              <pre class="code">
+# read
+with open('data.txt', 'r', encoding='utf-8') as f:
+    text = f.read()
+
+# write
+with open('out.txt', 'w', encoding='utf-8') as f:
+    f.write("Hello")
+              </pre>
+
+              <p class="small">Use <code>os.path</code> for path operations (see docs).</p>
+            </div>
+          </details>
+        </div>
+
+        <!-- 11 Exception Handling -->
+        <div class="card">
+          <details>
+            <summary>11 ▸ Exception Handling</summary>
+            <div style="margin-top:10px">
+              <pre class="code">
+try:
+    x = int("abc")
+except ValueError as e:
+    print("Bad int:", e)
+except Exception:
+    print("Other error")
+else:
+    print("No error")
+finally:
+    print("Always runs")
+              </pre>
+
+              <p class="small">You can raise custom exceptions using <code>raise</code> and define custom exception classes by inheriting from <code>Exception</code>.</p>
+            </div>
+          </details>
+        </div>
+
+        <!-- 12 Memory & Garbage Collection -->
+        <div class="card">
+          <details>
+            <summary>12 ▸ Memory & Garbage Collection</summary>
+            <div style="margin-top:10px">
+              <p><strong>Reference counting</strong> is primary in CPython; objects are freed when refcount drops to zero. The <code>gc</code> module handles cyclic garbage.</p>
+
+              <div class="ascii">
+Memory (simplified):
+name -> object
+a -> [1,2,3]  (list object on heap)
+b -> same object (a and b reference same id)
+              </div>
+
+              <pre class="code">
+import gc
+print(gc.isenabled())   # True usually
+
+# shallow vs deep copy
+import copy
+lst = [[1],[2]]
+s = copy.copy(lst)      # shallow copy (inner lists shared)
+d = copy.deepcopy(lst)  # deep copy (full clone)
+              </pre>
+
+              <p class="small">Use immutable types when you want safe hashable objects (e.g., tuple as dict key).</p>
+            </div>
+          </details>
+        </div>
+
+        <!-- 13 Advanced Fundamentals -->
+        <div class="card">
+          <details>
+            <summary>13 ▸ Advanced Fundamentals (enumerate, zip, comprehensions, helpers)</summary>
+            <div style="margin-top:10px">
+              <pre class="code">
+# enumerate
+for i, x in enumerate(['a','b']):
+    print(i, x)
+
+# zip
+for a, b in zip([1,2], ['x','y']):
+    print(a, b)
+
+# comprehensions
+squares = [x*x for x in range(5)]
+d = {x: x*x for x in range(5)}
+st = {x for x in range(5)}
+
+# useful builtins
+any([False, True])   # True
+all([True, True])    # True
+              </pre>
+
+              <p class="small">Prefer comprehensions for readable, concise transforms.</p>
+            </div>
+          </details>
+        </div>
+
+        <!-- 14 Summary Table -->
+        <div class="card">
+          <details>
+            <summary>14 ▸ Summary Table: Types at-a-glance</summary>
+            <div style="margin-top:10px">
+              <table class="quick-table">
+                <tr><th>Category</th><th>Type</th><th>Mutable</th><th>Ordered</th><th>Duplicates</th><th>Example</th></tr>
+                <tr><td>Numeric</td><td>int, float, complex, bool</td><td>No</td><td>Yes</td><td>Yes</td><td>5, 3.14, 2+3j</td></tr>
+                <tr><td>Text</td><td>str</td><td>No</td><td>Yes</td><td>Yes</td><td>"abc"</td></tr>
+                <tr><td>Sequence</td><td>list, tuple</td><td>list:Yes, tuple:No</td><td>Yes</td><td>Yes</td><td>[1,2], (1,2)</td></tr>
+                <tr><td>Set</td><td>set, frozenset</td><td>set:Yes, frozenset:No</td><td>No</td><td>No</td><td>{1,2}</td></tr>
+                <tr><td>Mapping</td><td>dict</td><td>Yes</td><td>Yes (insertion order)</td><td>Keys unique</td><td>{'a':1}</td></tr>
+                <tr><td>Binary</td><td>bytes, bytearray</td><td>bytes:No, bytearray:Yes</td><td>Yes</td><td>Yes</td><td>b'hi'</td></tr>
+                <tr><td>None</td><td>NoneType</td><td>No</td><td>—</td><td>—</td><td>None</td></tr>
+              </table>
+            </div>
+          </details>
+        </div>
+
+        <!-- 15 Practice Zone -->
+        <div class="card">
+          <details>
+            <summary>15 ▸ Practice Zone (Mini tasks & Quiz)</summary>
+            <div style="margin-top:10px">
+              <h4 class="small">Small coding tasks (try them)</h4>
+              <ol>
+                <li>Swap two variables without a temp variable.</li>
+                <li>Check if a number is palindrome (string/number).</li>
+                <li>Count vowels in a string.</li>
+                <li>Given list of ints, return unique elements using set.</li>
+                <li>Flatten a list of lists (one level).</li>
+                <li>Read file `data.txt` and print number of lines.</li>
+                <li>Remove duplicates but keep order.</li>
+                <li>Implement factorial using recursion.</li>
+                <li>Find intersection of two lists.</li>
+                <li>Use list comprehension to square even numbers from 0..9.</li>
+              </ol>
+
+              <h4 class="small" style="margin-top:10px">Quick quiz (answers below)</h4>
+              <ol>
+                <li>What is the result of `3 // 2`?</li>
+                <li>Does `is` compare values or identity?</li>
+                <li>Which method adds an item to a set? (`add`/`append`/`insert`)</li>
+                <li>True or False: Strings are mutable.</li>
+                <li>How do you open a file safely for reading?</li>
+              </ol>
+
+              <details style="margin-top:8px">
+                <summary style="font-weight:600;color:var(--accent)">Answers</summary>
+                <div style="margin-top:8px">
+                  <ol>
+                    <li><code>1</code> (floor division)</li>
+                    <li><code>identity</code> (object identity)</li>
+                    <li><code>add</code></li>
+                    <li><code>False</code></li>
+                    <li><code>with open('file','r') as f:</code></li>
+                  </ol>
+                </div>
+              </details>
+
+              <p class="small" style="margin-top:8px">Practice tip: implement these without Googling; then compare with idiomatic Python solutions (list comprehensions, set usage, file `with` pattern).</p>
+            </div>
+          </details>
+        </div>
+
+      </main>
+
+      <!-- Sidebar -->
+      <aside class="side">
+        <div class="card">
+          <strong>Quick Links</strong>
+          <ul style="margin-top:8px">
+            <li><a href="#top">Top</a></li>
+            <li><a href="#python-basics">1 Basics</a></li>
+            <li><a href="#variables">2 Variables</a></li>
+            <li><a href="#primitives">3 Primitives</a></li>
+            <li><a href="#operators">5 Operators</a></li>
+            <li><a href="#control-flow">8 Control Flow</a></li>
+            <li><a href="#functions">9 Functions</a></li>
+            <li><a href="#practice-zone">15 Practice</a></li>
+          </ul>
+          <div style="margin-top:12px">
+            <button onclick="document.location='index.html'" style="background:var(--accent);color:#fff;border:none;padding:8px 10px;border-radius:8px;cursor:pointer">Home</button>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:12px">
+          <strong>Study tip</strong>
+          <p class="small" style="margin-top:6px">Start with variables/types → control flow → functions. Practice small problems daily and revisit memory topics (shallow vs deep copy).</p>
+        </div>
+      </aside>
+    </div>
+
+    <p class="footer">Part of DSA Visuals Collection • Ready for GitHub Pages</p>
+  </div>
+</body>
+</html>

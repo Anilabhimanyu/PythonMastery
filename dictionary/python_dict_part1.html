@@ -1,168 +1,359 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DSA: Dictionaries - Complete Visual and Practice Guide</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Python Dictionary — Complete Reference</title>
 <style>
-  body { font-family: 'Segoe UI', sans-serif; margin: 40px; background: #f9fafb; color: #222; }
-  h1, h2 { color: #0070f3; }
-  h3 { color: #333; }
-  pre { background: #111; color: #0f0; padding: 10px; border-radius: 8px; overflow-x: auto; }
-  .section { background: white; padding: 25px; margin-bottom: 30px; border-radius: 16px; box-shadow: 0 2px 6px rgba(0,0,0,0.08); }
-  a { color: #0070f3; text-decoration: none; }
-  a:hover { text-decoration: underline; }
-  .ascii { font-family: monospace; background: #f0f0f0; padding: 10px; border-radius: 10px; }
-  details { background: #fff; padding: 10px 15px; border-radius: 8px; margin-bottom: 10px; border: 1px solid #ddd; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
-  summary { font-weight: bold; cursor: pointer; color: #0070f3; }
+  /* Layout & typography */
+  :root{
+    --accent:#0070f3;
+    --card:#ffffff;
+    --muted:#6b7280;
+    --mono-bg:#0b1220;
+    --mono-color:#9fffb0;
+  }
+  body{font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, Arial; margin:28px; background:#f8fafc; color:#111;}
+  h1{color:var(--accent);text-align:left;margin:6px 0 16px;font-size:26px;}
+  p.lead{color:var(--muted);margin-top:0}
+  .container{max-width:980px;margin:0 auto}
+  .card{background:var(--card);border-radius:10px;padding:18px;margin-bottom:14px;box-shadow:0 6px 18px rgba(10,20,40,0.06);}
+  details{border:1px solid rgba(3,102,214,0.06);border-radius:8px;padding:10px;background:#fff;margin:10px 0; }
+  summary{cursor:pointer; font-weight:600; color:var(--accent); outline:none; padding:6px 4px; font-size:16px;}
+  .section-title{display:flex;justify-content:space-between;align-items:center}
+  table{width:100%;border-collapse:collapse;margin-top:12px}
+  th,td{padding:10px;border:1px solid #e6eef6;text-align:left;font-size:14px}
+  th{background:var(--accent);color:#fff}
+  pre.code{background:var(--mono-bg);color:var(--mono-color);padding:12px;border-radius:8px;overflow:auto;font-family:Consolas,monospace;font-size:13px}
+  .ascii{font-family:monospace;background:#f3f6fb;padding:10px;border-radius:8px;color:#0b1220}
+  ul{margin:8px 0 0 18px}
+  a{color:var(--accent); text-decoration:none}
+  a:hover{text-decoration:underline}
+  .small{font-size:13px;color:var(--muted)}
+  .grid{display:grid;grid-template-columns:1fr 320px;gap:18px}
+  .side{position:sticky;top:20px}
+  @media (max-width:940px){.grid{grid-template-columns:1fr;}.side{position:static}}
 </style>
 </head>
 <body>
+  <div class="container">
+    <h1>🐍 Python Dictionary — Complete Reference</h1>
+    <p class="lead">Compact, accordion-style reference with examples, outputs and time complexity. Use as your quick DSA / Python cheat-sheet.</p>
 
-<h1>🌈 DSA Roadmap: Dictionaries in Python</h1>
+    <div class="grid">
+      <!-- Main content -->
+      <main>
 
-<div class="section">
-<h2>1️⃣ Definition & Intuition</h2>
-<p><b>Dictionary</b> = Collection of key-value pairs. Keys are unique and hashable; values can be any type.</p>
-<p>Think of it as a <b>mailroom with labeled boxes</b> 📬 — each box has a unique label (key), and you can instantly access the content (value).</p>
+        <!-- 1 Basics -->
+        <div class="card">
+          <details open>
+            <summary>1 ▸ Dictionary Basics</summary>
+            <div style="margin-top:10px">
+              <p><strong>Definition:</strong> A mapping of <em>unique, hashable</em> keys to values. Used for fast lookups (average O(1)).</p>
+              <div class="ascii">
+Keys → "name"   "age"   "city"  &nbsp;&nbsp; Values → "Anil"   25   "AP"
+              </div>
 
-<div class="ascii">
-Keys      → "name"   "age"   "city"<br>
-Values    → "Anil"    25    "AP"
-</div>
+              <pre class="code">
+# Basic dict
+d = {"name":"Anil", "age":25}
+print(d["name"])            # Anil
+print(d.get("city","-"))    # - (safe access)
+              </pre>
 
-<p><b>Key property:</b> Average O(1) lookup using the key.</p>
-</div>
+              <p class="small">Note: In CPython 3.7+, insertion order is preserved.</p>
+            </div>
+          </details>
+        </div>
 
-<div class="section">
-<h2>2️⃣ Common Operations & Time Complexity</h2>
-<table border="1" cellspacing="0" cellpadding="6">
-<tr><th>Operation</th><th>Average Time</th><th>Description</th></tr>
-<tr><td>Access</td><td>O(1)</td><td>d[key]</td></tr>
-<tr><td>Insert / Update</td><td>O(1)</td><td>d[key] = value</td></tr>
-<tr><td>Delete</td><td>O(1)</td><td>del d[key]</td></tr>
-<tr><td>Search (key)</td><td>O(1)</td><td>key in d</td></tr>
-<tr><td>Iteration</td><td>O(n)</td><td>for k,v in d.items()</td></tr>
-</table>
+        <!-- 2 Creation Methods -->
+        <div class="card">
+          <details>
+            <summary>2 ▸ Creation Methods (examples & complexity)</summary>
+            <div style="margin-top:10px">
+              <table>
+                <tr><th>Method</th><th>Description</th><th>Example</th><th>Output</th><th>Time</th></tr>
+                <tr><td><code>{}</code></td><td>Literal empty dictionary</td><td><code>d={}</code></td><td><code>{}</code></td><td>O(1)</td></tr>
+                <tr><td><code>dict()</code></td><td>From iterable of pairs</td><td><code>dict([('a',1),('b',2)])</code></td><td><code>{'a':1,'b':2}</code></td><td>O(n)</td></tr>
+                <tr><td><code>fromkeys()</code></td><td>Create keys with same value</td><td><code>dict.fromkeys(['a','b'],0)</code></td><td><code>{'a':0,'b':0}</code></td><td>O(n)</td></tr>
+                <tr><td><code>{k:v for ...}</code></td><td>Dictionary comprehension (recommended)</td><td><code>{x:x**2 for x in range(3)}</code></td><td><code>{0:0,1:1,2:4}</code></td><td>O(n)</td></tr>
+                <tr><td><code>zip()</code></td><td>Pair two sequences</td><td><code>dict(zip(keys,vals))</code></td><td>depends</td><td>O(n)</td></tr>
+              </table>
 
-<pre>
-# Python example
-d = {"name": "Anil", "age": 25}
-d["city"] = "AP"        # Insert
-d["age"] = 26           # Update
-del d["name"]           # Delete
-print(d.get("city"))     # Access safely
-</pre>
-</div>
+              <h4 style="margin-top:12px">Examples</h4>
+              <pre class="code">
+# fromkeys
+d = dict.fromkeys(['x','y'], 0)   # {'x':0,'y':0}
 
-<div class="section">
-<h2>3️⃣ ASCII Visual: Dictionary Storage</h2>
-<pre class="ascii">
-Hash Table Example (Simplified):
+# comprehension
+squared = {x: x*x for x in range(5)}  # {0:0,1:1,2:4,3:9,4:16}
+              </pre>
+            </div>
+          </details>
+        </div>
 
-Index | Key        | Value
-------+------------+------
- 0    | "name"     | "Anil"
- 1    | "age"      | 25
- 2    | "city"     | "AP"
-</pre>
-<p>Keys are hashed → go directly to the memory slot → O(1) access</p>
-</div>
+        <!-- 3 Accessing Values -->
+        <div class="card">
+          <details>
+            <summary>3 ▸ Accessing Values</summary>
+            <div style="margin-top:10px">
+              <table>
+                <tr><th>Operation</th><th>Example</th><th>Behaviour</th><th>Time</th></tr>
+                <tr><td>Indexing</td><td><code>d['k']</code></td><td>KeyError if missing</td><td>O(1)</td></tr>
+                <tr><td>Safe access</td><td><code>d.get('k', default)</code></td><td>Return default if missing</td><td>O(1)</td></tr>
+                <tr><td>keys()</td><td><code>d.keys()</code></td><td>View of keys (iterable)</td><td>O(1)</td></tr>
+                <tr><td>values()</td><td><code>d.values()</code></td><td>View of values</td><td>O(1)</td></tr>
+                <tr><td>items()</td><td><code>d.items()</code></td><td>View of (key,value) pairs</td><td>O(1)</td></tr>
+              </table>
 
-<div class="section">
-<h2>4️⃣ Dictionary Methods</h2>
-<table border="1" cellspacing="0" cellpadding="6">
-<tr><th>Method</th><th>Description</th><th>Example</th><th>Output</th></tr>
-<tr><td>get(key, default)</td><td>Return value if key exists else default</td><td>d.get("age",0)</td><td>25</td></tr>
-<tr><td>keys()</td><td>Return all keys</td><td>d.keys()</td><td>dict_keys([...])</td></tr>
-<tr><td>values()</td><td>Return all values</td><td>d.values()</td><td>dict_values([...])</td></tr>
-<tr><td>items()</td><td>Return key-value pairs</td><td>d.items()</td><td>dict_items([...])</td></tr>
-<tr><td>pop(key)</td><td>Remove key and return value</td><td>d.pop("age")</td><td>25</td></tr>
-<tr><td>popitem()</td><td>Remove last inserted item</td><td>d.popitem()</td><td>('city','AP')</td></tr>
-<tr><td>update(other_dict)</td><td>Merge another dict</td><td>d.update({"hobby":"coding"})</td><td>{...}</td></tr>
-<tr><td>setdefault(key, default)</td><td>Return value; if missing, insert key with default</td><td>d.setdefault("country","IN")</td><td>IN</td></tr>
-<tr><td>clear()</td><td>Remove all items</td><td>d.clear()</td><td>{}</td></tr>
-<tr><td>copy()</td><td>Shallow copy</td><td>d2 = d.copy()</td><td>{...}</td></tr>
-</table>
-</div>
+              <pre class="code">
+d = {'a':1,'b':2}
+print(d['a'])        # 1
+print(d.get('c', 0)) # 0
+for k, v in d.items():
+    print(k, v)
+              </pre>
+            </div>
+          </details>
+        </div>
 
-<div class="section">
-<h2>5️⃣ Dictionary Operations & Patterns</h2>
-<ul>
-<li>Access / update: <code>d[key]</code> or <code>d.get(key)</code></li>
-<li>Check existence: <code>key in d</code></li>
-<li>Iteration: <code>for k,v in d.items(): ...</code></li>
-<li>Merge: <code>d.update(other_dict)</code></li>
-<li>Dictionary comprehension: <code>{k:v for k,v in iterable}</code></li>
-</ul>
+        <!-- 4 Modification & Updating -->
+        <div class="card">
+          <details>
+            <summary>4 ▸ Modification & Updating</summary>
+            <div style="margin-top:10px">
+              <table>
+                <tr><th>Method</th><th>Example</th><th>Effect</th><th>Time</th></tr>
+                <tr><td>Assign</td><td><code>d[k]=v</code></td><td>Insert or update</td><td>O(1)</td></tr>
+                <tr><td>update()</td><td><code>d.update({'c':3})</code></td><td>Merge another dict</td><td>O(m)</td></tr>
+                <tr><td>setdefault()</td><td><code>d.setdefault('k', default)</code></td><td>Return d[k], set if missing</td><td>O(1)</td></tr>
+                <tr><td>collections.defaultdict</td><td><code>defaultdict(int)</code></td><td>Auto-initialize missing keys</td><td>O(1)</td></tr>
+              </table>
 
-<pre class="ascii">
-Example:
-nums = [1,2,3]
-squared = {x:x**2 for x in nums}
-print(squared)  # {1:1, 2:4, 3:9}
-</pre>
-</div>
+              <pre class="code">
+d = {'a':1}
+d['b'] = 2           # insert
+d.update({'c':3})    # merge
+d.setdefault('d',0)  # insert if missing
+              </pre>
+            </div>
+          </details>
+        </div>
 
-<div class="section">
-<h2>6️⃣ Real-World Use Cases</h2>
-<ul>
-<li>Counting frequency of elements</li>
-<li>Fast lookup tables (hashmaps)</li>
-<li>Storing configuration/settings</li>
-<li>Mapping relationships (user→score)</li>
-<li>Grouping items by property</li>
-</ul>
-</div>
+        <!-- 5 Deletion Methods -->
+        <div class="card">
+          <details>
+            <summary>5 ▸ Deletion Methods</summary>
+            <div style="margin-top:10px">
+              <table>
+                <tr><th>Method</th><th>Example</th><th>Behaviour</th><th>Time</th></tr>
+                <tr><td>pop(key)</td><td><code>d.pop('k')</code></td><td>Remove & return value; KeyError if missing</td><td>O(1)</td></tr>
+                <tr><td>pop(key, default)</td><td><code>d.pop('k', None)</code></td><td>Return default if missing</td><td>O(1)</td></tr>
+                <tr><td>popitem()</td><td><code>d.popitem()</code></td><td>Remove & return last inserted (k,v)</td><td>O(1)</td></tr>
+                <tr><td>del</td><td><code>del d['k']</code></td><td>Delete key; KeyError if missing</td><td>O(1)</td></tr>
+                <tr><td>clear()</td><td><code>d.clear()</code></td><td>Remove all items</td><td>O(n)</td></tr>
+              </table>
 
-<div class="section">
-<h2>7️⃣ Problem-Solving Mindset</h2>
-<ul>
-<li>Identify if key-value mapping fits the problem.</li>
-<li>Think about hash collisions → Python handles internally.</li>
-<li>Use dictionary comprehension for concise logic.</li>
-<li>For counting, prefer <code>collections.Counter</code>.</li>
-<li>When combining with tuples → use tuples as immutable keys.</li>
-</ul>
-</div>
+              <pre class="code">
+d = {'a':1,'b':2}
+val = d.pop('a')    # 1
+last = d.popitem()  # ('b',2)
+del d['x']          # KeyError if missing
+d.clear()           # {}
+              </pre>
+            </div>
+          </details>
+        </div>
 
-<div class="section">
-<h2>8️⃣ LeetCode Practice Links</h2>
-<details>
-<summary>💻 Click to Expand Dictionary Problems</summary>
-<ul>
-<li><a href="https://leetcode.com/problems/two-sum/">#1 Two Sum</a></li>
-<li><a href="https://leetcode.com/problems/group-anagrams/">#49 Group Anagrams</a></li>
-<li><a href="https://leetcode.com/problems/top-k-frequent-elements/">#347 Top K Frequent Elements</a></li>
-<li><a href="https://leetcode.com/problems/sort-characters-by-frequency/">#451 Sort Characters by Frequency</a></li>
-<li><a href="https://leetcode.com/problems/valid-anagram/">#242 Valid Anagram</a></li>
-<li><a href="https://leetcode.com/problems/subdomain-visit-count/">#811 Subdomain Visit Count</a></li>
-<li><a href="https://leetcode.com/problems/minimum-index-sum-of-two-lists/">#599 Minimum Index Sum of Two Lists</a></li>
-<li><a href="https://leetcode.com/problems/design-twitter/">#355 Design Twitter</a></li>
-<li><a href="https://leetcode.com/problems/employee-free-time/">#759 Employee Free Time</a></li>
-<li><a href="https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/">#167 Two Sum II</a></li>
-</ul>
-</details>
-</div>
+        <!-- 6 Iteration Techniques -->
+        <div class="card">
+          <details>
+            <summary>6 ▸ Iteration Techniques</summary>
+            <div style="margin-top:10px">
+              <ul>
+                <li>Loop keys: <code>for k in d:</code></li>
+                <li>Loop values: <code>for v in d.values():</code></li>
+                <li>Loop items: <code>for k,v in d.items():</code></li>
+                <li>Unpack entries: <code>for (k,v) in d.items():</code></li>
+              </ul>
 
-<div class="section">
-<h2>9️⃣ ASCII Summary Map</h2>
-<pre class="ascii">
-   +-------------------+
-   |  DICTIONARIES 🔑  |
-   +-------------------+
-           |
-   +-------+-------+
-   |               |
-Hashmap Lookup  Frequency Counting
-   |               |
-Iteration / Comprehension
-   |
-Dynamic Problems / Tuples as Keys
-</pre>
-</div>
+              <pre class="code">
+# iterate items
+for k, v in d.items():
+    print(k, v)
 
-<p style="text-align:center;color:#555">Built for Python DSA Learning • Practice 1 pattern per day • Master before moving to Arrays / Tuples / Recursion</p>
+# nested traversal
+for user, info in users.items():
+    name = info['name']
+              </pre>
+            </div>
+          </details>
+        </div>
 
+        <!-- 7 Searching / Checking -->
+        <div class="card">
+          <details>
+            <summary>7 ▸ Searching / Checking</summary>
+            <div style="margin-top:10px">
+              <table>
+                <tr><th>Check</th><th>Example</th><th>Notes</th><th>Time</th></tr>
+                <tr><td>key in dict</td><td><code>'a' in d</code></td><td>Fast membership test for keys</td><td>O(1)</td></tr>
+                <tr><td>value search</td><td><code>v in d.values()</code></td><td>Scans values → O(n)</td><td>O(n)</td></tr>
+                <tr><td>any/all</td><td><code>any(v>0 for v in d.values())</code></td><td>Useful predicates</td><td>O(n)</td></tr>
+              </table>
+            </div>
+          </details>
+        </div>
+
+        <!-- 8 Built-in Functions -->
+        <div class="card">
+          <details>
+            <summary>8 ▸ Built-in Functions</summary>
+            <div style="margin-top:10px">
+              <table>
+                <tr><th>Function</th><th>Example</th><th>Output / Use</th></tr>
+                <tr><td>len()</td><td><code>len(d)</code></td><td>Number of items</td></tr>
+                <tr><td>sorted()</td><td><code>sorted(d)</code></td><td>Sorted list of keys</td></tr>
+                <tr><td>max/min</td><td><code>max(d)</code></td><td>Max key (lexicographic or numeric)</td></tr>
+                <tr><td>sum()</td><td><code>sum(d.values())</code></td><td>Sum of values</td></tr>
+                <tr><td>enumerate()</td><td><code>for i,(k,v) in enumerate(d.items())</code></td><td>Index + item</td></tr>
+              </table>
+
+              <pre class="code">
+# sorted by value
+sorted_items = sorted(d.items(), key=lambda x: x[1])
+              </pre>
+            </div>
+          </details>
+        </div>
+
+        <!-- 9 Comprehensions -->
+        <div class="card">
+          <details>
+            <summary>9 ▸ Dictionary Comprehensions</summary>
+            <div style="margin-top:10px">
+              <p>Powerful and readable way to build dicts.</p>
+              <pre class="code">
+# basic
+squared = {x: x*x for x in range(6)}
+
+# filter
+even_sq = {x:x*x for x in range(6) if x % 2 == 0}
+
+# invert mapping (assumes unique values)
+inv = {v:k for k,v in d.items()}
+              </pre>
+            </div>
+          </details>
+        </div>
+
+        <!-- 10 Advanced Operations -->
+        <div class="card">
+          <details>
+            <summary>10 ▸ Advanced Operations & Tools</summary>
+            <div style="margin-top:10px">
+              <ul>
+                <li><strong>Merging:</strong> Python 3.9+: <code>d3 = d1 | d2</code>; older: <code>{**d1, **d2}</code></li>
+                <li><strong>Unpacking in function calls:</strong> <code>fn(**d)</code></li>
+                <li><strong>collections.defaultdict:</strong> auto-init missing keys</li>
+                <li><strong>collections.Counter:</strong> frequency counting & helpers</li>
+                <li><strong>Nesting:</strong> safely update nested dicts with <code>setdefault()</code> or <code>dict.setdefault(...)</code></li>
+              </ul>
+
+              <pre class="code">
+# merge (3.9+)
+d3 = d1 | d2
+
+# Counter
+from collections import Counter
+cnt = Counter(['a','b','a'])  # Counter({'a':2,'b':1})
+              </pre>
+            </div>
+          </details>
+        </div>
+
+        <!-- 11 Memory Tip & ASCII -->
+        <div class="card">
+          <details>
+            <summary>11 ▸ Memory Tip & ASCII Visual</summary>
+            <div style="margin-top:10px">
+              <div class="ascii">
+Hash table (simplified):
+Index | Key hash -> slot | Stored
+  12  | hash('name')     | ('name','Anil')
+  27  | hash('age')      | ('age',25)
+  31  | collision -> chain or probe
+              </div>
+
+              <pre class="code">
+# memory tip: dict is fast because keys are hashed.
+# use tuple keys for composite keys: d[(x,y)] = value
+              </pre>
+
+              <p class="small">Note: dicts use extra memory for hash table overhead; this trades memory for O(1) average lookup.</p>
+            </div>
+          </details>
+        </div>
+
+        <!-- 12 LeetCode Practice -->
+        <div class="card">
+          <details open>
+            <summary>12 ▸ LeetCode Practice (Dictionary-centric Problems)</summary>
+            <div style="margin-top:10px">
+              <h4 class="small">🟢 Easy</h4>
+              <ul>
+                <li><a href="https://leetcode.com/problems/two-sum/" target="_blank">#1 Two Sum</a></li>
+                <li><a href="https://leetcode.com/problems/valid-anagram/" target="_blank">#242 Valid Anagram</a></li>
+                <li><a href="https://leetcode.com/problems/subdomain-visit-count/" target="_blank">#811 Subdomain Visit Count</a></li>
+                <li><a href="https://leetcode.com/problems/minimum-index-sum-of-two-lists/" target="_blank">#599 Minimum Index Sum of Two Lists</a></li>
+              </ul>
+
+              <h4 class="small">🟡 Medium</h4>
+              <ul>
+                <li><a href="https://leetcode.com/problems/group-anagrams/" target="_blank">#49 Group Anagrams</a></li>
+                <li><a href="https://leetcode.com/problems/top-k-frequent-elements/" target="_blank">#347 Top K Frequent Elements</a></li>
+                <li><a href="https://leetcode.com/problems/sort-characters-by-frequency/" target="_blank">#451 Sort Characters by Frequency</a></li>
+                <li><a href="https://leetcode.com/problems/subarray-sum-equals-k/" target="_blank">#560 Subarray Sum Equals K (use dict prefix sums)</a></li>
+              </ul>
+
+              <h4 class="small">🔴 Hard</h4>
+              <ul>
+                <li><a href="https://leetcode.com/problems/design-twitter/" target="_blank">#355 Design Twitter</a></li>
+                <li><a href="https://leetcode.com/problems/employee-free-time/" target="_blank">#759 Employee Free Time</a></li>
+                <li><a href="https://leetcode.com/problems/first-unique-character-in-a-string/" target="_blank">#387 First Unique Character in a String</a></li>
+              </ul>
+
+              <p class="small">Tip: For most interview problems, identify if a mapping (value→index, prefix sum map, frequency map) helps reduce complexity.</p>
+            </div>
+          </details>
+        </div>
+
+      </main>
+
+      <!-- Sidebar -->
+      <aside class="side">
+        <div class="card">
+          <strong>Quick Links</strong>
+          <ul style="margin-top:8px">
+            <li><a href="#dict-basics">1 Basics</a></li>
+            <li><a href="#dict-properties">2 Properties</a></li>
+            <li><a href="#dict-methods">3 Methods</a></li>
+            <li><a href="#dict-operations">4 Operations</a></li>
+            <li><a href="#dict-leetcode">12 LeetCode</a></li>
+          </ul>
+          <div style="margin-top:12px">
+            <button onclick="document.location='index.html'" style="background:var(--accent);color:#fff;border:none;padding:8px 10px;border-radius:8px;cursor:pointer">Home</button>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:12px">
+          <strong>Practice Tip</strong>
+          <p class="small" style="margin-top:6px">Start with frequency & mapping problems. Build a reusable snippet: prefix-sum map and frequency counter.</p>
+        </div>
+      </aside>
+    </div>
+
+    <p style="text-align:center;color:var(--muted);margin-top:18px">Part of DSA Visuals Collection • Ready for GitHub Pages</p>
+  </div>
 </body>
 </html>

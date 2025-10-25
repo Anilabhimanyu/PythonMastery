@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Python Tuples — Complete Reference</title>
+<title>Python Sets — Complete Reference</title>
 <style>
   :root{
     --accent:#0070f3;
@@ -19,7 +19,6 @@
   .card{background:var(--card);border-radius:10px;padding:18px;margin-bottom:14px;box-shadow:0 6px 18px rgba(10,20,40,0.06);}
   details{border:1px solid rgba(3,102,214,0.06);border-radius:8px;padding:10px;background:#fff;margin:10px 0; }
   summary{cursor:pointer; font-weight:600; color:var(--accent); outline:none; padding:6px 4px; font-size:16px;}
-  .section-title{display:flex;justify-content:space-between;align-items:center}
   table{width:100%;border-collapse:collapse;margin-top:12px}
   th,td{padding:10px;border:1px solid #e6eef6;text-align:left;font-size:14px}
   th{background:var(--accent);color:#fff}
@@ -36,29 +35,26 @@
 </head>
 <body>
   <div class="container">
-    <h1>🌈 DSA Roadmap: Tuples in Python (Complete Visual and Practice Guide)</h1>
+    <h1>🌈 DSA Roadmap: Sets in Python (Complete Visual and Practice Guide)</h1>
     <p class="lead">Compact, accordion-style reference with examples, outputs, and time complexity. Use as your quick DSA / Python cheat-sheet.</p>
 
     <div class="grid">
-      <!-- Main content -->
       <main>
 
         <!-- 1 Basics -->
         <div class="card">
           <details open>
-            <summary>1 ▸ Tuple Basics</summary>
+            <summary>1 ▸ Set Basics</summary>
             <div style="margin-top:10px">
-              <p><strong>Definition:</strong> An <em>ordered, immutable</em> collection of items. Can contain heterogeneous elements.</p>
+              <p><strong>Definition:</strong> An <em>unordered, mutable</em> collection of <strong>unique, hashable</strong> items.</p>
               <div class="ascii">
-Index → 0    1      2
-Tuple → 'a'  10.5   True
+Set elements (unordered):
+{10, 'a', 3.14, True}
               </div>
-
               <pre class="code">
-# basic tuple
-t = ('a', 10.5, True)
-print(t[0])  # 'a'
-print(t[-1]) # True
+# basic set
+s = {1,2,3}
+print(s)  # {1,2,3} (order may vary)
               </pre>
             </div>
           </details>
@@ -71,41 +67,24 @@ print(t[-1]) # True
             <div style="margin-top:10px">
               <table>
                 <tr><th>Method</th><th>Description</th><th>Example</th><th>Output</th><th>Time</th></tr>
-                <tr><td><code>()</code></td><td>Empty tuple literal</td><td><code>t=()</code></td><td><code>()</code></td><td>O(1)</td></tr>
-                <tr><td><code>(a, b)</code></td><td>Literal tuple</td><td><code>t=(1,2)</code></td><td><code>(1,2)</code></td><td>O(1)</td></tr>
-                <tr><td><code>tuple(iterable)</code></td><td>From list, string, etc.</td><td><code>tuple([1,2,3])</code></td><td><code>(1,2,3)</code></td><td>O(n)</td></tr>
-                <tr><td><code>single-element</code></td><td>Need comma</td><td><code>t=(5,)</code></td><td><code>(5,)</code></td><td>O(1)</td></tr>
+                <tr><td><code>{}</code></td><td>Empty dict! <strong>Use set()</strong> for empty set</td><td><code>set()</code></td><td><code>set()</code></td><td>O(1)</td></tr>
+                <tr><td><code>{a,b,c}</code></td><td>Literal set</td><td><code>s={1,2,3}</code></td><td><code>{1,2,3}</code></td><td>O(n)</td></tr>
+                <tr><td><code>set(iterable)</code></td><td>From list, tuple, string</td><td><code>set([1,2,2,3])</code></td><td><code>{1,2,3}</code></td><td>O(n)</td></tr>
               </table>
-
-              <pre class="code">
-# from list
-t = tuple([1,2,3])  # (1,2,3)
-
-# single-element tuple
-t1 = (5,)            # (5,)
-not_tuple = (5)      # int, not tuple
-              </pre>
             </div>
           </details>
         </div>
 
-        <!-- 3 Accessing Values -->
+        <!-- 3 Accessing Elements -->
         <div class="card">
           <details>
-            <summary>3 ▸ Accessing Values</summary>
+            <summary>3 ▸ Accessing Elements</summary>
             <div style="margin-top:10px">
-              <table>
-                <tr><th>Operation</th><th>Example</th><th>Behaviour</th><th>Time</th></tr>
-                <tr><td>Indexing</td><td><code>t[0]</code></td><td>Get element at position</td><td>O(1)</td></tr>
-                <tr><td>Slicing</td><td><code>t[1:3]</code></td><td>Returns a tuple slice</td><td>O(k)</td></tr>
-                <tr><td>Negative indexing</td><td><code>t[-1]</code></td><td>Last element</td><td>O(1)</td></tr>
-              </table>
-
+              <p>No indexing due to unordered nature. Access via iteration:</p>
               <pre class="code">
-t = (10,20,30,40)
-print(t[1])    # 20
-print(t[1:3])  # (20,30)
-print(t[-1])   # 40
+s = {10,20,30}
+for x in s:
+    print(x)
               </pre>
             </div>
           </details>
@@ -116,13 +95,11 @@ print(t[-1])   # 40
           <details>
             <summary>4 ▸ Modification & Updating</summary>
             <div style="margin-top:10px">
-              <p>Tuples are <strong>immutable</strong>. To modify, convert to list and back:</p>
-              <pre class="code">
-t = (1,2,3)
-lst = list(t)
-lst[0] = 10
-t = tuple(lst)  # (10,2,3)
-              </pre>
+              <table>
+                <tr><th>Method</th><th>Example</th><th>Effect</th><th>Time</th></tr>
+                <tr><td>add()</td><td><code>s.add(4)</code></td><td>Add single element</td><td>O(1)</td></tr>
+                <tr><td>update()</td><td><code>s.update([5,6])</code></td><td>Add multiple elements</td><td>O(k)</td></tr>
+              </table>
             </div>
           </details>
         </div>
@@ -132,12 +109,13 @@ t = tuple(lst)  # (10,2,3)
           <details>
             <summary>5 ▸ Deletion Methods</summary>
             <div style="margin-top:10px">
-              <p>Cannot delete individual items. Can delete whole tuple:</p>
-              <pre class="code">
-t = (1,2,3)
-del t
-# print(t) -> NameError
-              </pre>
+              <table>
+                <tr><th>Method</th><th>Example</th><th>Behaviour</th><th>Time</th></tr>
+                <tr><td>remove()</td><td><code>s.remove(2)</code></td><td>Remove element, KeyError if missing</td><td>O(1)</td></tr>
+                <tr><td>discard()</td><td><code>s.discard(2)</code></td><td>Remove element if exists, no error</td><td>O(1)</td></tr>
+                <tr><td>pop()</td><td><code>s.pop()</code></td><td>Remove arbitrary element</td><td>O(1)</td></tr>
+                <tr><td>clear()</td><td><code>s.clear()</code></td><td>Remove all elements</td><td>O(n)</td></tr>
+              </table>
             </div>
           </details>
         </div>
@@ -148,17 +126,9 @@ del t
             <summary>6 ▸ Iteration Techniques</summary>
             <div style="margin-top:10px">
               <ul>
-                <li>Loop over elements: <code>for x in t:</code></li>
-                <li>Unpack tuple: <code>a,b,c = t</code></li>
+                <li>For loop: <code>for x in s:</code></li>
+                <li>Set unpacking: <code>a,b,c = s</code> (order unpredictable)</li>
               </ul>
-              <pre class="code">
-t = (1,2,3)
-for x in t:
-    print(x)
-
-a,b,c = t
-print(a,b,c)  # 1 2 3
-              </pre>
             </div>
           </details>
         </div>
@@ -170,9 +140,8 @@ print(a,b,c)  # 1 2 3
             <div style="margin-top:10px">
               <table>
                 <tr><th>Check</th><th>Example</th><th>Notes</th><th>Time</th></tr>
-                <tr><td>Membership</td><td><code>5 in t</code></td><td>Check if element exists</td><td>O(n)</td></tr>
-                <tr><td>index()</td><td><code>t.index(20)</code></td><td>Return first index, ValueError if missing</td><td>O(n)</td></tr>
-                <tr><td>count()</td><td><code>t.count(2)</code></td><td>Number of occurrences</td><td>O(n)</td></tr>
+                <tr><td>Membership</td><td><code>5 in s</code></td><td>Check if element exists</td><td>O(1)</td></tr>
+                <tr><td>Subset / Superset</td><td><code>s1 <= s2</code></td><td>Subset check</td><td>O(len(s1))</td></tr>
               </table>
             </div>
           </details>
@@ -185,25 +154,24 @@ print(a,b,c)  # 1 2 3
             <div style="margin-top:10px">
               <table>
                 <tr><th>Function</th><th>Example</th><th>Output / Use</th></tr>
-                <tr><td>len()</td><td><code>len(t)</code></td><td>Number of elements</td></tr>
-                <tr><td>min()/max()</td><td><code>min(t)</code></td><td>Minimum / maximum</td></tr>
-                <tr><td>sum()</td><td><code>sum(t)</code></td><td>Sum of elements (numeric)</td></tr>
-                <tr><td>sorted()</td><td><code>sorted(t)</code></td><td>Returns sorted list</td></tr>
+                <tr><td>len()</td><td><code>len(s)</code></td><td>Number of elements</td></tr>
+                <tr><td>min()/max()</td><td><code>min(s)</code></td><td>Min/Max element</td></tr>
+                <tr><td>sum()</td><td><code>sum(s)</code></td><td>Sum (numeric)</td></tr>
+                <tr><td>sorted()</td><td><code>sorted(s)</code></td><td>Returns sorted list</td></tr>
               </table>
             </div>
           </details>
         </div>
 
-        <!-- 9 Comprehensions -->
+        <!-- 9 Set Comprehensions -->
         <div class="card">
           <details>
-            <summary>9 ▸ Tuple Comprehensions</summary>
+            <summary>9 ▸ Set Comprehensions</summary>
             <div style="margin-top:10px">
-              <p>Tuple comprehensions <strong>do not exist</strong>. Use <code>generator expressions</code> instead:</p>
               <pre class="code">
-gen = (x*x for x in range(5))
-t = tuple(gen)  # convert to tuple
-print(t)        # (0,1,4,9,16)
+# square of numbers
+s = {x*x for x in range(5)}
+print(s)  # {0,1,4,9,16}
               </pre>
             </div>
           </details>
@@ -214,20 +182,13 @@ print(t)        # (0,1,4,9,16)
           <details>
             <summary>10 ▸ Advanced Operations</summary>
             <div style="margin-top:10px">
-              <ul>
-                <li>Packing / Unpacking: <code>a,b=1,2</code></li>
-                <li>Nesting: <code>t = (1,(2,3),4)</code></li>
-                <li>Multiple assignments: <code>a,*b,c = (1,2,3,4)</code></li>
-              </ul>
-              <pre class="code">
-# packing & unpacking
-t = 1,2,3
-a,b,c = t
-
-# nested tuple
-t2 = (1,(2,3),4)
-print(t2[1][0])  # 2
-              </pre>
+              <table>
+                <tr><th>Operation</th><th>Example</th><th>Output</th></tr>
+                <tr><td>Union</td><td><code>s1 | s2</code></td><td>All elements</td></tr>
+                <tr><td>Intersection</td><td><code>s1 & s2</code></td><td>Common elements</td></tr>
+                <tr><td>Difference</td><td><code>s1 - s2</code></td><td>In s1 not in s2</td></tr>
+                <tr><td>Symmetric Difference</td><td><code>s1 ^ s2</code></td><td>In s1 or s2 but not both</td></tr>
+              </table>
             </div>
           </details>
         </div>
@@ -238,13 +199,16 @@ print(t2[1][0])  # 2
             <summary>11 ▸ Memory Tip & ASCII Visual</summary>
             <div style="margin-top:10px">
               <div class="ascii">
-Tuple memory (simplified):
-Index | Value
-  0   | 1
-  1   | 2
-  2   | 3
-Immutable → stored efficiently; can be used as dict keys.
+Set memory (hash-based):
+Value → Hash → Slot
+10    → h(10) → 5
+'a'   → h('a')→ 2
+3.14  → h(3.14)→7
               </div>
+              <pre class="code">
+# set is fast due to hashing
+# duplicates automatically removed
+              </pre>
             </div>
           </details>
         </div>
@@ -252,54 +216,54 @@ Immutable → stored efficiently; can be used as dict keys.
         <!-- 12 LeetCode Practice -->
         <div class="card">
           <details open>
-            <summary>12 ▸ LeetCode Practice (Tuple-centric Problems)</summary>
+            <summary>12 ▸ LeetCode Practice (Set-centric Problems)</summary>
             <div style="margin-top:10px">
               <h4 class="small">🟢 Easy</h4>
               <ul>
-                <li><a href="https://leetcode.com/problems/two-sum/" target="_blank">#1 Two Sum (tuple as immutable keys)</a></li>
-                <li><a href="https://leetcode.com/problems/valid-anagram/" target="_blank">#242 Valid Anagram (use tuple of counts)</a></li>
+                <li><a href="https://leetcode.com/problems/contains-duplicate/" target="_blank">#217 Contains Duplicate</a></li>
+                <li><a href="https://leetcode.com/problems/intersection-of-two-arrays/" target="_blank">#349 Intersection of Two Arrays</a></li>
+                <li><a href="https://leetcode.com/problems/valid-sudoku/" target="_blank">#36 Valid Sudoku</a></li>
               </ul>
+
               <h4 class="small">🟡 Medium</h4>
               <ul>
-                <li><a href="https://leetcode.com/problems/group-anagrams/" target="_blank">#49 Group Anagrams (tuple as dict key)</a></li>
+                <li><a href="https://leetcode.com/problems/longest-consecutive-sequence/" target="_blank">#128 Longest Consecutive Sequence</a></li>
+                <li><a href="https://leetcode.com/problems/longest-substring-without-repeating-characters/" target="_blank">#3 Longest Substring Without Repeating Characters</a></li>
               </ul>
+
               <h4 class="small">🔴 Hard</h4>
               <ul>
-                <li><a href="https://leetcode.com/problems/first-unique-character-in-a-string/" target="_blank">#387 First Unique Character in a String</a></li>
+                <li><a href="https://leetcode.com/problems/maximum-number-of-non-overlapping-subarrays-with-sum-equals-target/" target="_blank">#1546 Max Non-overlapping Subarrays</a></li>
               </ul>
             </div>
           </details>
         </div>
 
-        <!-- 13 Tuple in Real Life -->
+        <!-- 13 Comparison Table -->
         <div class="card">
           <details>
-            <summary>13 ▸ Tuple in Real Life Analogy 🎁</summary>
+            <summary>⚖️ Comparison Table: Set vs List vs Tuple</summary>
             <div style="margin-top:10px">
-              <p>A tuple is like a <strong>sealed box</strong> of items: you can look inside, unpack it, but you <strong>cannot change</strong> the contents.</p>
-              <div class="ascii">
-Tuple (sealed box):
-+-------+
-| 1 2 3 |
-+-------+
-              </div>
+              <table>
+                <tr><th>Property</th><th>List</th><th>Tuple</th><th>Set</th></tr>
+                <tr><td>Ordered</td><td>Yes</td><td>Yes</td><td>No</td></tr>
+                <tr><td>Mutable</td><td>Yes</td><td>No</td><td>Yes</td></tr>
+                <tr><td>Duplicates</td><td>Allowed</td><td>Allowed</td><td>No</td></tr>
+                <tr><td>Indexing</td><td>Yes</td><td>Yes</td><td>No</td></tr>
+                <tr><td>Iteration Time</td><td>O(n)</td><td>O(n)</td><td>O(n)</td></tr>
+                <tr><td>Membership Test</td><td>O(n)</td><td>O(n)</td><td>O(1)</td></tr>
+              </table>
             </div>
           </details>
         </div>
 
-        <!-- 14 Comparison Table -->
+        <!-- 14 Real Life Analogy -->
         <div class="card">
           <details>
-            <summary>14 ▸ Comparison: Tuple vs List vs Set</summary>
+            <summary>🎁 Set in Real Life</summary>
             <div style="margin-top:10px">
-              <table>
-                <tr><th>Property</th><th>Tuple</th><th>List</th><th>Set</th></tr>
-                <tr><td>Mutable</td><td>No</td><td>Yes</td><td>Yes</td></tr>
-                <tr><td>Ordered</td><td>Yes</td><td>Yes</td><td>No</td></tr>
-                <tr><td>Duplicates</td><td>Allowed</td><td>Allowed</td><td>No</td></tr>
-                <tr><td>Indexing</td><td>Yes</td><td>Yes</td><td>No</td></tr>
-                <tr><td>Time Complexity Access</td><td>O(1)</td><td>O(1)</td><td>O(1 avg membership)</td></tr>
-              </table>
+              <p>Think of a <strong>set</strong> as a <em>basket of unique items 🧺</em>.  
+              You can add new items, remove items, and check if an item is inside instantly. Duplicates automatically removed.</p>
             </div>
           </details>
         </div>
@@ -311,11 +275,11 @@ Tuple (sealed box):
         <div class="card">
           <strong>Quick Links</strong>
           <ul style="margin-top:8px">
-            <li><a href="#tuple-basics">1 Basics</a></li>
-            <li><a href="#tuple-creation">2 Creation</a></li>
-            <li><a href="#tuple-access">3 Access</a></li>
-            <li><a href="#tuple-advanced">10 Advanced</a></li>
-            <li><a href="#tuple-leetcode">12 LeetCode</a></li>
+            <li><a href="#set-basics">1 Basics</a></li>
+            <li><a href="#creation-methods">2 Creation</a></li>
+            <li><a href="#modification">4 Modification</a></li>
+            <li><a href="#advanced">10 Advanced</a></li>
+            <li><a href="#leetcode">12 LeetCode</a></li>
           </ul>
           <div style="margin-top:12px">
             <button onclick="document.location='index.html'" style="background:var(--accent);color:#fff;border:none;padding:8px 10px;border-radius:8px;cursor:pointer">Home</button>
@@ -324,7 +288,7 @@ Tuple (sealed box):
 
         <div class="card" style="margin-top:12px">
           <strong>Practice Tip</strong>
-          <p class="small" style="margin-top:6px">Use tuples as keys for dicts, for grouping, and when immutability is needed. Convert to list if modification required.</p>
+          <p class="small" style="margin-top:6px">Focus on membership, duplicate removal, and set operations (union/intersection/difference) to simplify problems.</p>
         </div>
       </aside>
     </div>
