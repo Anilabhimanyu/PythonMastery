@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete Git Guide for Python Developers</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        
+        nav {
+            background: #4a5568;
+            padding: 15px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            margin: 0 5px;
+            border-radius: 5px;
+            display: inline-block;
+            transition: background 0.3s;
+        }
+        
+        nav a:hover {
+            background: #667eea;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        section {
+            margin-bottom: 50px;
+        }
+        
+        h2 {
+            color: #2d3748;
+            font-size: 2em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+        
+        h3 {
+            color: #4a5568;
+            font-size: 1.5em;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+        
+        h4 {
+            color: #667eea;
+            font-size: 1.2em;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        
+        code {
+            background: #f7fafc;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #e53e3e;
+            font-size: 0.9em;
+        }
+        
+        pre {
+            background: #2d3748;
+            color: #f7fafc;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 15px 0;
+            border-left: 4px solid #667eea;
+        }
+        
+        pre code {
+            background: none;
+            color: #f7fafc;
+            padding: 0;
+        }
+        
+        .command-box {
+            background: #edf2f7;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #48bb78;
+        }
+        
+        .warning-box {
+            background: #fff5f5;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #f56565;
+        }
+        
+        .tip-box {
+            background: #f0fff4;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #48bb78;
+        }
+        
+        .info-box {
+            background: #ebf8ff;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #4299e1;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        th {
+            background: #667eea;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        tr:hover {
+            background: #f7fafc;
+        }
+        
+        .scenario {
+            background: #fefcbf;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid #ecc94b;
+        }
+        
+        .faq-item {
+            background: #f7fafc;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .faq-item:hover {
+            background: #edf2f7;
+            transform: translateX(5px);
+        }
+        
+        .faq-question {
+            font-weight: bold;
+            color: #2d3748;
+            margin-bottom: 10px;
+        }
+        
+        .faq-answer {
+            color: #4a5568;
+            display: none;
+            padding-top: 10px;
+            border-top: 1px solid #cbd5e0;
+        }
+        
+        .faq-item.active .faq-answer {
+            display: block;
+        }
+        
+        footer {
+            background: #2d3748;
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .references {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .references li {
+            padding: 10px;
+            margin: 5px 0;
+            background: #f7fafc;
+            border-radius: 5px;
+        }
+        
+        .references a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
+        .references a:hover {
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 768px) {
+            .content {
+                padding: 20px;
+            }
+            
+            header h1 {
+                font-size: 1.8em;
+            }
+            
+            h2 {
+                font-size: 1.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🚀 Complete Git Guide</h1>
+            <p>Comprehensive Resource for Python Developers with 3 YOE</p>
+        </header>
+        
+        <nav>
+            <a href="#intro">Introduction</a>
+            <a href="#basics">Basics</a>
+            <a href="#branching">Branching</a>
+            <a href="#merging">Merging</a>
+            <a href="#remote">Remote</a>
+            <a href="#advanced">Advanced</a>
+            <a href="#workflows">Workflows</a>
+            <a href="#scenarios">Scenarios</a>
+            <a href="#faqs">FAQs</a>
+            <a href="#references">References</a>
+        </nav>
+        
+        <div class="content">
+            <section id="intro">
+                <h2>1. Introduction to Git</h2>
+                
+                <h3>What is Git?</h3>
+                <p>Git is a distributed version control system created by Linus Torvalds in 2005. It tracks changes in source code during software development and enables multiple developers to work on the same project simultaneously.</p>
+                
+                <h3>Why Git?</h3>
+                <ul>
+                    <li><strong>Distributed:</strong> Every developer has a complete copy of the repository</li>
+                    <li><strong>Fast:</strong> Most operations are local</li>
+                    <li><strong>Branching:</strong> Lightweight and powerful branching model</li>
+                    <li><strong>Data Integrity:</strong> Everything is checksummed using SHA-1</li>
+                    <li><strong>Collaboration:</strong> Seamless team collaboration</li>
+                </ul>
+                
+                <h3>Git Installation</h3>
+                <pre><code># Linux (Debian/Ubuntu)
+sudo apt-get install git
+
+# Linux (Fedora)
+sudo dnf install git
+
+# macOS (Homebrew)
+brew install git
+
+# Windows
+# Download from https://git-scm.com/download/win</code></pre>
+                
+                <h3>Initial Configuration</h3>
+                <pre><code># Set your name and email
+git config --global user.name "Your Name"
+git config --global user.email "your.email@example.com"
+
+# Set default branch name
+git config --global init.defaultBranch main
+
+# Set default editor
+git config --global core.editor "vim"
+
+# Enable color output
+git config --global color.ui auto
+
+# View all settings
+git config --list</code></pre>
+            </section>
+            
+            <section id="basics">
+                <h2>2. Git Basics</h2>
+                
+                <h3>Repository Initialization</h3>
+                <pre><code># Initialize a new repository
+git init
+
+# Clone an existing repository
+git clone https://github.com/user/repo.git
+
+# Clone with a different name
+git clone https://github.com/user/repo.git my-project</code></pre>
+                
+                <h3>Git File States</h3>
+                <div class="info-box">
+                    <strong>Three States of Files:</strong>
+                    <ul>
+                        <li><strong>Modified:</strong> Changed but not committed</li>
+                        <li><strong>Staged:</strong> Marked for next commit</li>
+                        <li><strong>Committed:</strong> Safely stored in local database</li>
+                    </ul>
+                </div>
+                
+                <h3>Basic Commands</h3>
+                <pre><code># Check repository status
+git status
+
+# Short status format
+git status -s
+
+# Add files to staging area
+git add filename.py
+git add .                    # Add all files
+git add *.py                 # Add all Python files
+git add src/                 # Add directory
+
+# Remove from staging area
+git reset filename.py
+git reset                    # Unstage all
+
+# Commit changes
+git commit -m "Add user authentication"
+
+# Add and commit in one step
+git commit -am "Update README"
+
+# Amend last commit
+git commit --amend -m "New message"
+
+# View commit history
+git log
+git log --oneline            # Compact view
+git log --graph              # Graph view
+git log -p                   # Show diff
+git log -3                   # Last 3 commits
+git log --author="John"      # By author
+git log --since="2 weeks ago"
+git log --until="2024-01-01"
+
+# Show specific commit
+git show <commit-hash>
+
+# Show changes
+git diff                     # Unstaged changes
+git diff --staged            # Staged changes
+git diff HEAD                # All changes
+git diff branch1 branch2     # Between branches</code></pre>
+                
+                <h3>Ignoring Files (.gitignore)</h3>
+                <pre><code># Python .gitignore example
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+.venv
+pip-log.txt
+pip-delete-this-directory.txt
+.pytest_cache/
+.coverage
+htmlcov/
+dist/
+build/
+*.egg-info/
+.env
+.DS_Store
+.idea/
+.vscode/
+*.log</code></pre>
+                
+                <div class="tip-box">
+                    <strong>Tip:</strong> Use <code>git check-ignore -v filename</code> to debug why a file is being ignored.
+                </div>
+            </section>
+            
+            <section id="branching">
+                <h2>3. Branching</h2>
+                
+                <h3>Understanding Branches</h3>
+                <p>Branches are lightweight movable pointers to commits. The default branch is usually called <code>main</code> or <code>master</code>.</p>
+                
+                <h3>Branch Commands</h3>
+                <pre><code># List branches
+git branch                   # Local branches
+git branch -r                # Remote branches
+git branch -a                # All branches
+
+# Create new branch
+git branch feature/user-auth
+
+# Switch to branch
+git checkout feature/user-auth
+
+# Create and switch (newer way)
+git switch -c feature/user-auth
+
+# Create and switch (older way)
+git checkout -b feature/user-auth
+
+# Rename branch
+git branch -m old-name new-name
+
+# Delete branch
+git branch -d feature/user-auth     # Safe delete
+git branch -D feature/user-auth     # Force delete
+
+# Delete remote branch
+git push origin --delete feature/user-auth</code></pre>
+                
+                <h3>Branch Best Practices</h3>
+                <div class="tip-box">
+                    <ul>
+                        <li>Use descriptive branch names: <code>feature/add-login</code>, <code>bugfix/fix-memory-leak</code></li>
+                        <li>Keep branches short-lived</li>
+                        <li>Delete merged branches</li>
+                        <li>Regularly sync with main branch</li>
+                    </ul>
+                </div>
+                
+                <h3>Branch Naming Conventions</h3>
+                <pre><code>feature/feature-name      # New features
+bugfix/bug-description    # Bug fixes
+hotfix/critical-fix       # Production fixes
+release/version-number    # Release branches
+docs/documentation-update # Documentation
+refactor/code-improvement # Code refactoring</code></pre>
+            </section>
+            
+            <section id="merging">
+                <h2>4. Merging & Rebasing</h2>
+                
+                <h3>Merging</h3>
+                <pre><code># Merge branch into current branch
+git merge feature/user-auth
+
+# Merge with no fast-forward (creates merge commit)
+git merge --no-ff feature/user-auth
+
+# Abort merge
+git merge --abort
+
+# Continue after resolving conflicts
+git merge --continue</code></pre>
+                
+                <h3>Merge Conflicts</h3>
+                <p>Conflicts occur when Git can't automatically merge changes. You'll need to resolve them manually.</p>
+                
+                <pre><code># Example conflict markers
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+def calculate(x, y):
+    return x + y
+=======
+def calculate(a, b):
+    return a + b + 10
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; feature/new-calculation
+
+# After resolving conflicts
+git add conflicted-file.py
+git commit -m "Resolve merge conflict"</code></pre>
+                
+                <h3>Rebasing</h3>
+                <p>Rebasing rewrites commit history by applying commits from one branch onto another.</p>
+                
+                <pre><code># Rebase current branch onto main
+git rebase main
+
+# Interactive rebase (last 3 commits)
+git rebase -i HEAD~3
+
+# Continue after resolving conflicts
+git rebase --continue
+
+# Skip a commit during rebase
+git rebase --skip
+
+# Abort rebase
+git rebase --abort</code></pre>
+                
+                <h3>Interactive Rebase Commands</h3>
+                <pre><code>pick   = use commit
+reword = use commit, but edit message
+edit   = use commit, but stop for amending
+squash = use commit, meld into previous commit
+fixup  = like squash, but discard message
+drop   = remove commit</code></pre>
+                
+                <div class="warning-box">
+                    <strong>Warning:</strong> Never rebase commits that have been pushed to a public repository and others are working on!
+                </div>
+                
+                <h3>Merge vs Rebase</h3>
+                <table>
+                    <tr>
+                        <th>Merge</th>
+                        <th>Rebase</th>
+                    </tr>
+                    <tr>
+                        <td>Preserves complete history</td>
+                        <td>Creates linear history</td>
+                    </tr>
+                    <tr>
+                        <td>Non-destructive</td>
+                        <td>Rewrites history</td>
+                    </tr>
+                    <tr>
+                        <td>Creates merge commits</td>
+                        <td>No merge commits</td>
+                    </tr>
+                    <tr>
+                        <td>Safe for public branches</td>
+                        <td>Dangerous for public branches</td>
+                    </tr>
+                </table>
+            </section>
+            
+            <section id="remote">
+                <h2>5. Working with Remote Repositories</h2>
+                
+                <h3>Remote Commands</h3>
+                <pre><code># List remotes
+git remote -v
+
+# Add remote
+git remote add origin https://github.com/user/repo.git
+
+# Change remote URL
+git remote set-url origin https://github.com/user/new-repo.git
+
+# Remove remote
+git remote remove origin
+
+# Rename remote
+git remote rename origin upstream</code></pre>
+                
+                <h3>Fetching and Pulling</h3>
+                <pre><code># Fetch from remote (doesn't merge)
+git fetch origin
+
+# Fetch all remotes
+git fetch --all
+
+# Pull (fetch + merge)
+git pull origin main
+
+# Pull with rebase
+git pull --rebase origin main
+
+# Pull specific branch
+git pull origin feature/user-auth</code></pre>
+                
+                <h3>Pushing</h3>
+                <pre><code># Push to remote
+git push origin main
+
+# Push new branch and set upstream
+git push -u origin feature/user-auth
+
+# Push all branches
+git push --all
+
+# Push tags
+git push --tags
+
+# Force push (dangerous!)
+git push --force
+git push --force-with-lease  # Safer alternative
+
+# Delete remote branch
+git push origin --delete feature/old-feature</code></pre>
+                
+                <h3>Tracking Branches</h3>
+                <pre><code># Set upstream branch
+git branch --set-upstream-to=origin/main main
+
+# Push and set upstream
+git push -u origin feature/new-feature
+
+# View tracking branches
+git branch -vv</code></pre>
+            </section>
+            
+            <section id="advanced">
+                <h2>6. Advanced Git Concepts</h2>
+                
+                <h3>Stashing</h3>
+                <p>Stash allows you to save uncommitted changes temporarily.</p>
+                <pre><code># Stash changes
+git stash
+
+# Stash with message
+git stash save "WIP: working on authentication"
+
+# List stashes
+git stash list
+
+# Apply most recent stash
+git stash apply
+
+# Apply specific stash
+git stash apply stash@{2}
+
+# Apply and remove from stash list
+git stash pop
+
+# Drop stash
+git stash drop stash@{0}
+
+# Clear all stashes
+git stash clear
+
+# Show stash contents
+git stash show -p stash@{0}</code></pre>
+                
+                <h3>Cherry-picking</h3>
+                <p>Apply specific commits from one branch to another.</p>
+                <pre><code># Cherry-pick a commit
+git cherry-pick <commit-hash>
+
+# Cherry-pick multiple commits
+git cherry-pick <commit1> <commit2>
+
+# Cherry-pick a range
+git cherry-pick <commit1>..<commit2>
+
+# Cherry-pick without committing
+git cherry-pick -n <commit-hash></code></pre>
+                
+                <h3>Reverting and Resetting</h3>
+                <pre><code># Revert a commit (creates new commit)
+git revert <commit-hash>
+
+# Revert without committing
+git revert -n <commit-hash>
+
+# Reset to specific commit (soft - keeps changes staged)
+git reset --soft <commit-hash>
+
+# Reset (mixed - keeps changes unstaged, default)
+git reset --mixed <commit-hash>
+
+# Reset (hard - discards all changes)
+git reset --hard <commit-hash>
+
+# Reset to previous commit
+git reset --hard HEAD~1
+
+# Reset specific file
+git checkout -- filename.py</code></pre>
+                
+                <div class="warning-box">
+                    <strong>Danger:</strong> <code>git reset --hard</code> permanently deletes uncommitted changes!
+                </div>
+                
+                <h3>Reflog</h3>
+                <p>Reflog tracks all changes to HEAD, allowing recovery of "lost" commits.</p>
+                <pre><code># View reflog
+git reflog
+
+# Recover lost commit
+git reset --hard <commit-hash-from-reflog>
+
+# View reflog for specific branch
+git reflog show feature/user-auth</code></pre>
+                
+                <h3>Tags</h3>
+                <pre><code># List tags
+git tag
+
+# Create lightweight tag
+git tag v1.0.0
+
+# Create annotated tag
+git tag -a v1.0.0 -m "Release version 1.0.0"
+
+# Tag specific commit
+git tag -a v1.0.0 <commit-hash> -m "Release 1.0.0"
+
+# Show tag information
+git show v1.0.0
+
+# Push tags
+git push origin v1.0.0
+git push origin --tags
+
+# Delete local tag
+git tag -d v1.0.0
+
+# Delete remote tag
+git push origin --delete v1.0.0
+
+# Checkout tag
+git checkout v1.0.0</code></pre>
+                
+                <h3>Git Bisect</h3>
+                <p>Binary search to find the commit that introduced a bug.</p>
+                <pre><code># Start bisect
+git bisect start
+
+# Mark current commit as bad
+git bisect bad
+
+# Mark a known good commit
+git bisect good <commit-hash>
+
+# Git will checkout a commit in between
+# Test and mark as good or bad
+git bisect good  # or git bisect bad
+
+# Repeat until bug is found
+# Reset when done
+git bisect reset</code></pre>
+                
+                <h3>Git Hooks</h3>
+                <p>Scripts that run automatically on certain Git events.</p>
+                <div class="command-box">
+                    <p>Hooks are stored in <code>.git/hooks/</code></p>
+                    <p>Common hooks: <code>pre-commit</code>, <code>pre-push</code>, <code>post-merge</code></p>
+                </div>
+                
+                <pre><code># Example pre-commit hook (.git/hooks/pre-commit)
+#!/bin/sh
+# Run Python linting before commit
+
+python -m pylint **/*.py
+if [ $? -ne 0 ]; then
+    echo "Linting failed. Commit aborted."
+    exit 1
+fi</code></pre>
+                
+                <h3>Submodules</h3>
+                <pre><code># Add submodule
+git submodule add https://github.com/user/library.git lib/library
+
+# Clone repo with submodules
+git clone --recursive https://github.com/user/repo.git
+
+# Initialize submodules
+git submodule init
+git submodule update
+
+# Update all submodules
+git submodule update --remote
+
+# Remove submodule
+git submodule deinit lib/library
+git rm lib/library</code></pre>
+                
+                <h3>Git Worktrees</h3>
+                <p>Work on multiple branches simultaneously without switching.</p>
+                <pre><code># Create new worktree
+git worktree add ../project-feature1 feature/feature1
+
+# List worktrees
+git worktree list
+
+# Remove worktree
+git worktree remove ../project-feature1
+
+# Prune deleted worktrees
+git worktree prune</code></pre>
+            </section>
+            
+            <section id="workflows">
+                <h2>7. Git Workflows</h2>
+                
+                <h3>Git Flow</h3>
+                <p>A popular branching model with strict branch structure.</p>
+                <div class="info-box">
+                    <strong>Branches:</strong>
+                    <ul>
+                        <li><strong>main:</strong> Production-ready code</li>
+                        <li><strong>develop:</strong> Integration branch for features</li>
+                        <li><strong>feature/*:</strong> New features</li>
+                        <li><strong>release/*:</strong> Release preparation</li>
+                        <li><strong>hotfix/*:</strong> Emergency production fixes</li>
+                    </ul>
+                </div>
+                
+                <pre><code># Feature workflow
+git checkout develop
+git checkout -b feature/new-feature
+# ... work on feature ...
+git checkout develop
+git merge --no-ff feature/new-feature
+git branch -d feature/new-feature
+
+# Release workflow
+git checkout develop
+git checkout -b release/1.0.0
+# ... prepare release ...
+git checkout main
+git merge --no-ff release/1.0.0
+git tag -a v1.0.0
+git checkout develop
+git merge --no-ff release/1.0.0
+git branch -d release/1.0.0
+
+# Hotfix workflow
+git checkout main
+git checkout -b hotfix/critical-bug
+# ... fix bug ...
+git checkout main
+git merge --no-ff hotfix/critical-bug
+git tag -a v1.0.1
+git checkout develop
+git merge --no-ff hotfix/critical-bug
+git branch -d hotfix/critical-bug</code></pre>
+                
+                <h3>GitHub Flow</h3>
+                <p>Simpler workflow focused on continuous deployment.</p>
+                <div class="info-box">
+                    <strong>Process:</strong>
+                    <ol>
+                        <li>Create a branch from main</li>
+                        <li>Make changes and commit</li>
+                        <li>Open a Pull Request</li>
+                        <li>Discuss and review code</li>
+                        <li>Deploy for testing</li>
+                        <li>Merge to main</li>
+                    </ol>
+                </div>
+                
+                <h3>Trunk-Based Development</h3>
+                <p>Developers work on short-lived branches or directly on trunk (main).</p>
+                <div class="tip-box">
+                    <ul>
+                        <li>Commit directly to main or use very short-lived branches (1-2 days)</li>
+                        <li>Requires strong CI/CD and testing</li>
+                        <li>Use feature flags for incomplete features</li>
+                    </ul>
+                </div>
+                
+                <h3>Forking Workflow</h3>
+                <p>Common in open-source projects.</p>
+                <pre><code># Fork repository on GitHub
+# Clone your fork
+git clone https://github.com/your-username/repo.git
+
+# Add upstream remote
+git remote add upstream https://github.com/original-owner/repo.git
+
+# Keep fork synced
+git fetch upstream
+git checkout main
+git merge upstream/main
+git push origin main
+
+# Create feature branch
+git checkout -b feature/new-feature
+
+# Push to your fork
+git push origin feature/new-feature
+
+# Create Pull Request from your fork to upstream</code></pre>
+            </section>
+            
+            <section id="scenarios">
+                <h2>8. Real-Time Issues & Scenarios</h2>
+                
+                <div class="scenario">
+                    <h4>Scenario 1: Accidentally Committed to Wrong Branch</h4>
+                    <p><strong>Problem:</strong> You made commits on main instead of a feature branch.</p>
+                    <pre><code># Create new branch with current commits
+git branch feature/my-feature
+
+# Reset main to origin
+git reset --hard origin/main
+
+# Switch to feature branch
+git checkout feature/my-feature</code></pre>
+                </div>
+                
+                <div class="scenario">
+                    <h4>Scenario 2: Undo Last Commit (Keep Changes)</h4>
+                    <pre><code># Undo commit but keep changes staged
+git reset --soft HEAD~1
+
+# Undo commit and unstage changes
+git reset HEAD~1
+
+# Modify and recommit
+git add .
+git commit -m "Correct commit message"</code></pre>
+                </div>
+                
+                <div class="scenario">
+                    <h4>Scenario 3: Accidentally Deleted Branch</h4>
+                    <pre><code># Find the commit hash in reflog
+git reflog
+
+# Recreate branch
+git checkout -b feature/recovered <commit-hash></code></pre>
+                </div>
+                
+                <div class="scenario">
+                    <h4>Scenario 4: Merge Conflict Resolution</h4>
+                    <pre><code># Start merge
+git merge feature/user-auth
+
+# Conflict occurs - edit files manually
+# Remove conflict markers and decide which code to keep
+
+# After resolving
+git add resolved-file.py
+git commit
+
+# Or use merge tools
+git mergetool</code></pre>
+                </div>
+                
+                <div class="scenario">
+                    <h4>Scenario 5: Committed Sensitive Data (passwords, API keys)</h4>
+                    <pre><code># Remove file from last commit
+git rm --cached config/secrets.py
+git commit --amend -m "Remove sensitive data"
+
+# If already pushed, use BFG Repo-Cleaner or git-filter-repo
+# BFG: https://rtyley.github.io/bfg-repo-cleaner/
+java -jar bfg.jar --delete-files secrets.py
+
+# Force push (coordinate with team!)
+git push --force</code></pre>
+                    <div class="warning-box">
+                        <strong>Important:</strong> Rotate any exposed secrets immediately! Removing from Git history doesn't remove from GitHub history or clones.
+                    </div>
+                </div>
+                
+                <div class="scenario">
+                    <h4>Scenario 6: Pull Latest Changes with Local Modifications</h4>
+                    <pre><code># Option 1: Stash, pull, apply
+git stash
+git pull origin main
+git stash pop
+
+# Option 2: Commit, pull with rebase
+git commit -am "WIP"
+git pull --rebase origin main
+
+# Option 3: Pull and merge
+git pull origin main</code></pre>
+                </div>
+                
+                <div class="scenario">
+                    <h4>Scenario 7: Sync Fork with Upstream</h4>
+                    <pre><code># Add upstream if not already added
+git remote add upstream https://github.com/original/repo.git
+
+# Fetch upstream
+git fetch upstream
+
+# Merge upstream main into your main
+git checkout main
+git merge upstream/main
+
+# Push to your fork
+git push origin main</code></pre>
+                </div
