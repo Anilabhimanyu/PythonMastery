@@ -1,0 +1,1266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graphs Part 2 - Practice Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: #333;
+            padding: 20px;
+            line-height: 1.7;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 50px;
+            text-align: center;
+        }
+        
+        h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.3em;
+            opacity: 0.95;
+        }
+        
+        nav {
+            background: #f8f9fa;
+            padding: 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .nav-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .nav-links a {
+            padding: 10px 20px;
+            background: white;
+            color: #f5576c;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .nav-links a:hover {
+            background: #f5576c;
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .content {
+            padding: 50px;
+        }
+        
+        .section {
+            margin-bottom: 50px;
+            padding: 40px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            border-left: 6px solid #f5576c;
+        }
+        
+        h2 {
+            color: #f5576c;
+            margin-bottom: 25px;
+            font-size: 2.2em;
+            border-bottom: 3px solid #f5576c;
+            padding-bottom: 10px;
+        }
+        
+        h3 {
+            color: #f093fb;
+            margin: 25px 0 15px 0;
+            font-size: 1.6em;
+        }
+        
+        h4 {
+            color: #e91e63;
+            margin: 20px 0 10px 0;
+            font-size: 1.3em;
+        }
+        
+        .problem-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin: 20px 0;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            border-left: 5px solid #f5576c;
+            transition: all 0.3s ease;
+        }
+        
+        .problem-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+        }
+        
+        .difficulty {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.85em;
+            margin-right: 10px;
+        }
+        
+        .easy {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .medium {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .hard {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .code-block {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 25px;
+            border-radius: 12px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+            line-height: 1.6;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+        
+        .code-block .comment {
+            color: #95a5a6;
+        }
+        
+        .code-block .keyword {
+            color: #3498db;
+        }
+        
+        .code-block .string {
+            color: #e74c3c;
+        }
+        
+        .code-block .function {
+            color: #f39c12;
+        }
+        
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+        
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+        
+        .card h3 {
+            margin-top: 0;
+        }
+        
+        .highlight-box {
+            background: #ffe5f0;
+            border-left: 5px solid #f5576c;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        
+        .warning-box {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        
+        .info-box {
+            background: #d1ecf1;
+            border-left: 5px solid #17a2b8;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        
+        .success-box {
+            background: #d4edda;
+            border-left: 5px solid #28a745;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        
+        th {
+            background: #f5576c;
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #ecf0f1;
+        }
+        
+        tr:hover {
+            background: #f8f9fa;
+        }
+        
+        code {
+            background: #f4f4f4;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            color: #e74c3c;
+            font-size: 0.9em;
+        }
+        
+        ul, ol {
+            margin-left: 30px;
+            margin-top: 15px;
+        }
+        
+        li {
+            margin: 10px 0;
+        }
+        
+        strong {
+            color: #f5576c;
+        }
+        
+        a {
+            color: #f5576c;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+        
+        .resource-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin: 15px 0;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+        
+        .resource-card a {
+            color: white;
+            text-decoration: underline;
+        }
+        
+        .pattern-box {
+            background: white;
+            border: 3px solid #f093fb;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 20px 0;
+        }
+        
+        @media (max-width: 768px) {
+            .content {
+                padding: 20px;
+            }
+            
+            .section {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎯 Graphs Part 2</h1>
+            <p class="subtitle">Practice Guide, LeetCode Problems & Resources</p>
+        </header>
+        
+        <nav>
+            <div class="nav-links">
+                <a href="#dfs-deep">DFS Deep Dive</a>
+                <a href="#patterns">Problem Patterns</a>
+                <a href="#leetcode">LeetCode Problems</a>
+                <a href="#templates">Code Templates</a>
+                <a href="#resources">Learning Resources</a>
+                <a href="#roadmap">Study Roadmap</a>
+            </div>
+        </nav>
+        
+        <div class="content">
+            <!-- DFS DEEP DIVE -->
+            <div class="section" id="dfs-deep">
+                <h2>🌊 DFS Deep Dive</h2>
+                <p>DFS is one of the most versatile graph algorithms. Let's master it completely!</p>
+                
+                <h3>Why DFS is So Powerful</h3>
+                <div class="highlight-box">
+                    <h4>🎯 DFS Excels At:</h4>
+                    <ul>
+                        <li><strong>Exploring all paths</strong> - Goes deep before backtracking</li>
+                        <li><strong>Backtracking problems</strong> - Natural fit for exploring possibilities</li>
+                        <li><strong>Cycle detection</strong> - Track recursion stack</li>
+                        <li><strong>Topological sorting</strong> - Post-order gives correct order</li>
+                        <li><strong>Connected components</strong> - Efficiently explores entire component</li>
+                        <li><strong>Path finding</strong> - Find ANY path (not necessarily shortest)</li>
+                    </ul>
+                </div>
+                
+                <h3>DFS Implementation Variants</h3>
+                
+                <h4>1. Standard Recursive DFS</h4>
+<div class="code-block"><span class="keyword">def</span> <span class="function">dfs</span>(graph, vertex, visited=None):
+    <span class="comment">"""
+    Standard DFS - Most common and clean
+    Time: O(V + E), Space: O(V) for recursion stack
+    """</span>
+    <span class="keyword">if</span> visited <span class="keyword">is None</span>:
+        visited = set()
+    
+    visited.add(vertex)
+    print(vertex, end=<span class="string">' '</span>)  <span class="comment"># Process vertex</span>
+    
+    <span class="keyword">for</span> neighbor <span class="keyword">in</span> graph[vertex]:
+        <span class="keyword">if</span> neighbor <span class="keyword">not in</span> visited:
+            dfs(graph, neighbor, visited)
+    
+    <span class="keyword">return</span> visited</div>
+
+                <h4>2. Iterative DFS (with Stack)</h4>
+<div class="code-block"><span class="keyword">def</span> <span class="function">dfs_iterative</span>(graph, start):
+    <span class="comment">"""
+    Iterative DFS using explicit stack
+    Better for deep graphs (avoids stack overflow)
+    """</span>
+    visited = set()
+    stack = [start]
+    result = []
+    
+    <span class="keyword">while</span> stack:
+        vertex = stack.pop()
+        
+        <span class="keyword">if</span> vertex <span class="keyword">not in</span> visited:
+            visited.add(vertex)
+            result.append(vertex)
+            
+            <span class="comment"># Add neighbors in reverse order to maintain left-to-right order</span>
+            <span class="keyword">for</span> neighbor <span class="keyword">in</span> reversed(graph[vertex]):
+                <span class="keyword">if</span> neighbor <span class="keyword">not in</span> visited:
+                    stack.append(neighbor)
+    
+    <span class="keyword">return</span> result</div>
+
+                <h4>3. DFS with Path Tracking</h4>
+<div class="code-block"><span class="keyword">def</span> <span class="function">dfs_all_paths</span>(graph, start, end, path=None):
+    <span class="comment">"""
+    Find all paths from start to end
+    Classic backtracking with DFS
+    """</span>
+    <span class="keyword">if</span> path <span class="keyword">is None</span>:
+        path = []
+    
+    path = path + [start]
+    
+    <span class="keyword">if</span> start == end:
+        <span class="keyword">return</span> [path]
+    
+    paths = []
+    <span class="keyword">for</span> neighbor <span class="keyword">in</span> graph[start]:
+        <span class="keyword">if</span> neighbor <span class="keyword">not in</span> path:  <span class="comment"># Avoid cycles</span>
+            new_paths = dfs_all_paths(graph, neighbor, end, path)
+            paths.extend(new_paths)
+    
+    <span class="keyword">return</span> paths
+
+<span class="comment"># Example</span>
+graph = {
+    <span class="string">'A'</span>: [<span class="string">'B'</span>, <span class="string">'C'</span>],
+    <span class="string">'B'</span>: [<span class="string">'D'</span>],
+    <span class="string">'C'</span>: [<span class="string">'D'</span>],
+    <span class="string">'D'</span>: []
+}
+print(dfs_all_paths(graph, <span class="string">'A'</span>, <span class="string">'D'</span>))
+<span class="comment"># Output: [['A', 'B', 'D'], ['A', 'C', 'D']]</span></div>
+
+                <h4>4. DFS with Time Stamps (for Advanced Algorithms)</h4>
+<div class="code-block"><span class="keyword">def</span> <span class="function">dfs_with_timestamps</span>(graph, vertex, visited, disc, finish, time):
+    <span class="comment">"""
+    DFS with discovery and finish times
+    Used in: SCCs, Bridges, Articulation Points
+    """</span>
+    visited.add(vertex)
+    disc[vertex] = time[0]
+    time[0] += 1
+    
+    <span class="keyword">for</span> neighbor <span class="keyword">in</span> graph[vertex]:
+        <span class="keyword">if</span> neighbor <span class="keyword">not in</span> visited:
+            dfs_with_timestamps(graph, neighbor, visited, disc, finish, time)
+    
+    finish[vertex] = time[0]
+    time[0] += 1</div>
+
+                <h3>DFS Pattern Recognition</h3>
+                <div class="pattern-box">
+                    <h4>🎯 When to Use DFS:</h4>
+                    <table>
+                        <tr>
+                            <th>Problem Type</th>
+                            <th>Why DFS?</th>
+                            <th>Example</th>
+                        </tr>
+                        <tr>
+                            <td><strong>Find ANY path</strong></td>
+                            <td>Don't need shortest, just existence</td>
+                            <td>Valid path in maze</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Explore all possibilities</strong></td>
+                            <td>Backtracking nature</td>
+                            <td>Generate all paths, combinations</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Detect cycles</strong></td>
+                            <td>Track recursion stack</td>
+                            <td>Course schedule validation</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Topological sort</strong></td>
+                            <td>Post-order gives correct order</td>
+                            <td>Build dependencies</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Connected components</strong></td>
+                            <td>Explores entire component</td>
+                            <td>Number of islands</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Graph coloring</strong></td>
+                            <td>Natural recursion for trying colors</td>
+                            <td>Bipartite check, Sudoku</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- PROBLEM PATTERNS -->
+            <div class="section" id="patterns">
+                <h2>🧩 Graph Problem Patterns</h2>
+                <p>Master these patterns and you can solve 80% of graph problems!</p>
+                
+                <h3>Pattern 1: Matrix as Graph (Grid DFS/BFS)</h3>
+                <div class="pattern-box">
+                    <h4>Recognition:</h4>
+                    <ul>
+                        <li>2D grid/matrix given</li>
+                        <li>Need to explore connected cells</li>
+                        <li>Islands, regions, paths in grid</li>
+                    </ul>
+                    
+                    <h4>Template:</h4>
+<div class="code-block"><span class="keyword">def</span> <span class="function">dfs_grid</span>(grid, i, j, visited):
+    <span class="comment">"""Grid DFS Template - 4 directions"""</span>
+    rows, cols = len(grid), len(grid[0])
+    
+    <span class="comment"># Boundary check</span>
+    <span class="keyword">if</span> i < 0 <span class="keyword">or</span> i >= rows <span class="keyword">or</span> j < 0 <span class="keyword">or</span> j >= cols:
+        <span class="keyword">return</span>
+    
+    <span class="comment"># Check if already visited or invalid cell</span>
+    <span class="keyword">if</span> (i, j) <span class="keyword">in</span> visited <span class="keyword">or</span> grid[i][j] == 0:
+        <span class="keyword">return</span>
+    
+    visited.add((i, j))
+    
+    <span class="comment"># Explore 4 directions: up, down, left, right</span>
+    directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+    <span class="keyword">for</span> di, dj <span class="keyword">in</span> directions:
+        dfs_grid(grid, i + di, j + dj, visited)
+
+<span class="comment"># For 8 directions (including diagonals):</span>
+<span class="comment"># directions = [(-1,0), (1,0), (0,-1), (0,1), (-1,-1), (-1,1), (1,-1), (1,1)]</span></div>
+
+                    <h4>Problems:</h4>
+                    <ul>
+                        <li>Number of Islands (LC 200)</li>
+                        <li>Max Area of Island (LC 695)</li>
+                        <li>Surrounded Regions (LC 130)</li>
+                        <li>Pacific Atlantic Water Flow (LC 417)</li>
+                    </ul>
+                </div>
+                
+                <h3>Pattern 2: Cycle Detection</h3>
+                <div class="pattern-box">
+                    <h4>Recognition:</h4>
+                    <ul>
+                        <li>Check if circular dependency exists</li>
+                        <li>Validate prerequisites/dependencies</li>
+                        <li>Detect deadlock</li>
+                    </ul>
+                    
+                    <h4>Template (Directed Graph - 3 Colors):</h4>
+<div class="code-block"><span class="keyword">def</span> <span class="function">has_cycle</span>(graph):
+    <span class="comment">"""
+    WHITE (0): Not visited
+    GRAY (1): In current DFS path (being processed)
+    BLACK (2): Completely processed
+    """</span>
+    WHITE, GRAY, BLACK = 0, 1, 2
+    color = {node: WHITE <span class="keyword">for</span> node <span class="keyword">in</span> graph}
+    
+    <span class="keyword">def</span> <span class="function">dfs</span>(node):
+        <span class="keyword">if</span> color[node] == GRAY:
+            <span class="keyword">return True</span>  <span class="comment"># Back edge - cycle!</span>
+        
+        <span class="keyword">if</span> color[node] == BLACK:
+            <span class="keyword">return False</span>  <span class="comment"># Already processed</span>
+        
+        color[node] = GRAY  <span class="comment"># Mark as being processed</span>
+        
+        <span class="keyword">for</span> neighbor <span class="keyword">in</span> graph.get(node, []):
+            <span class="keyword">if</span> dfs(neighbor):
+                <span class="keyword">return True</span>
+        
+        color[node] = BLACK  <span class="comment"># Done processing</span>
+        <span class="keyword">return False</span>
+    
+    <span class="keyword">for</span> node <span class="keyword">in</span> graph:
+        <span class="keyword">if</span> color[node] == WHITE:
+            <span class="keyword">if</span> dfs(node):
+                <span class="keyword">return True</span>
+    
+    <span class="keyword">return False</span></div>
+
+                    <h4>Problems:</h4>
+                    <ul>
+                        <li>Course Schedule (LC 207)</li>
+                        <li>Course Schedule II (LC 210)</li>
+                        <li>Redundant Connection (LC 684)</li>
+                    </ul>
+                </div>
+                
+                <h3>Pattern 3: Shortest Path in Weighted Graph</h3>
+                <div class="pattern-box">
+                    <h4>Recognition:</h4>
+                    <ul>
+                        <li>Find minimum cost/distance/time</li>
+                        <li>Weighted edges</li>
+                        <li>Non-negative weights → Dijkstra</li>
+                    </ul>
+                    
+                    <h4>Template (Dijkstra with Heap):</h4>
+<div class="code-block"><span class="keyword">import</span> heapq
+
+<span class="keyword">def</span> <span class="function">dijkstra</span>(graph, start, end):
+    <span class="comment">"""Dijkstra's shortest path"""</span>
+    distances = {node: float(<span class="string">'inf'</span>) <span class="keyword">for</span> node <span class="keyword">in</span> graph}
+    distances[start] = 0
+    
+    <span class="comment"># Min-heap: (distance, node)</span>
+    pq = [(0, start)]
+    visited = set()
+    
+    <span class="keyword">while</span> pq:
+        curr_dist, node = heapq.heappop(pq)
+        
+        <span class="keyword">if</span> node <span class="keyword">in</span> visited:
+            <span class="keyword">continue</span>
+        
+        <span class="keyword">if</span> node == end:
+            <span class="keyword">return</span> curr_dist
+        
+        visited.add(node)
+        
+        <span class="keyword">for</span> neighbor, weight <span class="keyword">in</span> graph[node]:
+            distance = curr_dist + weight
+            <span class="keyword">if</span> distance < distances[neighbor]:
+                distances[neighbor] = distance
+                heapq.heappush(pq, (distance, neighbor))
+    
+    <span class="keyword">return</span> -1  <span class="comment"># No path found</span></div>
+
+                    <h4>Problems:</h4>
+                    <ul>
+                        <li>Network Delay Time (LC 743)</li>
+                        <li>Path with Maximum Probability (LC 1514)</li>
+                        <li>Cheapest Flights Within K Stops (LC 787)</li>
+                    </ul>
+                </div>
+                
+                <h3>Pattern 4: Union-Find (Disjoint Set)</h3>
+                <div class="pattern-box">
+                    <h4>Recognition:</h4>
+                    <ul>
+                        <li>Dynamic connectivity queries</li>
+                        <li>Grouping/clustering elements</li>
+                        <li>Check if two elements in same group</li>
+                    </ul>
+                    
+                    <h4>Template:</h4>
+<div class="code-block"><span class="keyword">class</span> <span class="function">UnionFind</span>:
+    <span class="keyword">def</span> <span class="function">__init__</span>(self, n):
+        self.parent = list(range(n))
+        self.rank = [0] * n
+        self.components = n
+    
+    <span class="keyword">def</span> <span class="function">find</span>(self, x):
+        <span class="comment"># Path compression</span>
+        <span class="keyword">if</span> self.parent[x] != x:
+            self.parent[x] = self.find(self.parent[x])
+        <span class="keyword">return</span> self.parent[x]
+    
+    <span class="keyword">def</span> <span class="function">union</span>(self, x, y):
+        <span class="comment"># Union by rank</span>
+        px, py = self.find(x), self.find(y)
+        
+        <span class="keyword">if</span> px == py:
+            <span class="keyword">return False</span>  <span class="comment"># Already connected</span>
+        
+        <span class="keyword">if</span> self.rank[px] < self.rank[py]:
+            self.parent[px] = py
+        <span class="keyword">elif</span> self.rank[px] > self.rank[py]:
+            self.parent[py] = px
+        <span class="keyword">else</span>:
+            self.parent[py] = px
+            self.rank[px] += 1
+        
+        self.components -= 1
+        <span class="keyword">return True</span>
+    
+    <span class="keyword">def</span> <span class="function">connected</span>(self, x, y):
+        <span class="keyword">return</span> self.find(x) == self.find(y)</div>
+
+                    <h4>Problems:</h4>
+                    <ul>
+                        <li>Number of Connected Components (LC 323)</li>
+                        <li>Graph Valid Tree (LC 261)</li>
+                        <li>Accounts Merge (LC 721)</li>
+                        <li>Most Stones Removed (LC 947)</li>
+                    </ul>
+                </div>
+                
+                <h3>Pattern 5: Topological Sort</h3>
+                <div class="pattern-box">
+                    <h4>Recognition:</h4>
+                    <ul>
+                        <li>Order tasks with dependencies</li>
+                        <li>Prerequisites, build order</li>
+                        <li>Must be DAG (Directed Acyclic Graph)</li>
+                    </ul>
+                    
+                    <h4>Template (Kahn's Algorithm - BFS):</h4>
+<div class="code-block"><span class="keyword">from</span> collections <span class="keyword">import</span> deque, defaultdict
+
+<span class="keyword">def</span> <span class="function">topological_sort</span>(n, edges):
+    <span class="comment">"""Kahn's algorithm - also detects cycles"""</span>
+    graph = defaultdict(list)
+    in_degree = [0] * n
+    
+    <span class="comment"># Build graph</span>
+    <span class="keyword">for</span> u, v <span class="keyword">in</span> edges:
+        graph[u].append(v)
+        in_degree[v] += 1
+    
+    <span class="comment"># Start with nodes having no dependencies</span>
+    queue = deque([i <span class="keyword">for</span> i <span class="keyword">in</span> range(n) <span class="keyword">if</span> in_degree[i] == 0])
+    result = []
+    
+    <span class="keyword">while</span> queue:
+        node = queue.popleft()
+        result.append(node)
+        
+        <span class="keyword">for</span> neighbor <span class="keyword">in</span> graph[node]:
+            in_degree[neighbor] -= 1
+            <span class="keyword">if</span> in_degree[neighbor] == 0:
+                queue.append(neighbor)
+    
+    <span class="comment"># If result length < n, there's a cycle</span>
+    <span class="keyword">return</span> result <span class="keyword">if</span> len(result) == n <span class="keyword">else</span> []</div>
+
+                    <h4>Problems:</h4>
+                    <ul>
+                        <li>Course Schedule II (LC 210)</li>
+                        <li>Alien Dictionary (LC 269)</li>
+                        <li>Sequence Reconstruction (LC 444)</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- LEETCODE PROBLEMS -->
+            <div class="section" id="leetcode">
+                <h2>💻 LeetCode Problems - Curated List</h2>
+                <p>Handpicked problems covering all graph concepts. Follow this order!</p>
+                
+                <h3>🟢 Easy Problems (Build Foundation)</h3>
+                
+                <div class="problem-card">
+                    <h4>1. Find Center of Star Graph</h4>
+                    <span class="difficulty easy">Easy</span>
+                    <a href="https://leetcode.com/problems/find-center-of-star-graph/" target="_blank">LC 1791</a>
+                    <p><strong>Concept:</strong> Graph basics, degree counting</p>
+                    <p><strong>Hint:</strong> Center node connects to all others</p>
+                </div>
+                
+                <div class="problem-card">
+                    <h4>2. Find if Path Exists in Graph</h4>
+                    <span class="difficulty easy">Easy</span>
+                    <a href="https://leetcode.com/problems/find-if-path-exists-in-graph/" target="_blank">LC 1971</a>
+                    <p><strong>Concept:</strong> Basic BFS/DFS or Union-Find</p>
+                    <p><strong>Approach:</strong> Use DFS to check connectivity</p>
+<div class="code-block"><span class="keyword">def</span> <span class="function">validPath</span>(n, edges, source, destination):
+    graph = defaultdict(list)
+    <span class="keyword">for</span> u, v <span class="keyword">in</span> edges:
+        graph[u].append(v)
+        graph[v].append(u)
+    
+    visited = set()
+    <span class="keyword">def</span> <span class="function">dfs</span>(node):
+        <span class="keyword">if</span> node == destination:
+            <span class="keyword">return True</span>
+        visited.add(node)
+        <span class="keyword">for</span> neighbor <span class="keyword">in</span> graph[node]:
+            <span class="keyword">if</span> neighbor <span class="keyword">not in</span> visited:
+                <span class="keyword">if</span> dfs(neighbor):
+                    <span class="keyword">return True</span>
+        <span class="keyword">return False</span>
+    
+    <span class="keyword">return</span> dfs(source)</div>
+                </div>
+                
+                <div class="problem-card">
+                    <h4>3. Island Perimeter</h4>
+                    <span class="difficulty easy">Easy</span>
+                    <a href="https://leetcode.com/problems/island-perimeter/" target="_blank">LC 463</a>
+                    <p><strong>Concept:</strong> Grid traversal, counting</p>
+                    <p><strong>Hint:</strong> Count edges not shared with another land cell</p>
+                </div>
+                
+                <div class="problem-card">
+                    <h4>4. Flood Fill</h4>
+                    <span class="difficulty easy">Easy</span>
+                    <a href="https://leetcode.com/problems/flood-fill/" target="_blank">LC 733</a>
+                    <p><strong>Concept:</strong> DFS/BFS on grid, classic problem</p>
+                    <p><strong>Pattern:</strong> Matrix as graph, 4-directional DFS</p>
+                </div>
+                
+                <h3>🟡 Medium Problems (Core Concepts)</h3>
+                
+                <div class="problem-card">
+                    <h4>5. Number of Islands ⭐ MUST DO</h4>
+                    <span class="difficulty medium">Medium</span>
+                    <a href="https://leetcode.com/problems/number-of-islands/" target="_blank">LC 200</a>
+                    <p><strong>Concept:</strong> Connected components in grid</p>
+                    <p><strong>Approach:</strong> DFS/BFS for each unvisited land cell</p>
+<div class="code-block"><span class="keyword">def</span> <span class="function">numIslands</span>(grid):
+    <span class="keyword">if not</span> grid:
+        <span class="keyword">return</span> 0
+    
+    rows, cols = len(grid), len(grid[0])
+    count = 0
+    
+    <span class="keyword">def</span> <span class="function">dfs</span>(i, j):
+        <span class="keyword">if</span> i < 0 <span class="keyword">or</span> i >= rows <span class="keyword">or</span> j < 0 <span class="keyword">or</span> j >= cols:
+            <span class="keyword">return</span>
+        <span class="keyword">if</span> grid[i][j] != <span class="string">'1'</span>:
+            <span class="keyword">return</span>
+        
+        grid[i][j] = <span class="string">'0'</span>  <span class="comment"># Mark as visited</span>
+        dfs(i+1, j)
+        dfs(i-1, j)
+        dfs(i, j+1)
+        dfs(i, j-1)
+    
+    <span class="keyword">for</span> i <span class="keyword">in</span> range(rows):
+        <span class="keyword">for</span> j <span class="keyword">in</span> range(cols):
+            <span class="keyword">if</span> grid[i][j] == <span class="string">'1'</span>:
+                count += 1
+                dfs(i, j)
+    
+    <span class="keyword">return</span> count</div>
+                </div>
+                
+                <div class="problem-card">
+                    <h4>6. Clone Graph ⭐ MUST DO</h4>
+                    <span class="difficulty medium">Medium</span>
+                    <a href="https://leetcode.com/problems/clone-graph/" target="_blank">LC 133</a>
+                    <p><strong>Concept:</strong> DFS/BFS with hashmap for node mapping</p>
+                    <p><strong>Key:</strong> Use hashmap to track cloned nodes</p>
+                </div>
+                
+                <div class="problem-card">
+                    <h4>7. Course Schedule ⭐ MUST DO</h4>
+                    <span class="difficulty medium">Medium</span>
+                    <a href="https://leetcode.com/problems/course-schedule/" target="_blank">LC 207</a>
+                    <p><strong>Concept:</strong> Cycle detection in directed graph</p>
+                    <p><strong>Approach:</strong> DFS with 3 colors or Kahn's algorithm</p>
+<div class="code-block"><span class="keyword">def</span> <span class="function">canFinish</span>(numCourses, prerequisites):
+    graph = defaultdict(list)
+    <span class="keyword">for</span> course, prereq <span class="keyword">in</span> prerequisites:
+        graph[course].append(prereq)
+    
+    WHITE, GRAY, BLACK = 0, 1, 2
+    color = [WHITE] * numCourses
+    
+    <span class="keyword">def</span> <span class="function">has_cycle</span>(node):
+        <span class="keyword">if</span> color[node] == GRAY:
+            <span class="keyword">return True</span>  <span class="comment"># Cycle!</span>
+        <span class="keyword">if</span> color[node] == BLACK:
+            <span class="keyword">return False</span>
+        
+        color[node] = GRAY
+        <span class="keyword">for</span> neighbor <span class="keyword">in</span> graph[node]:
+            <span class="keyword">if</span> has_cycle(neighbor):
+                <span class="keyword">return True</span>
+        color[node] = BLACK
+        <span class="keyword">return False</span>
+    
+    <span class="keyword">for</span> i <span class="keyword">in</span> range(numCourses):
+        <span class="keyword">if</span> color[i] == WHITE:
+            <span class="keyword">if</span> has_cycle(i):
+                <span class="keyword">return False</span>
+    <span class="keyword">return True</span></div>
+                </div>
+                
+                <div class="problem-card">
+                    <h4>8. Course Schedule II ⭐ MUST DO</h4>
+                    <span class="difficulty medium">Medium</span>
+                    <a href="https://leetcode.com/problems/course-schedule-ii/" target="_blank">LC 210</a>
+                    <p><strong>Concept:</strong> Topological sort</p>
+                    <p><strong>Approach:</strong> Kahn's algorithm or DFS post-order</p>
+                </div>
+                
+                <div class="problem-card">
+                    <h4>9. Pacific Atlantic Water Flow</h4>
+                    <span class="difficulty medium">Medium</span>
+                    <a href="https://leetcode.com/problems/pacific-atlantic-water-flow/" target="_blank">LC 417</a>
+                    <p><strong>Concept:</strong> Multi-source BFS/DFS</p>
+                    <p><strong>Trick:</strong> Start from ocean edges and flow upward</p>
+                </div>
+                
+                <div class="problem-card">
+                    <h4>10. Number of Connected Components ⭐</h4>
+                    <span class="difficulty medium">Medium</span>
+                    <a href="https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/" target="_blank">LC 323</a>
+                    <p><strong>Concept:</strong> Connected components (DFS/Union-Find)</p>
+                    <p><strong>Two approaches:</strong> DFS counting or Union-Find components</p>
+                </div>
+                
+                <div class="problem-card">
+                    <h4>11. Graph Valid Tree ⭐ MUST DO</h4>
+                    <span class="difficulty medium">Medium</span>
+                    <a href="https://leetcode.com/problems/graph-valid-tree/" target="_blank">LC 261</a>
+                    <p><strong>Concept:</strong> Tree properties: no cycles + connected</p>
+                    <p><strong>Key:</strong> Tree has n-1 edges and is connected</p>
+                </div>
+                
+                <div class="problem-card">
+                    <h4>12. Rotting Oranges</h4>
+                    <span class="difficulty medium">Medium</span>
+                    <a href="https://leetcode.com/problems/rotting-oranges/" target="_blank">LC 994</a>
+                    <p><strong>Concept:</strong> Multi-source BFS, time-based spreading</p>
+                    <p><strong>Pattern:</strong> Level-by-level BFS with time tracking</p>
+                </div>
+                
+                <div class="problem-card">
+                    <h4>13. Walls and Gates</h4>
+                    <span class="difficulty medium">Medium</span>
+                    <a href="https://leetcode.com/problems/walls-and-gates/" target="_blank">LC 286</a>
+                    <p><strong>Concept:</strong> Multi-source BFS, distance calculation</p>
+                    <p><strong>Approach:</strong> Start BFS from all gates simultaneously</p>
+                </div>
+                
+                <div class="problem-card">
+                    <h4>14. Accounts Merge</h4>
+                    <span class="difficulty medium">Medium</span>
+                    <a href="https://leetcode.com/problems/accounts-merge/" target="_blank">LC 721</a>
+                    <p><strong>Concept:</strong> Union-Find for grouping</p>
+                    <p><strong>Trick:</strong> Map emails to account IDs, then union</p>
+                </div>
+                
+                <div class="problem-card">
+                    <h4>15. Network Delay Time ⭐</h4>
+                    <span class="difficulty medium">Medium</span>
+                    <a href="https://leetcode.com/problems/network-delay-time/" target="_blank">LC 743</a>
+                    <p><strong>Concept:</strong> Dijkstra's shortest path</p>
+                    <p><strong>Classic:</strong> Perfect Dijkstra practice problem</p>
+                </div>
+                
+                <div class="problem-card">
+                    <h4>16. Cheapest Flights Within K Stops</h4>
+                    <span class="difficulty medium">Medium</span>
+                    <a href="https://leetcode.com/problems/cheapest-flights-within-k-stops/" target="_blank">LC 787</a>
+                    <p><strong>Concept:</strong> Modified Dijkstra with constraint</p>
+                    <p><strong>Variation:</strong> Track stops along with distance</p>
+                </div>
+                
+                <div class="problem-card">
+                    <h4>17. Surrounded Regions</h4>
+                    <span class="difficulty medium">Medium</span>
+                    <a href="https://leetcode.com/problems/surrounded-regions/" target="_blank">LC 130</a>
+                    <p><strong>Concept:</strong> DFS from borders</p>
+                    <p><strong>Trick:</strong> Start from edges, mark safe regions</p>
+                </div>
+                
+                <div class="problem-card">
+                    <h4>18. Redundant Connection</h4>
+                    <span class="difficulty medium">Medium</span>
+                    <a href="https://leetcode.com/problems/redundant-connection/" target="_blank">LC 684</a>
+                    <p><strong>Concept:</strong> Union-Find cycle detection</p>
+                    <p><strong>Goal:</strong> Find edge that creates cycle</p>
+                </div>
+                
+                <div class="problem-card">
+                    <h4>19. Word Ladder ⭐ MUST DO</h4>
+                    <span class="difficulty medium">Medium</span>
+                    <a href="https://leetcode.com/problems/word-ladder/" target="_blank">LC 127</a>
+                    <p><strong>Concept:</strong> BFS for shortest path in implicit graph</p>
+                    <p><strong>Trick:</strong> Each word is node, 1-char diff is edge</p>
+                </div>
+                
+                <div class="problem-card">
+                    <h4>20. All Paths From Source to Target</h4>
+                    <span class="difficulty medium">Medium</span>
+                    <a href="https://leetcode.com/problems/all-paths-from-source-to-target/" target="_blank">LC 797</a>
+                    <p><strong>Concept:</strong> DFS backtracking for all paths</p>
+                    <p><strong>Pattern:</strong> Classic DFS with path tracking</p>
+                </div>
+                
+                <h3>🔴 Hard Problems (Advanced)</h3>
+                
+                <div class="problem-card">
+                    <h4>21. Word Ladder II</h4>
+                    <span class="difficulty hard">Hard</span>
+                    <a href="https://leetcode.com/problems/word-ladder-ii/" target="_blank">LC 126</a>
+                    <p><strong>Concept:</strong> BFS + DFS, find all shortest paths</p>
+                    <p><strong>Approach:</strong> BFS to find distances, DFS to construct paths</p>
+                </div>
+                
+                <div class="problem-card">
+                    <h4>22. Critical Connections in Network ⭐</h4>
+                    <span class="difficulty hard">Hard</span>
+                    <a href="https://leetcode.com/problems/critical-connections-in-a-network/" target="_blank">LC 1192</a>
+                    <p><strong>Concept:</strong> Finding bridges (Tarjan's algorithm)</p>
+                    <p><strong>Advanced:</strong> DFS with low-link values</p>
+                </div>
+                
+                <div class="problem-card">
+                    <h4>23. Alien Dictionary ⭐</h4>
+                    <span class="difficulty hard">Hard</span>
+                    <a href="https://leetcode.com/problems/alien-dictionary/" target="_blank">LC 269</a>
+                    <p><strong>Concept:</strong> Topological sort from word order</p>
+                    <p><strong>Trick:</strong> Build graph from character order in words</p>
+                </div>
+                
+                <div class="problem-card">
+                    <h4>24. Reconstruct Itinerary</h4>
+                    <span class="difficulty hard">Hard</span>
+                    <a href="https://leetcode.com/problems/reconstruct-itinerary/" target="_blank">LC 332</a>
+                    <p><strong>Concept:</strong> Eulerian path (Hierholzer's algorithm)</p>
+                    <p><strong>Goal:</strong> Visit all edges exactly once</p>
+                </div>
+                
+                <div class="problem-card">
+                    <h4>25. Minimum Cost to Connect All Points</h4>
+                    <span class="difficulty hard">Hard</span>
+                    <a href="https://leetcode.com/problems/min-cost-to-connect-all-points/" target="_blank">LC 1584</a>
+                    <p><strong>Concept:</strong> Minimum Spanning Tree (Prim's or Kruskal's)</p>
+                    <p><strong>Note:</strong> Build complete graph from points</p>
+                </div>
+                
+                <div class="problem-card">
+                    <h4>26. Swim in Rising Water</h4>
+                    <span class="difficulty hard">Hard</span>
+                    <a href="https://leetcode.com/problems/swim-in-rising-water/" target="_blank">LC 778</a>
+                    <p><strong>Concept:</strong> Modified Dijkstra (minimize max elevation)</p>
+                    <p><strong>Trick:</strong> Binary search or priority queue with max tracking</p>
+                </div>
+                
+                <h3>📊 Problem Distribution by Topic</h3>
+                <table>
+                    <tr>
+                        <th>Topic</th>
+                        <th>Problems</th>
+                        <th>Count</th>
+                    </tr>
+                    <tr>
+                        <td><strong>BFS/DFS Basics</strong></td>
+                        <td>1971, 733, 200, 133</td>
+                        <td>4</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Grid/Matrix</strong></td>
+                        <td>463, 733, 200, 417, 994, 286, 130</td>
+                        <td>7</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Cycle Detection</strong></td>
+                        <td>207, 684</td>
+                        <td>2</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Topological Sort</strong></td>
+                        <td>210, 269</td>
+                        <td>2</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Union-Find</strong></td>
+                        <td>323, 261, 721, 684, 1584</td>
+                        <td>5</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Shortest Path</strong></td>
+                        <td>743, 787, 127, 778</td>
+                        <td>4</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Advanced</strong></td>
+                        <td>126, 1192, 332</td>
+                        <td>3</td>
+                    </tr>
+                </table>
+            </div>
+            
+            <!-- CODE TEMPLATES -->
+            <div class="section" id="templates">
+                <h2>📝 Production-Ready Code Templates</h2>
+                <p>Copy-paste these templates and modify for your problem!</p>
+                
+                <h3>Template 1: Graph Class (Adjacency List)</h3>
+<div class="code-block"><span class="keyword">from</span> collections <span class="keyword">import</span> defaultdict, deque
+<span class="keyword">import</span> heapq
+
+<span class="keyword">class</span> <span class="function">Graph</span>:
+    <span class="keyword">def</span> <span class="function">__init__</span>(self, directed=<span class="keyword">False</span>):
+        self.graph = defaultdict(list)
+        self.directed = directed
+    
+    <span class="keyword">def</span> <span class="function">add_edge</span>(self, u, v, weight=1):
+        <span class="comment">"""Add edge from u to v"""</span>
+        self.graph[u].append((v, weight))
+        <span class="keyword">if not</span> self.directed:
+            self.graph[v].append((u, weight))
+    
+    <span class="keyword">def</span> <span class="function">bfs</span>(self, start):
+        <span class="comment">"""Breadth-First Search"""</span>
+        visited = set([start])
+        queue = deque([start])
+        result = []
+        
+        <span class="keyword">while</span> queue:
+            node = queue.popleft()
+            result.append(node)
+            
+            <span class="keyword">for</span> neighbor, _ <span class="keyword">in</span> self.graph[node]:
+                <span class="keyword">if</span> neighbor <span class="keyword">not in</span> visited:
+                    visited.add(neighbor)
+                    queue.append(neighbor)
+        
+        <span class="keyword">return</span> result
+    
+    <span class="keyword">def</span> <span class="function">dfs</span>(self, start):
+        <span class="comment">"""Depth-First Search (Iterative)"""</span>
+        visited = set()
+        stack = [start]
+        result = []
+        
+        <span class="keyword">while</span> stack:
+            node = stack.pop()
+            <span class="keyword">if</span> node <span class="keyword">not in</span> visited:
+                visited.add(node)
+                result.append(node)
+                <span class="keyword">for</span> neighbor, _ <span class="keyword">in</span> self.graph[node]:
+                    <span class="keyword">if</span> neighbor <span class="keyword">not in</span> visited:
+                        stack.append(neighbor)
+        
+        <span class="keyword">return</span> result
+    
+    <span class="keyword">def</span> <span class="function">dijkstra</span>(self, start):
+        <span class="comment">"""Dijkstra's shortest path"""</span>
+        distances = {node: float(<span class="string">'inf'</span>) <span class="keyword">for</span> node <span class="keyword">in</span> self.graph}
+        distances[start] = 0
+        pq = [(0, start)]
+        visited = set()
+        
+        <span class="keyword">while</span> pq:
+            curr_dist, node = heapq.heappop(pq)
+            
+            <span class="keyword">if</span> node <span class="keyword">in</span> visited:
+                <span class="keyword">continue</span>
+            visited.add(node)
+            
+            <span class="keyword">for</span> neighbor, weight <span class="keyword">in</span> self.graph[node]:
+                distance = curr_dist + weight
+                <span class="keyword">if</span> distance < distances[neighbor]:
+                    distances[neighbor] = distance
+                    heapq.heappush(pq, (distance, neighbor))
+        
+        <span class="keyword">return</span> distances
+    
+    <span class="keyword">def</span> <span class="function">has_cycle</span>(self):
+        <span class="comment">"""Detect cycle in directed graph"""</span>
+        WHITE, GRAY, BLACK = 0, 1, 2
+        color = {node: WHITE <span class="keyword">for</span> node <span class="keyword">in</span> self.graph}
+        
+        <span class="keyword">def</span> <span class="function">dfs</span>(node):
+            <span class="keyword">if</span> color[node] == GRAY:
+                <span class="keyword">return True</span>
+            <span class="keyword">if</span> color[node] == BLACK:
+                <span class="keyword">return False</span>
+            
+            color[node] = GRAY
+            <span class="keyword">for</span> neighbor, _ <span class="keyword">in</span> self.graph[node]:
+                <span class="keyword">if</span> dfs(neighbor):
+                    <span class="keyword">return True</span>
+            color[node] = BLACK
+            <span class="keyword">return False</span>
+        
+        <span class="keyword">for</span> node <span class="keyword">in</span> self.graph:
+            <span class="keyword">if</span> color[node] == WHITE:
+                <span class="keyword">if</span> dfs(node):
+                    <span class="keyword">return True</span>
+        <span class="keyword">return False</span></div>
+
+                <h3>Template 2: Grid DFS/BFS</h3>
+<div class="code-block"><span class="keyword">def</span> <span class="function">grid_dfs</span>(grid, start_row, start_col):
+    <span class="comment">"""Template for grid-based DFS"""</span>
+    rows, cols = len(grid), len(grid[0])
+    visited = set()
+    
+    <span class="keyword">def</span> <span class="function">dfs</span>(r, c):
+        <span class="comment"># Base cases</span>
+        <span class="keyword">if</span> r < 0 <span class="keyword">or</span> r >= rows <span class="keyword">or</span> c < 0 <span class="keyword">or</span> c >= cols:
+            <span class="keyword">return</span>
+        <span class="keyword">if</span> (r, c) <span class="keyword">in</span> visited <span class="keyword">or</span> grid[r][c] == 0:
+            <span class="keyword">return</span>
+        
+        visited.add((r, c))
+        
+        <span class="comment"># Explore 4 directions</span>
+        <span class="keyword">for</span> dr, dc <span class="keyword">in</span> [(-1,0), (1,0), (0,-1), (0,1)]:
+            dfs(r + dr, c + dc)
+    
+    dfs(start_row, start_col)
+    <span class="keyword">return</span> visited
+
+<span class="keyword">def</span> <span class="function">grid_bfs</span>(grid, start_row, start_col):
+    <span class="comment">"""Template for grid-based BFS"""</span>
+    rows, cols = len(grid), len(grid[0])
+    visited = {(start_row, start_col)}
+    queue = deque([(start_row, start_col)])
+    
+    <span class="keyword">while</span> queue:
+        r, c = queue.popleft()
+        
+        <span class="comment"># Explore 4 directions</span>
+        <span class="keyword">for</span> dr, dc <span class="keyword">in</span> [(-1,0), (1,0), (0,-1), (0,1)]:
+            nr, nc = r + dr, c + dc
+            
+            <span class="keyword">if</span> (0 <= nr < rows <span class="keyword">and</span> 0 <= nc < cols <span class="keyword">and</span>
+                (nr, nc) <span class="keyword">not in</span> visited <span class="keyword">and</span> grid[nr][nc] == 1):
+                visited.add((nr, nc))
+                queue.append((nr, nc))
+    
+    <span class="keyword">return</span> visited</div>
+
+                <h3>Template 3: Union-Find</h3>
+<div class="code-block"><span class="keyword">class</span> <span class="function">UnionFind</span>:
+    <span class="comment">"""Union-Find with path compression and union by rank"""</span>
+    <span class="keyword">def</span> <span class="function">__init__</span>(self, n):
+        self.parent = list(range(n))
+        self.rank = [0] * n
+        self.count = n  <span class="comment"># Number of components</span>
+    
+    <span class="keyword">def</span> <span class="function">find</span>(self, x):
+        <span class="comment">"""Find with path compression"""</span>
+        <span class="keyword">if</span> self.parent[x] != x:
+            self.parent[x] = self.find(self.parent[x])
+        <span class="keyword">return</span> self.parent[x]
+    
+    <span class="keyword">def</span> <span class="function">union</span>(self, x, y):
+        <span class="comment">"""Union by rank"""</span>
+        px, py = self.find(x), self.find(y)
+        
+        <span class="keyword">if</span> px == py:
+            <span class="keyword">return False</span>  <span class="comment"># Already connected</span>
+        
+        <span class="keyword">if</span> self.rank[px] < self.rank[py]:
+            self.parent[px] = py
+        <span class="keyword">elif</span> self.rank[px] > self.rank[py]:
+            self.parent[py] = px
+        <span class="keyword">else</span>:
+            self.parent[py] = px
+            self.rank[px] += 1
+        
+        self.count -= 1
+        <span class="keyword">return True</span>
+    
+    <span class="keyword">def</span> <span class="function">connected</span>(self, x, y):
+        <span class="comment">"""Check if x and y are in same component"""</span>
+        <span class="keyword">return</span> self.find(x) == self.find(y)
+    
+    <span class="keyword">def</span> <span class="function">get_count</span>(self):
+        <span class="comment">"""Get number of connected components"""</span>
+        <span class="keyword">return</span> self.count</div>
+
+                <h3>Template 4: Topological Sort (Both Methods)</h3>
+<div class="code-block"><span
