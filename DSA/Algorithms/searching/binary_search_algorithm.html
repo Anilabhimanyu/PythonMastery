@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Binary Search - Complete Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            padding: 20px;
+            line-height: 1.7;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 50px;
+            text-align: center;
+        }
+        
+        h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.3em;
+            opacity: 0.95;
+        }
+        
+        nav {
+            background: #f8f9fa;
+            padding: 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .nav-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .nav-links a {
+            padding: 10px 20px;
+            background: white;
+            color: #667eea;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .nav-links a:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .content {
+            padding: 50px;
+        }
+        
+        .section {
+            margin-bottom: 50px;
+            padding: 40px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            border-left: 6px solid #667eea;
+        }
+        
+        h2 {
+            color: #667eea;
+            margin-bottom: 25px;
+            font-size: 2.2em;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+        
+        h3 {
+            color: #764ba2;
+            margin: 25px 0 15px 0;
+            font-size: 1.6em;
+        }
+        
+        h4 {
+            color: #5a67d8;
+            margin: 20px 0 10px 0;
+            font-size: 1.3em;
+        }
+        
+        .code-block {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 25px;
+            border-radius: 12px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+            line-height: 1.6;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            white-space: pre;
+        }
+        
+        .code-block .comment {
+            color: #95a5a6;
+        }
+        
+        .code-block .keyword {
+            color: #3498db;
+        }
+        
+        .code-block .string {
+            color: #e74c3c;
+        }
+        
+        .code-block .function {
+            color: #f39c12;
+        }
+        
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+        
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+        
+        .highlight-box {
+            background: #e3e8ff;
+            border-left: 5px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        
+        .warning-box {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        
+        .info-box {
+            background: #d1ecf1;
+            border-left: 5px solid #17a2b8;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        
+        .success-box {
+            background: #d4edda;
+            border-left: 5px solid #28a745;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        
+        th {
+            background: #667eea;
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #ecf0f1;
+        }
+        
+        tr:hover {
+            background: #f8f9fa;
+        }
+        
+        code {
+            background: #f4f4f4;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            color: #e74c3c;
+            font-size: 0.9em;
+        }
+        
+        ul, ol {
+            margin-left: 30px;
+            margin-top: 15px;
+        }
+        
+        li {
+            margin: 10px 0;
+        }
+        
+        strong {
+            color: #667eea;
+        }
+        
+        .visual-demo {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin: 25px 0;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        
+        .array-visual {
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        .array-item {
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #667eea;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2em;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        
+        .array-item.highlight {
+            background: #f39c12;
+            transform: scale(1.1);
+        }
+        
+        .array-item.found {
+            background: #28a745;
+            transform: scale(1.15);
+        }
+        
+        .array-item.excluded {
+            background: #95a5a6;
+            opacity: 0.5;
+        }
+        
+        @media (max-width: 768px) {
+            .content {
+                padding: 20px;
+            }
+            
+            .section {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔍 Binary Search</h1>
+            <p class="subtitle">Master the Most Important Search Algorithm</p>
+        </header>
+        
+        <nav>
+            <div class="nav-links">
+                <a href="#basics">Basics</a>
+                <a href="#implementation">Implementation</a>
+                <a href="#variants">Variants</a>
+                <a href="#patterns">Patterns</a>
+                <a href="#problems">Problems</a>
+                <a href="#tips">Tips & Tricks</a>
+            </div>
+        </nav>
+        
+        <div class="content">
+            <!-- BASICS -->
+            <div class="section" id="basics">
+                <h2>🎯 What is Binary Search?</h2>
+                <p>Binary Search is a <strong>divide-and-conquer</strong> algorithm that finds the position of a target value within a <strong>sorted array</strong>. It works by repeatedly dividing the search interval in half.</p>
+                
+                <div class="visual-demo">
+                    <h3>Visual Example: Finding 7 in sorted array</h3>
+                    <p style="text-align: center; margin: 20px 0;"><strong>Array: [1, 3, 5, 7, 9, 11, 13, 15, 17]</strong></p>
+                    
+                    <h4>Step 1: Check middle (9)</h4>
+                    <div class="array-visual">
+                        <div class="array-item">1</div>
+                        <div class="array-item">3</div>
+                        <div class="array-item">5</div>
+                        <div class="array-item">7</div>
+                        <div class="array-item highlight">9</div>
+                        <div class="array-item excluded">11</div>
+                        <div class="array-item excluded">13</div>
+                        <div class="array-item excluded">15</div>
+                        <div class="array-item excluded">17</div>
+                    </div>
+                    <p style="text-align: center;">7 < 9, so search left half</p>
+                    
+                    <h4>Step 2: Check middle of left half (3)</h4>
+                    <div class="array-visual">
+                        <div class="array-item">1</div>
+                        <div class="array-item highlight">3</div>
+                        <div class="array-item">5</div>
+                        <div class="array-item">7</div>
+                        <div class="array-item excluded">9</div>
+                    </div>
+                    <p style="text-align: center;">7 > 3, so search right half</p>
+                    
+                    <h4>Step 3: Found!</h4>
+                    <div class="array-visual">
+                        <div class="array-item excluded">1</div>
+                        <div class="array-item excluded">3</div>
+                        <div class="array-item">5</div>
+                        <div class="array-item found">7</div>
+                    </div>
+                    <p style="text-align: center; color: #28a745; font-weight: bold;">Target found at index 3!</p>
+                </div>
+                
+                <div class="highlight-box">
+                    <h4>🔑 Key Characteristics:</h4>
+                    <ul>
+                        <li><strong>Prerequisite:</strong> Array must be SORTED</li>
+                        <li><strong>Time Complexity:</strong> O(log n) - eliminates half each step</li>
+                        <li><strong>Space Complexity:</strong> O(1) iterative, O(log n) recursive (call stack)</li>
+                        <li><strong>Comparison:</strong> Much faster than linear search O(n)</li>
+                        <li><strong>Trade-off:</strong> Requires sorted data</li>
+                    </ul>
+                </div>
+                
+                <div class="info-box">
+                    <h4>💡 Why O(log n)?</h4>
+                    <p>Each comparison eliminates half the remaining elements:</p>
+                    <ul>
+                        <li>1000 elements → 500 → 250 → 125 → 62 → 31 → 15 → 7 → 3 → 1</li>
+                        <li>Only <strong>10 comparisons</strong> for 1000 elements!</li>
+                        <li>For 1 billion elements: Only <strong>30 comparisons</strong>!</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- IMPLEMENTATION -->
+            <div class="section" id="implementation">
+                <h2>💻 Implementation</h2>
+                
+                <h3>1. Iterative Binary Search (Recommended)</h3>
+<div class="code-block"><span class="keyword">def</span> <span class="function">binary_search</span>(arr, target):
+    <span class="comment">"""
+    Iterative binary search
+    Time: O(log n), Space: O(1)
+    """</span>
+    left, right = 0, len(arr) - 1
+    
+    <span class="keyword">while</span> left <= right:
+        mid = left + (right - left) // 2  <span class="comment"># Avoid overflow</span>
+        
+        <span class="keyword">if</span> arr[mid] == target:
+            <span class="keyword">return</span> mid  <span class="comment"># Found!</span>
+        <span class="keyword">elif</span> arr[mid] < target:
+            left = mid + 1  <span class="comment"># Search right half</span>
+        <span class="keyword">else</span>:
+            right = mid - 1  <span class="comment"># Search left half</span>
+    
+    <span class="keyword">return</span> -1  <span class="comment"># Not found</span>
+
+<span class="comment"># Test</span>
+arr = [1, 3, 5, 7, 9, 11, 13, 15, 17]
+print(binary_search(arr, 7))   <span class="comment"># Output: 3</span>
+print(binary_search(arr, 10))  <span class="comment"># Output: -1</span></div>
+
+                <h3>2. Recursive Binary Search</h3>
+<div class="code-block"><span class="keyword">def</span> <span class="function">binary_search_recursive</span>(arr, target, left=0, right=<span class="keyword">None</span>):
+    <span class="comment">"""
+    Recursive binary search
+    Time: O(log n), Space: O(log n) - recursion stack
+    """</span>
+    <span class="keyword">if</span> right <span class="keyword">is None</span>:
+        right = len(arr) - 1
+    
+    <span class="keyword">if</span> left > right:
+        <span class="keyword">return</span> -1  <span class="comment"># Base case: not found</span>
+    
+    mid = left + (right - left) // 2
+    
+    <span class="keyword">if</span> arr[mid] == target:
+        <span class="keyword">return</span> mid
+    <span class="keyword">elif</span> arr[mid] < target:
+        <span class="keyword">return</span> binary_search_recursive(arr, target, mid + 1, right)
+    <span class="keyword">else</span>:
+        <span class="keyword">return</span> binary_search_recursive(arr, target, left, mid - 1)</div>
+
+                <div class="warning-box">
+                    <h4>⚠️ Common Mistakes:</h4>
+                    <ol>
+                        <li><strong>Using (left + right) / 2 for mid:</strong> Can cause integer overflow in some languages
+                            <ul>
+                                <li>❌ Bad: <code>mid = (left + right) // 2</code></li>
+                                <li>✅ Good: <code>mid = left + (right - left) // 2</code></li>
+                            </ul>
+                        </li>
+                        <li><strong>Wrong loop condition:</strong>
+                            <ul>
+                                <li>✅ Correct: <code>while left <= right</code> (equal is important!)</li>
+                                <li>❌ Wrong: <code>while left < right</code></li>
+                            </ul>
+                        </li>
+                        <li><strong>Not updating pointers correctly:</strong>
+                            <ul>
+                                <li>✅ <code>left = mid + 1</code> and <code>right = mid - 1</code></li>
+                                <li>❌ <code>left = mid</code> or <code>right = mid</code> (infinite loop!)</li>
+                            </ul>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+            
+            <!-- VARIANTS -->
+            <div class="section" id="variants">
+                <h2>🔄 Binary Search Variants</h2>
+                <p>Binary search has several powerful variations for different use cases</p>
+                
+                <h3>1. Find First Occurrence (Lower Bound)</h3>
+                <p>Find the leftmost position where target appears</p>
+<div class="code-block"><span class="keyword">def</span> <span class="function">find_first</span>(arr, target):
+    <span class="comment">"""Find first occurrence of target"""</span>
+    left, right = 0, len(arr) - 1
+    result = -1
+    
+    <span class="keyword">while</span> left <= right:
+        mid = left + (right - left) // 2
+        
+        <span class="keyword">if</span> arr[mid] == target:
+            result = mid
+            right = mid - 1  <span class="comment"># Keep searching left</span>
+        <span class="keyword">elif</span> arr[mid] < target:
+            left = mid + 1
+        <span class="keyword">else</span>:
+            right = mid - 1
+    
+    <span class="keyword">return</span> result
+
+<span class="comment"># Example: arr = [1, 2, 2, 2, 3, 4, 5]</span>
+<span class="comment"># find_first(arr, 2) returns 1 (first occurrence)</span></div>
+
+                <h3>2. Find Last Occurrence (Upper Bound)</h3>
+                <p>Find the rightmost position where target appears</p>
+<div class="code-block"><span class="keyword">def</span> <span class="function">find_last</span>(arr, target):
+    <span class="comment">"""Find last occurrence of target"""</span>
+    left, right = 0, len(arr) - 1
+    result = -1
+    
+    <span class="keyword">while</span> left <= right:
+        mid = left + (right - left) // 2
+        
+        <span class="keyword">if</span> arr[mid] == target:
+            result = mid
+            left = mid + 1  <span class="comment"># Keep searching right</span>
+        <span class="keyword">elif</span> arr[mid] < target:
+            left = mid + 1
+        <span class="keyword">else</span>:
+            right = mid - 1
+    
+    <span class="keyword">return</span> result
+
+<span class="comment"># Example: arr = [1, 2, 2, 2, 3, 4, 5]</span>
+<span class="comment"># find_last(arr, 2) returns 3 (last occurrence)</span></div>
+
+                <h3>3. Find Insert Position</h3>
+                <p>Find where to insert target to maintain sorted order (LeetCode 35)</p>
+<div class="code-block"><span class="keyword">def</span> <span class="function">search_insert</span>(arr, target):
+    <span class="comment">"""Find position to insert target"""</span>
+    left, right = 0, len(arr) - 1
+    
+    <span class="keyword">while</span> left <= right:
+        mid = left + (right - left) // 2
+        
+        <span class="keyword">if</span> arr[mid] == target:
+            <span class="keyword">return</span> mid
+        <span class="keyword">elif</span> arr[mid] < target:
+            left = mid + 1
+        <span class="keyword">else</span>:
+            right = mid - 1
+    
+    <span class="keyword">return</span> left  <span class="comment"># Insert position</span>
+
+<span class="comment"># Example: arr = [1, 3, 5, 6], target = 5 → returns 2</span>
+<span class="comment"># arr = [1, 3, 5, 6], target = 2 → returns 1</span></div>
+
+                <h3>4. Find Peak Element</h3>
+                <p>Find any peak in an array where arr[i] > arr[i-1] and arr[i] > arr[i+1]</p>
+<div class="code-block"><span class="keyword">def</span> <span class="function">find_peak_element</span>(arr):
+    <span class="comment">"""Find peak element (LeetCode 162)"""</span>
+    left, right = 0, len(arr) - 1
+    
+    <span class="keyword">while</span> left < right:
+        mid = left + (right - left) // 2
+        
+        <span class="keyword">if</span> arr[mid] > arr[mid + 1]:
+            <span class="comment"># Peak is on left side (including mid)</span>
+            right = mid
+        <span class="keyword">else</span>:
+            <span class="comment"># Peak is on right side</span>
+            left = mid + 1
+    
+    <span class="keyword">return</span> left  <span class="comment"># or right, they're equal</span></div>
+
+                <h3>5. Search in Rotated Sorted Array</h3>
+                <p>Binary search in array that was sorted then rotated (LeetCode 33)</p>
+<div class="code-block"><span class="keyword">def</span> <span class="function">search_rotated</span>(arr, target):
+    <span class="comment">"""
+    Search in rotated sorted array
+    Example: [4,5,6,7,0,1,2], target = 0 → returns 4
+    """</span>
+    left, right = 0, len(arr) - 1
+    
+    <span class="keyword">while</span> left <= right:
+        mid = left + (right - left) // 2
+        
+        <span class="keyword">if</span> arr[mid] == target:
+            <span class="keyword">return</span> mid
+        
+        <span class="comment"># Determine which half is sorted</span>
+        <span class="keyword">if</span> arr[left] <= arr[mid]:
+            <span class="comment"># Left half is sorted</span>
+            <span class="keyword">if</span> arr[left] <= target < arr[mid]:
+                right = mid - 1
+            <span class="keyword">else</span>:
+                left = mid + 1
+        <span class="keyword">else</span>:
+            <span class="comment"># Right half is sorted</span>
+            <span class="keyword">if</span> arr[mid] < target <= arr[right]:
+                left = mid + 1
+            <span class="keyword">else</span>:
+                right = mid - 1
+    
+    <span class="keyword">return</span> -1</div>
+            </div>
+            
+            <!-- PATTERNS -->
+            <div class="section" id="patterns">
+                <h2>🧩 Binary Search Patterns</h2>
+                
+                <h3>Pattern 1: Classic Binary Search on Array</h3>
+                <div class="success-box">
+                    <h4>Recognition:</h4>
+                    <ul>
+                        <li>Sorted array given</li>
+                        <li>Find exact element or position</li>
+                        <li>O(log n) time required</li>
+                    </ul>
+                    <p><strong>Examples:</strong> LC 704, LC 35, LC 278</p>
+                </div>
+                
+                <h3>Pattern 2: Binary Search on Answer</h3>
+                <div class="success-box">
+                    <h4>Recognition:</h4>
+                    <ul>
+                        <li>Problem asks for "minimum" or "maximum" value that satisfies condition</li>
+                        <li>Answer space is monotonic (if x works, all values < or > x also work)</li>
+                        <li>Can verify if a value works in reasonable time</li>
+                    </ul>
+                    <p><strong>Template:</strong></p>
+<div class="code-block"><span class="keyword">def</span> <span class="function">binary_search_on_answer</span>(arr):
+    <span class="comment">"""Find minimum/maximum value that satisfies condition"""</span>
+    left, right = <span class="comment"># define search space</span>
+    result = -1
+    
+    <span class="keyword">while</span> left <= right:
+        mid = left + (right - left) // 2
+        
+        <span class="keyword">if</span> is_valid(mid):  <span class="comment"># Check if mid satisfies condition</span>
+            result = mid
+            right = mid - 1  <span class="comment"># Try smaller (for minimum)</span>
+            <span class="comment"># left = mid + 1  # Try larger (for maximum)</span>
+        <span class="keyword">else</span>:
+            left = mid + 1
+    
+    <span class="keyword">return</span> result</div>
+                    <p><strong>Examples:</strong> LC 875 (Koko Eating Bananas), LC 1011 (Capacity To Ship Packages), LC 410 (Split Array Largest Sum)</p>
+                </div>
+                
+                <h3>Pattern 3: Binary Search in 2D Matrix</h3>
+                <div class="success-box">
+                    <h4>Recognition:</h4>
+                    <ul>
+                        <li>2D matrix with sorted properties</li>
+                        <li>Either fully sorted or row/column sorted</li>
+                    </ul>
+<div class="code-block"><span class="keyword">def</span> <span class="function">search_matrix</span>(matrix, target):
+    <span class="comment">"""
+    Search in 2D matrix where:
+    - Each row is sorted left to right
+    - First element of each row > last element of previous row
+    (LeetCode 74)
+    """</span>
+    <span class="keyword">if not</span> matrix <span class="keyword">or not</span> matrix[0]:
+        <span class="keyword">return False</span>
+    
+    rows, cols = len(matrix), len(matrix[0])
+    left, right = 0, rows * cols - 1
+    
+    <span class="keyword">while</span> left <= right:
+        mid = left + (right - left) // 2
+        <span class="comment"># Convert 1D index to 2D</span>
+        row, col = mid // cols, mid % cols
+        
+        <span class="keyword">if</span> matrix[row][col] == target:
+            <span class="keyword">return True</span>
+        <span class="keyword">elif</span> matrix[row][col] < target:
+            left = mid + 1
+        <span class="keyword">else</span>:
+            right = mid - 1
+    
+    <span class="keyword">return False</span></div>
+                    <p><strong>Examples:</strong> LC 74, LC 240</p>
+                </div>
+                
+                <h3>Pattern 4: Finding Boundaries</h3>
+                <div class="success-box">
+                    <h4>Recognition:</h4>
+                    <ul>
+                        <li>Find first/last occurrence</li>
+                        <li>Find range of values</li>
+                        <li>Count occurrences</li>
+                    </ul>
+<div class="code-block"><span class="keyword">def</span> <span class="function">find_range</span>(arr, target):
+    <span class="comment">"""
+    Find first and last position of target (LeetCode 34)
+    Returns [first_pos, last_pos] or [-1, -1]
+    """</span>
+    <span class="keyword">def</span> <span class="function">find_boundary</span>(arr, target, find_first):
+        left, right = 0, len(arr) - 1
+        result = -1
+        
+        <span class="keyword">while</span> left <= right:
+            mid = left + (right - left) // 2
+            
+            <span class="keyword">if</span> arr[mid] == target:
+                result = mid
+                <span class="keyword">if</span> find_first:
+                    right = mid - 1  <span class="comment"># Search left</span>
+                <span class="keyword">else</span>:
+                    left = mid + 1   <span class="comment"># Search right</span>
+            <span class="keyword">elif</span> arr[mid] < target:
+                left = mid + 1
+            <span class="keyword">else</span>:
+                right = mid - 1
+        
+        <span class="keyword">return</span> result
+    
+    first = find_boundary(arr, target, <span class="keyword">True</span>)
+    <span class="keyword">if</span> first == -1:
+        <span class="keyword">return</span> [-1, -1]
+    last = find_boundary(arr, target, <span class="keyword">False</span>)
+    <span class="keyword">return</span> [first, last]</div>
+                    <p><strong>Examples:</strong> LC 34, LC 278, LC 69</p>
+                </div>
+            </div>
+            
+            <!-- PROBLEMS -->
+            <div class="section" id="problems">
+                <h2>💻 LeetCode Problems</h2>
+                
+                <h3>🟢 Easy Problems</h3>
+                <table>
+                    <tr>
+                        <th>Problem</th>
+                        <th>Pattern</th>
+                        <th>Key Insight</th>
+                    </tr>
+                    <tr>
+                        <td><strong>LC 704: Binary Search</strong></td>
+                        <td>Classic</td>
+                        <td>Standard template, perfect for learning</td>
+                    </tr>
+                    <tr>
+                        <td><strong>LC 35: Search Insert Position</strong></td>
+                        <td>Find boundary</td>
+                        <td>Return left pointer when not found</td>
+                    </tr>
+                    <tr>
+                        <td><strong>LC 278: First Bad Version</strong></td>
+                        <td>Find first occurrence</td>
+                        <td>API call instead of array access</td>
+                    </tr>
+                    <tr>
+                        <td><strong>LC 69: Sqrt(x)</strong></td>
+                        <td>Search on answer</td>
+                        <td>Find largest integer where i² ≤ x</td>
+                    </tr>
+                    <tr>
+                        <td><strong>LC 367: Valid Perfect Square</strong></td>
+                        <td>Search on answer</td>
+                        <td>Similar to sqrt, check if i² == num</td>
+                    </tr>
+                </table>
+                
+                <h3>🟡 Medium Problems</h3>
+                <table>
+                    <tr>
+                        <th>Problem</th>
+                        <th>Pattern</th>
+                        <th>Key Insight</th>
+                    </tr>
+                    <tr>
+                        <td><strong>LC 33: Search in Rotated Array</strong></td>
+                        <td>Modified binary search</td>
+                        <td>Identify which half is sorted</td>
+                    </tr>
+                    <tr>
+                        <td><strong>LC 34: Find First and Last Position</strong></td>
+                        <td>Find boundaries</td>
+                        <td>Two binary searches (first & last)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>LC 74: Search 2D Matrix</strong></td>
+                        <td>2D to 1D conversion</td>
+                        <td>Treat as 1D sorted array</td>
+                    </tr>
+                    <tr>
+                        <td><strong>LC 162: Find Peak Element</strong></td>
+                        <td>Peak finding</td>
+                        <td>Go towards higher neighbor</td>
+                    </tr>
+                    <tr>
+                        <td><strong>LC 875: Koko Eating Bananas ⭐</strong></td>
+                        <td>Search on answer</td>
+                        <td>Binary search on eating speed</td>
+                    </tr>
+                    <tr>
+                        <td><strong>LC 1011: Capacity To Ship Packages</strong></td>
+                        <td>Search on answer</td>
+                        <td>Binary search on capacity</td>
+                    </tr>
+                    <tr>
+                        <td><strong>LC 153: Find Minimum in Rotated Array</strong></td>
+                        <td>Modified binary search</td>
+                        <td>Compare mid with right boundary</td>
+                    </tr>
+                    <tr>
+                        <td><strong>LC 540: Single Element in Sorted Array</strong></td>
+                        <td>Modified binary search</td>
+                        <td>Check if mid index is even/odd</td>
+                    </tr>
+                </table>
+                
+                <h3>🔴 Hard Problems</h3>
+                <table>
+                    <tr>
+                        <th>Problem</th>
+                        <th>Pattern</th>
+                        <th>Key Insight</th>
+                    </tr>
+                    <tr>
+                        <td><strong>LC 4: Median of Two Sorted Arrays</strong></td>
+                        <td>Partition + binary search</td>
+                        <td>Binary search on smaller array</td>
+                    </tr>
+                    <tr>
+                        <td><strong>LC 410: Split Array Largest Sum</strong></td>
+                        <td>Search on answer</td>
+                        <td>Binary search on maximum sum</td>
+                    </tr>
+                    <tr>
+                        <td><strong>LC 1235: Maximum Profit in Job Scheduling</strong></td>
+                        <td>Binary search + DP</td>
+                        <td>Find next non-overlapping job</td>
+                    </tr>
+                </table>
+                
+                <h3>Problem-Solving Approach</h3>
+<div class="code-block"><span class="comment">"""
+Step-by-step approach to solve binary search problems:
+
+1. IDENTIFY if binary search is applicable:
+   - Is data sorted (or can be treated as sorted)?
+   - Can we eliminate half the search space?
+   - Is answer space monotonic?
+
+2. DEFINE search space:
+   - What are left and right boundaries?
+   - For "search on answer": min/max possible values
+
+3. DETERMINE what to search for:
+   - Exact value?
+   - First/last occurrence?
+   - Minimum/maximum satisfying condition?
+
+4. IMPLEMENT the check function:
+   - For "search on answer": is_valid(mid)
+   - Should be O(n) or better
+
+5. DECIDE which half to eliminate:
+   - Based on comparison result
+   - Update left or right accordingly
+
+6. HANDLE edge cases:
+   - Empty array
+   - Single element
+   - Target not found
+"""</span></div>
+            </div>
+            
+            <!-- TIPS AND TRICKS -->
+            <div class="section" id="tips">
+                <h2>💡 Tips & Tricks</h2>
+                
+                <h3>🎯 Template Selection</h3>
+                <div class="comparison-grid">
+                    <div class="card">
+                        <h3>Template 1: Standard</h3>
+                        <p><strong>When:</strong> Find exact value</p>
+                        <code>while left <= right</code>
+                        <p>Most common, safest choice</p>
+                    </div>
+                    <div class="card">
+                        <h3>Template 2: Left Biased</h3>
+                        <p><strong>When:</strong> Find first occurrence</p>
+                        <code>while left < right</code>
+                        <code>right = mid</code>
+                        <p>Converges to left boundary</p>
+                    </div>
+                    <div class="card">
+                        <h3>Template 3: Right Biased</h3>
+                        <p><strong>When:</strong> Find last occurrence</p>
+                        <code>while left < right</code>
+                        <code>left = mid</code>
+                        <p>Converges to right boundary</p>
+                    </div>
+                </div>
+                
+                <h3>🔍 Debugging Binary Search</h3>
+                <div class="warning-box">
+                    <h4>Common Issues & Fixes:</h4>
+                    <ol>
+                        <li><strong>Infinite Loop</strong>
+                            <ul>
+                                <li>Check: Are you updating left/right correctly?</li>
+                                <li>Fix: Always use <code>mid + 1</code> or <code>mid - 1</code></li>
+                            </ul>
+                        </li>
+                        <li><strong>Missing Answer</strong>
+                            <ul>
+                                <li>Check: Is condition <code>left <= right</code> or <code>left < right</code>?</li>
+                                <li>Fix: Use <code><=</code> for standard search</li>
+                            </ul>
+                        </li>
+                        <li><strong>Wrong Boundary</strong>
+                            <ul>
+                                <li>Check: Are you storing result before updating pointers?</li>
+                                <li>Fix: <code>result = mid; right = mid - 1</code></li>
+                            </ul>
+                        </li>
+                    </ol>
+                </div>
+                
+                <h3>🚀 Optimization Techniques</h3>
+                <div class="highlight-box">
+                    <h4>Advanced Tips:</h4>
+                    <ul>
+                        <li><strong>Early termination:</strong> Return immediately when exact match found</li>
+                        <li><strong>Boundary checks:</strong> Check edges before starting loop</li>
+                        <li><strong>Integer overflow:</strong> Always use <code>left + (right - left) // 2</code></li>
+                        <li><strong>Floating point:</strong> Use epsilon for comparison in floating point BS</li>
+                    </ul>
+                </div>
+                
+                <h3>🎓 Interview Tips</h3>
+                <div class="success-box">
+                    <h4>What Interviewers Look For:</h4>
+                    <ol>
+                        <li><strong>Correct identification:</strong> Recognize when to use binary search</li>
+                        <li><strong>Edge case handling:</strong> Empty array, single element, duplicates</li>
+                        <li><strong>Loop invariants:</strong> Explain what left/right represent at each iteration</li>
+                        <li><strong>Time complexity:</strong> Clearly state O(log n) and why</li>
+                        <li><strong>Code correctness:</strong> No off-by-one errors</li>
+                    </ol>
+                    
+                    <h4>Communication Script:</h4>
+                    <p><em>"I'll use binary search here because the array is sorted and we need O(log n) time. I'll use the standard template with left <= right condition. The mid calculation avoids overflow by using left + (right - left) // 2..."</em></p>
+                </div>
+                
+                <h3>📊 Complexity Comparison</h3>
+                <table>
+                    <tr>
+                        <th>Search Type</th>
+                        <th>Time Complexity</th>
+                        <th>Space</th>
+                        <th>Prerequisite</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Linear Search</strong></td>
+                        <td>O(n)</td>
+                        <td>O(1)</td>
+                        <td>None</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Binary Search</strong></td>
+                        <td>O(log n)</td>
+                        <td>O(1) iterative</td>
+                        <td>Sorted data</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Jump Search</strong></td>
+                        <td>O(√n)</td>
+                        <td>O(1)</td>
+                        <td>Sorted data</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Interpolation Search</strong></td>
+                        <td>O(log log n) avg</td>
+                        <td>O(1)</td>
+                        <td>Uniformly distributed sorted data</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Hash Table</strong></td>
+                        <td>O(1) avg</td>
+                        <td>O(n)</td>
+                        <td>Extra space, not ordered</td>
+                    </tr>
+                </table>
+                
+                <h3>🎯 Practice Plan</h3>
+                <div class="info-box">
+                    <h4>Week 1: Foundations</h4>
+                    <ul>
+                        <li>Day 1-2: Implement standard binary search, practice on LC 704</li>
+                        <li>Day 3-4: Find insert position (LC 35), First bad version (LC 278)</li>
+                        <li>Day 5-7: Find first/last occurrence, sqrt(x) (LC 69)</li>
+                    </ul>
+                    
+                    <h4>Week 2: Variants</h4>
+                    <ul>
+                        <li>Day 1-3: Rotated array problems (LC 33, 153, 81)</li>
+                        <li>Day 4-5: 2D matrix search (LC 74, 240)</li>
+                        <li>Day 6-7: Peak element, Find minimum (LC 162, 153)</li>
+                    </ul>
+                    
+                    <h4>Week 3: Search on Answer</h4>
+                    <ul>
+                        <li>Day 1-3: Koko eating bananas (LC 875)</li>
+                        <li>Day 4-5: Capacity to ship packages (LC 1011)</li>
+                        <li>Day 6-7: Split array largest sum (LC 410)</li>
+                    </ul>
+                    
+                    <h4>Week 4: Advanced</h4>
+                    <ul>
+                        <li>Day 1-3: Median of two sorted arrays (LC 4)</li>
+                        <li>Day 4-7: Mixed practice, mock interviews</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- REAL WORLD -->
+            <div class="section">
+                <h2>🌍 Real-World Applications</h2>
+                
+                <div class="comparison-grid">
+                    <div class="card">
+                        <h3>📚 Databases</h3>
+                        <p>B-tree indexes use binary search principles</p>
+                        <p>SQL query optimization</p>
+                    </div>
+                    <div class="card">
+                        <h3>📖 Dictionary Lookup</h3>
+                        <p>Finding words in sorted dictionary</p>
+                        <p>Autocomplete suggestions</p>
+                    </div>
+                    <div class="card">
+                        <h3>🎮 Game Development</h3>
+                        <p>Collision detection optimization</p>
+                        <p>Spatial partitioning</p>
+                    </div>
+                    <div class="card">
+                        <h3>💾 File Systems</h3>
+                        <p>Searching in sorted file lists</p>
+                        <p>Binary file format parsing</p>
+                    </div>
+                    <div class="card">
+                        <h3>📊 Data Analysis</h3>
+                        <p>Finding percentiles in sorted data</p>
+                        <p>Statistical computations</p>
+                    </div>
+                    <div class="card">
+                        <h3>🔧 Git Bisect</h3>
+                        <p>Finding bug-introducing commit</p>
+                        <p>Binary search through commit history</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- SUMMARY -->
+            <div class="section">
+                <h2>🎓 Key Takeaways</h2>
+                
+                <div style="background: white; padding: 30px; border-radius: 12px; font-size: 1.05em; line-height: 2;">
+                    <p>
+                        ✦ <strong>Power of halving:</strong> Reduces 1 billion to 30 comparisons<br>
+                        ✦ <strong>Prerequisite is key:</strong> Data must be sorted (or answer space monotonic)<br>
+                        ✦ <strong>Three main patterns:</strong> Classic search, search on answer, find boundaries<br>
+                        ✦ <strong>Watch the details:</strong> Overflow, loop condition, pointer updates<br>
+                        ✦ <strong>Not just for arrays:</strong> Can binary search on answer space<br>
+                        ✦ <strong>Practice templates:</strong> Standard, left-biased, right-biased<br>
+                        ✦ <strong>Most efficient:</strong> O(log n) time, O(1) space (iterative)<br>
+                        ✦ <strong>Interview favorite:</strong> Appears in 30%+ coding interviews
+                    </p>
+                </div>
+                
+                <div class="highlight-box" style="margin-top: 30px; text-align: center;">
+                    <h3 style="margin-bottom: 15px;">🎯 Master Binary Search</h3>
+                    <p style="font-size: 1.2em; font-style: italic;">
+                        "Binary search is not just an algorithm—it's a way of thinking.<br>
+                        Whenever you can eliminate half the possibilities, you're thinking binary search!"
+                    </p>
+                    <p style="margin-top: 20px; font-weight: bold; color: #667eea;">
+                        Start with LC 704, master the template, then conquer the variants! 💪
+                    </p>
+                </div>
+                
+                <div class="success-box" style="margin-top: 30px;">
+                    <h3>✅ Checklist to Master Binary Search:</h3>
+                    <ul style="font-size: 1.1em;">
+                        <li>☐ Can implement standard binary search from memory in 2 minutes</li>
+                        <li>☐ Understand why mid = left + (right - left) // 2</li>
+                        <li>☐ Know when to use <= vs < in loop condition</li>
+                        <li>☐ Can find first and last occurrence</li>
+                        <li>☐ Solved rotated array problems</li>
+                        <li>☐ Understand "binary search on answer" pattern</li>
+                        <li>☐ Solved at least 10 binary search problems</li>
+                        <li>☐ Can explain O(log n) complexity clearly</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

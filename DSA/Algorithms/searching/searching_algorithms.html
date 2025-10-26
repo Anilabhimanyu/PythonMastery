@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Searching Algorithms - Complete Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #FA8BFF 0%, #2BD2FF 52%, #2BFF88 90%);
+            color: #333;
+            padding: 20px;
+            line-height: 1.7;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #FA8BFF 0%, #2BD2FF 52%, #2BFF88 90%);
+            color: white;
+            padding: 50px;
+            text-align: center;
+        }
+        
+        h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .subtitle {
+            font-size: 1.3em;
+            opacity: 0.95;
+        }
+        
+        nav {
+            background: #f8f9fa;
+            padding: 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .nav-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .nav-links a {
+            padding: 10px 20px;
+            background: white;
+            color: #FA8BFF;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .nav-links a:hover {
+            background: linear-gradient(135deg, #FA8BFF 0%, #2BD2FF 100%);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .content {
+            padding: 50px;
+        }
+        
+        .section {
+            margin-bottom: 50px;
+            padding: 40px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            border-left: 6px solid #FA8BFF;
+        }
+        
+        h2 {
+            color: #FA8BFF;
+            margin-bottom: 25px;
+            font-size: 2.2em;
+            border-bottom: 3px solid #FA8BFF;
+            padding-bottom: 10px;
+        }
+        
+        h3 {
+            color: #2BD2FF;
+            margin: 25px 0 15px 0;
+            font-size: 1.6em;
+        }
+        
+        h4 {
+            color: #667eea;
+            margin: 20px 0 10px 0;
+            font-size: 1.3em;
+        }
+        
+        .code-block {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 25px;
+            border-radius: 12px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+            line-height: 1.6;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+        
+        .code-block .comment {
+            color: #95a5a6;
+        }
+        
+        .code-block .keyword {
+            color: #3498db;
+        }
+        
+        .code-block .string {
+            color: #e74c3c;
+        }
+        
+        .code-block .function {
+            color: #f39c12;
+        }
+        
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+        
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border-top: 4px solid #FA8BFF;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+        
+        .highlight-box {
+            background: linear-gradient(135deg, #ffe5f0 0%, #e5f0ff 100%);
+            border-left: 5px solid #FA8BFF;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        
+        .warning-box {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        
+        .info-box {
+            background: #d1ecf1;
+            border-left: 5px solid #17a2b8;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        
+        .success-box {
+            background: #d4edda;
+            border-left: 5px solid #28a745;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        
+        th {
+            background: linear-gradient(135deg, #FA8BFF 0%, #2BD2FF 100%);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #ecf0f1;
+        }
+        
+        tr:hover {
+            background: #f8f9fa;
+        }
+        
+        code {
+            background: #f4f4f4;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            color: #e74c3c;
+            font-size: 0.9em;
+        }
+        
+        ul, ol {
+            margin-left: 30px;
+            margin-top: 15px;
+        }
+        
+        li {
+            margin: 10px 0;
+        }
+        
+        strong {
+            color: #FA8BFF;
+        }
+        
+        @media (max-width: 768px) {
+            .content {
+                padding: 20px;
+            }
+            
+            .section {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        container">
+        <header>
+            <h1>🔍 All Searching Algorithms</h1>
+            <p class="subtitle">Complete Guide to Every Search Technique</p>
+        </header>
+        
+        <nav>
+            <div class="nav-links">
+                <a href="#overview">Overview</a>
+                <a href="#linear">Linear Search</a>
+                <a href="#binary">Binary Search</a>
+                <a href="#jump">Jump Search</a>
+                <a href="#interpolation">Interpolation</a>
+                <a href="#exponential">Exponential</a>
+                <a href="#comparison">Comparison</a>
+            </div>
+        </nav>
+        
+        <div class="content">
+            <!-- OVERVIEW -->
+            <div class="section" id="overview">
+                <h2>📊 Searching Algorithms Overview</h2>
+                <p>Searching is one of the most fundamental operations in computer science. Here's every major searching algorithm you need to know!</p>
+                
+                <h3>Quick Comparison Table</h3>
+                <table>
+                    <tr>
+                        <th>Algorithm</th>
+                        <th>Time (Best)</th>
+                        <th>Time (Average)</th>
+                        <th>Time (Worst)</th>
+                        <th>Space</th>
+                        <th>Sorted Required?</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Linear Search</strong></td>
+                        <td>O(1)</td>
+                        <td>O(n)</td>
+                        <td>O(n)</td>
+                        <td>O(1)</td>
+                        <td>❌ No</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Binary Search</strong></td>
+                        <td>O(1)</td>
+                        <td>O(log n)</td>
+                        <td>O(log n)</td>
+                        <td>O(1)</td>
+                        <td>✅ Yes</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Jump Search</strong></td>
+                        <td>O(1)</td>
+                        <td>O(√n)</td>
+                        <td>O(√n)</td>
+                        <td>O(1)</td>
+                        <td>✅ Yes</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Interpolation Search</strong></td>
+                        <td>O(1)</td>
+                        <td>O(log log n)</td>
+                        <td>O(n)</td>
+                        <td>O(1)</td>
+                        <td>✅ Yes + Uniform</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Exponential Search</strong></td>
+                        <td>O(1)</td>
+                        <td>O(log n)</td>
+                        <td>O(log n)</td>
+                        <td>O(1)</td>
+                        <td>✅ Yes</td>
+                    </tr>
+                </table>
+                
+                <div class="highlight-box">
+                    <h4>🎯 Which Algorithm to Use?</h4>
+                    <ul>
+                        <li><strong>Small arrays (n < 100):</strong> Linear Search - simple and fast enough</li>
+                        <li><strong>Large sorted arrays:</strong> Binary Search - best general choice</li>
+                        <li><strong>Uniform distribution:</strong> Interpolation Search - fastest</li>
+                        <li><strong>Unbounded/infinite arrays:</strong> Exponential Search</li>
+                        <li><strong>Need simplicity:</strong> Linear Search</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- LINEAR SEARCH -->
+            <div class="section" id="linear">
+                <h2>1️⃣ Linear Search (Sequential Search)</h2>
+                <p>The simplest search algorithm - check each element one by one until found.</p>
+                
+                <h3>How It Works</h3>
+                <p>Start from the first element and compare each element with the target until match found or end reached.</p>
+        
+    <div class="code-block"><span class="keyword">def</span> <span class="function">linear_search</span>(arr, target):
+    <span class="comment">"""
+    Linear Search - O(n) time, O(1) space
+    Works on both sorted and unsorted arrays
+    """</span>
+    <span class="keyword">for</span> i <span class="keyword">in</span> range(len(arr)):
+        <span class="keyword">if</span> arr[i] == target:
+            <span class="keyword">return</span> i  <span class="comment"># Found at index i</span>
+    <span class="keyword">return</span> -1  <span class="comment"># Not found</span>
+
+<span class="comment"># Test</span>
+arr = [64, 34, 25, 12, 22, 11, 90]
+print(linear_search(arr, 22))  <span class="comment"># Output: 4</span>
+print(linear_search(arr, 100)) <span class="comment"># Output: -1</span></div>
+
+                <h3>Variants</h3>
+<div class="code-block"><span class="keyword">def</span> <span class="function">linear_search_all_occurrences</span>(arr, target):
+    <span class="comment">"""Find all occurrences of target"""</span>
+    indices = []
+    <span class="keyword">for</span> i <span class="keyword">in</span> range(len(arr)):
+        <span class="keyword">if</span> arr[i] == target:
+            indices.append(i)
+    <span class="keyword">return</span> indices
+
+<span class="keyword">def</span> <span class="function">linear_search_with_sentinel</span>(arr, target):
+    <span class="comment">"""
+    Linear search with sentinel - reduces comparisons
+    """</span>
+    n = len(arr)
+    last = arr[n-1]
+    arr[n-1] = target
+    i = 0
+    
+    <span class="keyword">while</span> arr[i] != target:
+        i += 1
+    
+    arr[n-1] = last  <span class="comment"># Restore last element</span>
+    
+    <span class="keyword">if</span> i < n-1 <span class="keyword">or</span> arr[n-1] == target:
+        <span class="keyword">return</span> i
+    <span class="keyword">return</span> -1</div>
+
+                <div class="info-box">
+                    <h4>✅ Pros:</h4>
+                    <ul>
+                        <li>Simple to implement</li>
+                        <li>Works on unsorted data</li>
+                        <li>No extra space needed</li>
+                        <li>Good for small datasets</li>
+                    </ul>
+                    <h4>❌ Cons:</h4>
+                    <ul>
+                        <li>Slow for large datasets - O(n)</li>
+                        <li>Inefficient compared to other methods on sorted data</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- BINARY SEARCH -->
+            <div class="section" id="binary">
+                <h2>2️⃣ Binary Search</h2>
+                <p>Most important search algorithm! Divides search space in half each iteration.</p>
+                
+                <div class="highlight-box">
+                    <p><strong>📖 Detailed Binary Search guide available separately!</strong></p>
+                    <p>This section provides a quick reference. See the dedicated Binary Search guide for comprehensive coverage.</p>
+                </div>
+                
+<div class="code-block"><span class="keyword">def</span> <span class="function">binary_search</span>(arr, target):
+    <span class="comment">"""
+    Binary Search - O(log n) time, O(1) space
+    REQUIRES: Sorted array
+    """</span>
+    left, right = 0, len(arr) - 1
+    
+    <span class="keyword">while</span> left <= right:
+        mid = left + (right - left) // 2
+        
+        <span class="keyword">if</span> arr[mid] == target:
+            <span class="keyword">return</span> mid
+        <span class="keyword">elif</span> arr[mid] < target:
+            left = mid + 1
+        <span class="keyword">else</span>:
+            right = mid - 1
+    
+    <span class="keyword">return</span> -1
+
+<span class="comment"># Test</span>
+arr = [11, 12, 22, 25, 34, 64, 90]  <span class="comment"># Must be sorted!</span>
+print(binary_search(arr, 22))  <span class="comment"># Output: 2</span></div>
+
+                <div class="success-box">
+                    <h4>🎯 Key Points:</h4>
+                    <ul>
+                        <li><strong>Most efficient</strong> for sorted arrays</li>
+                        <li><strong>O(log n)</strong> - eliminates half each step</li>
+                        <li><strong>Prerequisite:</strong> Array MUST be sorted</li>
+                        <li><strong>Best choice</strong> for large sorted datasets</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- JUMP SEARCH -->
+            <div class="section" id="jump">
+                <h2>3️⃣ Jump Search (Block Search)</h2>
+                <p>Jump ahead by fixed steps, then linear search in the block. Faster than linear, simpler than binary.</p>
+                
+                <h3>How It Works</h3>
+                <p>Jump by √n steps, find the block where target might be, then linear search within that block.</p>
+                
+<div class="code-block"><span class="keyword">import</span> math
+
+<span class="keyword">def</span> <span class="function">jump_search</span>(arr, target):
+    <span class="comment">"""
+    Jump Search - O(√n) time, O(1) space
+    REQUIRES: Sorted array
+    
+    Best jump size = √n (proven mathematically)
+    """</span>
+    n = len(arr)
+    step = int(math.sqrt(n))
+    prev = 0
+    
+    <span class="comment"># Jump ahead until we overshoot</span>
+    <span class="keyword">while</span> arr[min(step, n) - 1] < target:
+        prev = step
+        step += int(math.sqrt(n))
+        <span class="keyword">if</span> prev >= n:
+            <span class="keyword">return</span> -1
+    
+    <span class="comment"># Linear search in the block</span>
+    <span class="keyword">while</span> arr[prev] < target:
+        prev += 1
+        <span class="keyword">if</span> prev == min(step, n):
+            <span class="keyword">return</span> -1
+    
+    <span class="comment"># Check if we found it</span>
+    <span class="keyword">if</span> arr[prev] == target:
+        <span class="keyword">return</span> prev
+    
+    <span class="keyword">return</span> -1
+
+<span class="comment"># Test</span>
+arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+print(jump_search(arr, 11))  <span class="comment"># Output: 11</span></div>
+
+                <h3>Step-by-Step Example</h3>
+                <div class="info-box">
+                    <p><strong>Array:</strong> [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]</p>
+                    <p><strong>Target:</strong> 11, <strong>Step size:</strong> √16 = 4</p>
+                    <ol>
+                        <li>Jump to index 3 (value 3): 3 < 11, keep jumping</li>
+                        <li>Jump to index 7 (value 7): 7 < 11, keep jumping</li>
+                        <li>Jump to index 11 (value 11): 11 >= 11, found block!</li>
+                        <li>Linear search from 8 to 11: Found at index 11</li>
+                    </ol>
+                </div>
+                
+                <div class="highlight-box">
+                    <h4>When to Use Jump Search?</h4>
+                    <ul>
+                        <li><strong>Sorted arrays</strong> where binary search overhead is too much</li>
+                        <li><strong>Systems with expensive comparisons</strong></li>
+                        <li><strong>Backward jumping not allowed</strong> (one-directional traversal)</li>
+                        <li>Performance between linear O(n) and binary O(log n)</li>
+                    </ul>
+                </div>
+                
+                <div class="comparison-grid">
+                    <div class="card">
+                        <h3>✅ Advantages</h3>
+                        <ul>
+                            <li>Faster than linear search</li>
+                            <li>Simpler than binary search</li>
+                            <li>Less comparisons than linear</li>
+                            <li>Good for systems where jumping backwards is costly</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h3>❌ Disadvantages</h3>
+                        <ul>
+                            <li>Slower than binary search</li>
+                            <li>Requires sorted array</li>
+                            <li>Not as commonly used</li>
+                            <li>Optimal only for specific scenarios</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- INTERPOLATION SEARCH -->
+            <div class="section" id="interpolation">
+                <h2>4️⃣ Interpolation Search</h2>
+                <p>Smart guess based on value distribution - like looking up a word in dictionary.</p>
+                
+                <h3>How It Works</h3>
+                <p>Instead of always checking middle (like binary search), it estimates position based on value distribution.</p>
+                
+<div class="code-block"><span class="keyword">def</span> <span class="function">interpolation_search</span>(arr, target):
+    <span class="comment">"""
+    Interpolation Search - O(log log n) average, O(n) worst
+    REQUIRES: Sorted array with uniform distribution
+    
+    Formula: pos = left + ((target - arr[left]) * (right - left)) / 
+                         (arr[right] - arr[left])
+    """</span>
+    left, right = 0, len(arr) - 1
+    
+    <span class="keyword">while</span> left <= right <span class="keyword">and</span> arr[left] <= target <= arr[right]:
+        <span class="comment"># If array has only one element</span>
+        <span class="keyword">if</span> left == right:
+            <span class="keyword">if</span> arr[left] == target:
+                <span class="keyword">return</span> left
+            <span class="keyword">return</span> -1
+        
+        <span class="comment"># Estimate position using interpolation formula</span>
+        pos = left + int(((target - arr[left]) / (arr[right] - arr[left])) * 
+                        (right - left))
+        
+        <span class="comment"># Check if we found it</span>
+        <span class="keyword">if</span> arr[pos] == target:
+            <span class="keyword">return</span> pos
+        
+        <span class="comment"># If target is larger, search in right sub-array</span>
+        <span class="keyword">if</span> arr[pos] < target:
+            left = pos + 1
+        <span class="keyword">else</span>:
+            right = pos - 1
+    
+    <span class="keyword">return</span> -1
+
+<span class="comment"># Test with uniformly distributed array</span>
+arr = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+print(interpolation_search(arr, 70))  <span class="comment"># Output: 6</span></div>
+
+                <h3>Analogy: Dictionary Lookup</h3>
+                <div class="info-box">
+                    <p>When looking for "zebra" in a dictionary:</p>
+                    <ul>
+                        <li><strong>Binary Search:</strong> Opens middle, sees "M", goes right half</li>
+                        <li><strong>Interpolation Search:</strong> Knows "Z" is near end, opens near end immediately!</li>
+                    </ul>
+                    <p>Works great when values are uniformly distributed (like dictionary words, years, etc.)</p>
+                </div>
+                
+                <div class="warning-box">
+                    <h4>⚠️ Important Limitations:</h4>
+                    <ul>
+                        <li><strong>Worst case O(n):</strong> When data is not uniformly distributed</li>
+                        <li><strong>Example:</strong> [1, 2, 3, 4, 100] searching for 100 will degrade to O(n)</li>
+                        <li><strong>Best for:</strong> Large, uniformly distributed datasets</li>
+                        <li><strong>Avoid when:</strong> Data has clusters or is non-uniform</li>
+                    </ul>
+                </div>
+                
+                <div class="comparison-grid">
+                    <div class="card">
+                        <h3>✅ Best For</h3>
+                        <ul>
+                            <li>Uniformly distributed data</li>
+                            <li>Large datasets</li>
+                            <li>Phone books</li>
+                            <li>Dictionary lookups</li>
+                            <li>Timestamp searches</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h3>❌ Avoid When</h3>
+                        <ul>
+                            <li>Non-uniform distribution</li>
+                            <li>Small datasets</li>
+                            <li>Clustered data</li>
+                            <li>Exponential growth data</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- EXPONENTIAL SEARCH -->
+            <div class="section" id="exponential">
+                <h2>5️⃣ Exponential Search</h2>
+                <p>Find range by doubling, then binary search. Perfect for unbounded/infinite arrays.</p>
+                
+                <h3>How It Works</h3>
+                <p>Jump exponentially (1, 2, 4, 8, 16...) to find range, then binary search in that range.</p>
+                
+<div class="code-block"><span class="keyword">def</span> <span class="function">exponential_search</span>(arr, target):
+    <span class="comment">"""
+    Exponential Search - O(log n) time
+    REQUIRES: Sorted array
+    
+    Perfect for unbounded/infinite arrays
+    """</span>
+    n = len(arr)
+    
+    <span class="comment"># If target is at first position</span>
+    <span class="keyword">if</span> arr[0] == target:
+        <span class="keyword">return</span> 0
+    
+    <span class="comment"># Find range by repeated doubling</span>
+    i = 1
+    <span class="keyword">while</span> i < n <span class="keyword">and</span> arr[i] <= target:
+        i *= 2
+    
+    <span class="comment"># Binary search in the found range</span>
+    left = i // 2
+    right = min(i, n - 1)
+    
+    <span class="keyword">return</span> binary_search_range(arr, target, left, right)
+
+<span class="keyword">def</span> <span class="function">binary_search_range</span>(arr, target, left, right):
+    <span class="comment">"""Binary search in given range"""</span>
+    <span class="keyword">while</span> left <= right:
+        mid = left + (right - left) // 2
+        
+        <span class="keyword">if</span> arr[mid] == target:
+            <span class="keyword">return</span> mid
+        <span class="keyword">elif</span> arr[mid] < target:
+            left = mid + 1
+        <span class="keyword">else</span>:
+            right = mid - 1
+    
+    <span class="keyword">return</span> -1
+
+<span class="comment"># Test</span>
+arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+print(exponential_search(arr, 11))  <span class="comment"># Output: 10</span></div>
+
+                <h3>Step-by-Step Example</h3>
+                <div class="info-box">
+                    <p><strong>Array:</strong> [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]</p>
+                    <p><strong>Target:</strong> 11</p>
+                    <ol>
+                        <li>Check position 1: arr[1] = 2 < 11, continue</li>
+                        <li>Check position 2: arr[2] = 3 < 11, continue</li>
+                        <li>Check position 4: arr[4] = 5 < 11, continue</li>
+                        <li>Check position 8: arr[8] = 9 < 11, continue</li>
+                        <li>Check position 16: Out of bounds!</li>
+                        <li>Binary search in range [8, 15]</li>
+                        <li>Found at index 10</li>
+                    </ol>
+                </div>
+                
+                <h3>Unbounded Array Example</h3>
+<div class="code-block"><span class="keyword">def</span> <span class="function">exponential_search_unbounded</span>(get_element, target):
+    <span class="comment">"""
+    Exponential search for unbounded/infinite array
+    get_element(i) returns element at index i or None if out of bounds
+    """</span>
+    <span class="keyword">if</span> get_element(0) == target:
+        <span class="keyword">return</span> 0
+    
+    <span class="comment"># Find upper bound</span>
+    i = 1
+    <span class="keyword">while</span> <span class="keyword">True</span>:
+        val = get_element(i)
+        <span class="keyword">if</span> val <span class="keyword">is None or</span> val > target:
+            <span class="keyword">break</span>
+        <span class="keyword">if</span> val == target:
+            <span class="keyword">return</span> i
+        i *= 2
+    
+    <span class="comment"># Binary search between i//2 and i</span>
+    left, right = i // 2, i
+    
+    <span class="keyword">while</span> left <= right:
+        mid = left + (right - left) // 2
+        val = get_element(mid)
+        
+        <span class="keyword">if</span> val <span class="keyword">is None or</span> val > target:
+            right = mid - 1
+        <span class="keyword">elif</span> val < target:
+            left = mid + 1
+        <span class="keyword">else</span>:
+            <span class="keyword">return</span> mid
+    
+    <span class="keyword">return</span> -1</div>
+
+                <div class="highlight-box">
+                    <h4>🎯 When to Use Exponential Search?</h4>
+                    <ul>
+                        <li><strong>Unbounded/infinite arrays:</strong> Don't know the size</li>
+                        <li><strong>Target is near beginning:</strong> Finds range quickly</li>
+                        <li><strong>Binary search too slow:</strong> When you know target is close to start</li>
+                        <li><strong>Real-world:</strong> Searching in streams, logs, infinite lists</li>
+                    </ul>
+                </div>
+                
+                <div class="success-box">
+                    <h4>✅ Advantages:</h4>
+                    <ul>
+                        <li>Works on unbounded arrays</li>
+                        <li>Better than binary when target is near start</li>
+                        <li>Same O(log n) complexity as binary search</li>
+                        <li>Useful for sorted linked lists</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- COMPREHENSIVE COMPARISON -->
+            <div class="section" id="comparison">
+                <h2>📊 Comprehensive Comparison</h2>
+                
+                <h3>Performance Comparison</h3>
+                <table>
+                    <tr>
+                        <th>Algorithm</th>
+                        <th>Best Case</th>
+                        <th>Average Case</th>
+                        <th>Worst Case</th>
+                        <th>Space</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Linear Search</strong></td>
+                        <td>O(1)</td>
+                        <td>O(n)</td>
+                        <td>O(n)</td>
+                        <td>O(1)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Binary Search</strong></td>
+                        <td>O(1)</td>
+                        <td>O(log n)</td>
+                        <td>O(log n)</td>
+                        <td>O(1)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Jump Search</strong></td>
+                        <td>O(1)</td>
+                        <td>O(√n)</td>
+                        <td>O(√n)</td>
+                        <td>O(1)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Interpolation Search</strong></td>
+                        <td>O(1)</td>
+                        <td>O(log log n)</td>
+                        <td>O(n)</td>
+                        <td>O(1)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Exponential Search</strong></td>
+                        <td>O(1)</td>
+                        <td>O(log n)</td>
+                        <td>O(log n)</td>
+                        <td>O(1)</td>
+                    </tr>
+                </table>
+                
+                <h3>When to Use What?</h3>
+                <div class="comparison-grid">
+                    <div class="card">
+                        <h3>Linear Search</h3>
+                        <p><strong>Use when:</strong></p>
+                        <ul>
+                            <li>Small datasets (n < 100)</li>
+                            <li>Unsorted data</li>
+                            <li>Simple implementation needed</li>
+                            <li>One-time search</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="card">
+                        <h3>Binary Search</h3>
+                        <p><strong>Use when:</strong></p>
+                        <ul>
+                            <li>Large sorted datasets</li>
+                            <li>Multiple searches needed</li>
+                            <li>Best general-purpose choice</li>
+                            <li>Memory efficient</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="card">
+                        <h3>Jump Search</h3>
+                        <p><strong>Use when:</strong></p>
+                        <ul>
+                            <li>Sorted data</li>
+                            <li>Backward jumping costly</li>
+                            <li>Between linear & binary performance</li>
+                            <li>Simple cache-friendly access</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="card">
+                        <h3>Interpolation Search</h3>
+                        <p><strong>Use when:</strong></p>
+                        <ul>
+                            <li>Uniformly distributed data</li>
+                            <li>Large datasets</li>
+                            <li>Phone books, dictionaries</li>
+                            <li>Predictable value distribution</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="card">
+                        <h3>Exponential Search</h3>
+                        <p><strong>Use when:</strong></p>
+                        <ul>
+                            <li>Unbounded/infinite arrays</li>
+                            <li>Target near beginning</li>
+                            <li>Don't know array size</li>
+                            <li>Sorted linked lists</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <h3>Real-World Scenarios</h3>
+                <table>
+                    <tr>
+                        <th>Scenario</th>
+                        <th>Best Algorithm</th>
+                        <th>Why?</th>
+                    </tr>
+                    <tr>
+                        <td>Finding word in dictionary</td>
+                        <td>Interpolation Search</td>
+                        <td>Uniform distribution, predictable position</td>
+                    </tr>
+                    <tr>
+                        <td>Searching database index</td>
+                        <td>Binary Search</td>
+                        <td>Sorted, large dataset, reliable performance</td>
+                    </tr>
+                    <tr>
+                        <td>Finding element in small unsorted list</td>
+                        <td>Linear Search</td>
+                        <td>Simple, overhead not worth it</td>
+                    </tr>
+                    <tr>
+                        <td>Searching in log files (infinite stream)</td>
+                        <td>Exponential Search</td>
+                        <td>Unknown size, target likely recent</td>
+                    </tr>
+                    <tr>
+                        <td>Finding first occurrence in sorted array</td>
+                        <td>Binary Search (modified)</td>
+                        <td>Best O(log n) with boundary finding</td>
+                    </tr>
+                </table>
+            </div>
+            
+            <!-- INTERVIEW GUIDE -->
+            <div class="section">
+                <h2>🎯 Interview Guide</h2>
+                
+                <h3>Must-Know for Interviews</h3>
+                <div class="highlight-box">
+                    <ol>
+                        <li><strong>Binary Search:</strong> Must implement from memory in 2 minutes</li>
+                        <li><strong>Linear Search:</strong> Should be trivial</li>
+                        <li><strong>Complexity Analysis:</strong> Know why O(log n) vs O(n)</li>
+                        <li><strong>Trade-offs:</strong> When to use which algorithm</li>
+                        <li><strong>Edge Cases:</strong> Empty array, single element, duplicates</li>
+                    </ol>
+                </div>
+                
+                <h3>Common Interview Questions</h3>
+                <div class="info-box">
+                    <ul>
+                        <li>"Implement binary search" - LC 704</li>
+                        <li>"Find first and last position" - LC 34</li>
+                        <li>"Search in rotated sorted array" - LC 33</li>
+                        <li>"Find peak element" - LC 162</li>
+                        <li>"Search in 2D matrix" - LC 74</li>
+                        <li>"Koko eating bananas" - LC 875 (binary search on answer)</li>
+                    </ul>
+                </div>
+                
+                <h3>What Interviewers Ask</h3>
+                <div class="success-box">
+                    <h4>Expected Questions:</h4>
+                    <ul>
+                        <li><strong>"Why is binary search O(log n)?"</strong>
+                            <br>→ Each comparison eliminates half the elements
+                        </li>
+                        <li><strong>"Can you use binary search on unsorted data?"</strong>
+                            <br>→ No, unless you sort first (making it O(n log n) total)
+                        </li>
+                        <li><strong>"What if array has duplicates?"</strong>
+                            <br>→ Modify to find first/last occurrence
+                        </li>
+                        <li><strong>"When would you use linear over binary?"</strong>
+                            <br>→ Small datasets, unsorted data, or when simplicity matters
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- SUMMARY -->
+            <div class="section">
+                <h2>🎓 Key Takeaways</h2>
+                
+                <div style="background: white; padding: 30px; border-radius: 12px; font-size: 1.05em; line-height: 2;">
+                    <p>
+                        ✦ <strong>Linear Search:</strong> Simple O(n), works on unsorted, use for small data<br>
+                        ✦ <strong>Binary Search:</strong> Best general choice O(log n), requires sorted data<br>
+                        ✦ <strong>Jump Search:</strong> Middle ground O(√n), good for one-way traversal<br>
+                        ✦ <strong>Interpolation:</strong> Fastest O(log log n) for uniform distribution<br>
+                        ✦ <strong>Exponential:</strong> Perfect O(log n) for unbounded arrays<br>
+                        ✦ <strong>Master binary search:</strong> Most important for interviews<br>
+                        ✦ <strong>Know trade-offs:</strong> Time vs space vs prerequisites<br>
+                        ✦ <strong>Practice variations:</strong> Rotated arrays, 2D matrices, boundaries
+                    </p>
+                </div>
+                
+                <div class="highlight-box" style="margin-top: 30px; text-align: center;">
+                    <h3 style="margin-bottom: 15px;">🎯 Remember</h3>
+                    <p style="font-size: 1.2em; font-style: italic;">
+                        "The best search algorithm depends on your data.<br>
+                        But if in doubt, binary search is almost always the answer!"
+                    </p>
+                    <p style="margin-top: 20px; font-weight: bold; color: #FA8BFF;">
+                        Master binary search first, then explore the others! 💪
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+        
