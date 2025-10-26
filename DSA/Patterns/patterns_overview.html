@@ -1,0 +1,1955 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DSA Patterns - Complete Overview</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            padding: 20px;
+            line-height: 1.7;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 50px;
+            text-align: center;
+        }
+        
+        h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.3em;
+            opacity: 0.95;
+        }
+        
+        nav {
+            background: #f8f9fa;
+            padding: 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .nav-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .nav-links a {
+            padding: 10px 20px;
+            background: white;
+            color: #667eea;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .nav-links a:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .content {
+            padding: 50px;
+        }
+        
+        .section {
+            margin-bottom: 50px;
+            padding: 40px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            border-left: 6px solid #667eea;
+        }
+        
+        h2 {
+            color: #667eea;
+            margin-bottom: 25px;
+            font-size: 2.2em;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+        
+        h3 {
+            color: #764ba2;
+            margin: 25px 0 15px 0;
+            font-size: 1.6em;
+        }
+        
+        h4 {
+            color: #5a67d8;
+            margin: 20px 0 10px 0;
+            font-size: 1.3em;
+        }
+        
+        .pattern-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+        
+        .pattern-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border-top: 5px solid;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .pattern-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+        }
+        
+        .pattern-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+        }
+        
+        .pattern-card h3 {
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .pattern-icon {
+            font-size: 1.5em;
+        }
+        
+        .pattern-meta {
+            display: flex;
+            gap: 15px;
+            margin: 15px 0;
+            flex-wrap: wrap;
+        }
+        
+        .meta-badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+        
+        .difficulty-easy {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .difficulty-medium {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .difficulty-hard {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .time-badge {
+            background: #e3e8ff;
+            color: #667eea;
+        }
+        
+        .pattern-description {
+            color: #666;
+            line-height: 1.6;
+            margin: 15px 0;
+        }
+        
+        .pattern-examples {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        
+        .pattern-examples h4 {
+            font-size: 1em;
+            margin: 0 0 10px 0;
+            color: #667eea;
+        }
+        
+        .pattern-examples ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+        
+        .pattern-examples li {
+            margin: 5px 0;
+            font-size: 0.9em;
+        }
+        
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+        
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+        
+        .card h3 {
+            margin-top: 0;
+        }
+        
+        .highlight-box {
+            background: #e3e8ff;
+            border-left: 5px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        
+        .info-box {
+            background: #d1ecf1;
+            border-left: 5px solid #17a2b8;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        
+        .success-box {
+            background: #d4edda;
+            border-left: 5px solid #28a745;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        
+        .warning-box {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        
+        th {
+            background: #667eea;
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #ecf0f1;
+        }
+        
+        tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .category-section {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+        }
+        
+        .category-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .category-icon {
+            font-size: 2.5em;
+        }
+        
+        ul, ol {
+            margin-left: 30px;
+            margin-top: 15px;
+        }
+        
+        li {
+            margin: 10px 0;
+        }
+        
+        strong {
+            color: #667eea;
+        }
+        
+        code {
+            background: #f4f4f4;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            color: #e74c3c;
+            font-size: 0.9em;
+        }
+        
+        .visual-flow {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 25px 0;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .flow-diagram {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .flow-box {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 20px 30px;
+            border-radius: 10px;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            min-width: 150px;
+        }
+        
+        .flow-arrow {
+            font-size: 2em;
+            color: #667eea;
+        }
+        
+        @media (max-width: 768px) {
+            .content {
+                padding: 20px;
+            }
+            
+            .section {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            .pattern-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎯 DSA Patterns Masterclass</h1>
+            <p class="subtitle">Master Problem-Solving with Pattern Recognition</p>
+        </header>
+        
+        <nav>
+            <div class="nav-links">
+                <a href="#overview">Overview</a>
+                <a href="#array">Array Patterns</a>
+                <a href="#string">String Patterns</a>
+                <a href="#linked-list">Linked List</a>
+                <a href="#tree">Tree Patterns</a>
+                <a href="#graph">Graph Patterns</a>
+                <a href="#advanced">Advanced</a>
+                <a href="#recognition">Recognition</a>
+            </div>
+        </nav>
+        
+        <div class="content">
+            <!-- OVERVIEW -->
+            <div class="section" id="overview">
+                <h2>🎓 What are DSA Patterns?</h2>
+                <p><strong>DSA Patterns</strong> are recurring problem-solving techniques that can be applied to similar types of coding problems. Instead of memorizing solutions to hundreds of problems, you learn to recognize patterns and apply the appropriate technique.</p>
+                
+                <div class="highlight-box">
+                    <h4>🔑 Why Learn Patterns?</h4>
+                    <ul>
+                        <li><strong>Efficiency:</strong> Solve new problems faster by recognizing familiar patterns</li>
+                        <li><strong>Interview Success:</strong> Most interview problems follow known patterns</li>
+                        <li><strong>Deep Understanding:</strong> Learn WHY a solution works, not just HOW</li>
+                        <li><strong>Transferable Skills:</strong> Apply patterns across different problem domains</li>
+                        <li><strong>Confidence:</strong> Approach unknown problems with structured thinking</li>
+                    </ul>
+                </div>
+                
+                <div class="visual-flow">
+                    <h3>The Pattern Recognition Journey</h3>
+                    <div class="flow-diagram">
+                        <div class="flow-box">Read Problem</div>
+                        <div class="flow-arrow">→</div>
+                        <div class="flow-box">Identify Pattern</div>
+                        <div class="flow-arrow">→</div>
+                        <div class="flow-box">Apply Template</div>
+                        <div class="flow-arrow">→</div>
+                        <div class="flow-box">Optimize</div>
+                        <div class="flow-arrow">→</div>
+                        <div class="flow-box">Solve!</div>
+                    </div>
+                </div>
+                
+                <h3>How to Use This Guide</h3>
+                <div class="comparison-grid">
+                    <div class="card">
+                        <h3>📖 Study</h3>
+                        <p>Learn each pattern's core concept, when to use it, and its time/space complexity</p>
+                    </div>
+                    <div class="card">
+                        <h3>💻 Practice</h3>
+                        <p>Solve example problems to internalize the pattern</p>
+                    </div>
+                    <div class="card">
+                        <h3>🎯 Apply</h3>
+                        <p>Recognize patterns in new problems and adapt solutions</p>
+                    </div>
+                    <div class="card">
+                        <h3>🔄 Review</h3>
+                        <p>Regularly revisit patterns to maintain mastery</p>
+                    </div>
+                </div>
+                
+                <div class="info-box">
+                    <h4>📊 Pattern Coverage:</h4>
+                    <p>This guide covers <strong>20+ essential patterns</strong> that appear in 90% of coding interview problems:</p>
+                    <ul>
+                        <li><strong>Array & String:</strong> Two Pointers, Sliding Window, Prefix Sum, Kadane's</li>
+                        <li><strong>Searching:</strong> Binary Search, Modified Binary Search</li>
+                        <li><strong>LinkedList:</strong> Fast & Slow Pointers, In-place Reversal</li>
+                        <li><strong>Tree & Graph:</strong> DFS, BFS, Backtracking, Union-Find</li>
+                        <li><strong>Dynamic Programming:</strong> Multiple DP patterns</li>
+                        <li><strong>Advanced:</strong> Monotonic Stack/Queue, Greedy, Intervals, Bit Manipulation</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- ARRAY PATTERNS -->
+            <div class="section" id="array">
+                <div class="category-section">
+                    <div class="category-header">
+                        <span class="category-icon">📊</span>
+                        <h2 style="margin: 0; border: none; padding: 0;">Array & String Patterns</h2>
+                    </div>
+                    <p style="font-size: 1.1em;">Fundamental patterns for array and string manipulation problems</p>
+                </div>
+                
+                <div class="pattern-grid">
+                    <div class="pattern-card">
+                        <h3><span class="pattern-icon">👉</span>Two Pointers</h3>
+                        <div class="pattern-meta">
+                            <span class="meta-badge difficulty-easy">Easy-Medium</span>
+                            <span class="meta-badge time-badge">O(n)</span>
+                        </div>
+                        <p class="pattern-description">
+                            Use two pointers moving towards or away from each other to solve problems involving pairs, triplets, or subarrays.
+                        </p>
+                        <div class="pattern-examples">
+                            <h4>When to Use:</h4>
+                            <ul>
+                                <li>Finding pairs with target sum in sorted array</li>
+                                <li>Removing duplicates from sorted array</li>
+                                <li>Container with most water</li>
+                                <li>3Sum, 4Sum problems</li>
+                            </ul>
+                        </div>
+                        <div class="pattern-examples">
+                            <h4>Key Indicators:</h4>
+                            <ul>
+                                <li>✓ Sorted or can be sorted</li>
+                                <li>✓ Need to find pairs/triplets</li>
+                                <li>✓ Optimization with O(n) instead of O(n²)</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="pattern-card">
+                        <h3><span class="pattern-icon">🪟</span>Sliding Window</h3>
+                        <div class="pattern-meta">
+                            <span class="meta-badge difficulty-medium">Medium</span>
+                            <span class="meta-badge time-badge">O(n)</span>
+                        </div>
+                        <p class="pattern-description">
+                            Maintain a window of elements while sliding it across the array/string to find optimal subarrays or substrings.
+                        </p>
+                        <div class="pattern-examples">
+                            <h4>When to Use:</h4>
+                            <ul>
+                                <li>Maximum/minimum sum subarray of size K</li>
+                                <li>Longest substring with K distinct characters</li>
+                                <li>Minimum window substring</li>
+                                <li>Anagram/permutation problems</li>
+                            </ul>
+                        </div>
+                        <div class="pattern-examples">
+                            <h4>Key Indicators:</h4>
+                            <ul>
+                                <li>✓ Contiguous sequence (subarray/substring)</li>
+                                <li>✓ Find max/min/longest/shortest</li>
+                                <li>✓ Optimize from O(n²) to O(n)</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="pattern-card">
+                        <h3><span class="pattern-icon">➕</span>Prefix Sum</h3>
+                        <div class="pattern-meta">
+                            <span class="meta-badge difficulty-easy">Easy</span>
+                            <span class="meta-badge time-badge">O(n)</span>
+                        </div>
+                        <p class="pattern-description">
+                            Precompute cumulative sums to answer range sum queries efficiently in O(1) time.
+                        </p>
+                        <div class="pattern-examples">
+                            <h4>When to Use:</h4>
+                            <ul>
+                                <li>Range sum queries</li>
+                                <li>Subarray sum equals K</li>
+                                <li>Contiguous array problems</li>
+                                <li>Product of array except self</li>
+                            </ul>
+                        </div>
+                        <div class="pattern-examples">
+                            <h4>Key Indicators:</h4>
+                            <ul>
+                                <li>✓ Multiple range queries</li>
+                                <li>✓ Sum of subarrays</li>
+                                <li>✓ Need O(1) query time</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="pattern-card">
+                        <h3><span class="pattern-icon">📈</span>Kadane's Algorithm</h3>
+                        <div class="pattern-meta">
+                            <span class="meta-badge difficulty-medium">Medium</span>
+                            <span class="meta-badge time-badge">O(n)</span>
+                        </div>
+                        <p class="pattern-description">
+                            Find maximum sum of contiguous subarray using dynamic programming approach.
+                        </p>
+                        <div class="pattern-examples">
+                            <h4>When to Use:</h4>
+                            <ul>
+                                <li>Maximum subarray sum</li>
+                                <li>Maximum product subarray</li>
+                                <li>Best time to buy/sell stock</li>
+                                <li>Maximum circular subarray sum</li>
+                            </ul>
+                        </div>
+                        <div class="pattern-examples">
+                            <h4>Key Indicators:</h4>
+                            <ul>
+                                <li>✓ Maximum/minimum subarray</li>
+                                <li>✓ Contiguous elements</li>
+                                <li>✓ Can have negative numbers</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="pattern-card">
+                        <h3><span class="pattern-icon">🔄</span>Cyclic Sort</h3>
+                        <div class="pattern-meta">
+                            <span class="meta-badge difficulty-easy">Easy</span>
+                            <span class="meta-badge time-badge">O(n)</span>
+                        </div>
+                        <p class="pattern-description">
+                            Place each number at its correct index when dealing with numbers in range [1, n].
+                        </p>
+                        <div class="pattern-examples">
+                            <h4>When to Use:</h4>
+                            <ul>
+                                <li>Find missing number</li>
+                                <li>Find duplicate number</li>
+                                <li>Find all duplicates</li>
+                                <li>First missing positive</li>
+                            </ul>
+                        </div>
+                        <div class="pattern-examples">
+                            <h4>Key Indicators:</h4>
+                            <ul>
+                                <li>✓ Array with numbers 1 to n</li>
+                                <li>✓ Find missing/duplicate</li>
+                                <li>✓ O(1) space required</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="pattern-card">
+                        <h3><span class="pattern-icon">🔀</span>In-place Array Manipulation</h3>
+                        <div class="pattern-meta">
+                            <span class="meta-badge difficulty-easy">Easy-Medium</span>
+                            <span class="meta-badge time-badge">O(n)</span>
+                        </div>
+                        <p class="pattern-description">
+                            Modify array in-place without using extra space, often using swap or reverse techniques.
+                        </p>
+                        <div class="pattern-examples">
+                            <h4>When to Use:</h4>
+                            <ul>
+                                <li>Rotate array</li>
+                                <li>Move zeros to end</li>
+                                <li>Sort colors (Dutch flag)</li>
+                                <li>Rearrange array elements</li>
+                            </ul>
+                        </div>
+                        <div class="pattern-examples">
+                            <h4>Key Indicators:</h4>
+                            <ul>
+                                <li>✓ O(1) space constraint</li>
+                                <li>✓ Need to rearrange/sort</li>
+                                <li>✓ Can modify input</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- STRING PATTERNS -->
+            <div class="section" id="string">
+                <div class="category-section">
+                    <div class="category-header">
+                        <span class="category-icon">🔤</span>
+                        <h2 style="margin: 0; border: none; padding: 0;">String-Specific Patterns</h2>
+                    </div>
+                    <p style="font-size: 1.1em;">Patterns designed specifically for string manipulation</p>
+                </div>
+                
+                <div class="pattern-grid">
+                    <div class="pattern-card">
+                        <h3><span class="pattern-icon">🎯</span>Pattern Matching</h3>
+                        <div class="pattern-meta">
+                            <span class="meta-badge difficulty-medium">Medium</span>
+                            <span class="meta-badge time-badge">O(n)</span>
+                        </div>
+                        <p class="pattern-description">
+                            Find occurrences of pattern in text using KMP, Rabin-Karp, or Z-algorithm.
+                        </p>
+                        <div class="pattern-examples">
+                            <h4>When to Use:</h4>
+                            <ul>
+                                <li>Find pattern in string</li>
+                                <li>Repeated substring pattern</li>
+                                <li>Longest prefix/suffix</li>
+                                <li>String matching problems</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="pattern-card">
+                        <h3><span class="pattern-icon">🪞</span>Palindrome</h3>
+                        <div class="pattern-meta">
+                            <span class="meta-badge difficulty-easy">Easy-Medium</span>
+                            <span class="meta-badge time-badge">O(n)</span>
+                        </div>
+                        <p class="pattern-description">
+                            Check for palindromes or find palindromic substrings using expand-around-center or DP.
+                        </p>
+                        <div class="pattern-examples">
+                            <h4>When to Use:</h4>
+                            <ul>
+                                <li>Valid palindrome</li>
+                                <li>Longest palindromic substring</li>
+                                <li>Palindrome partitioning</li>
+                                <li>Count palindromic substrings</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="pattern-card">
+                        <h3><span class="pattern-icon">📝</span>Anagram/Permutation</h3>
+                        <div class="pattern-meta">
+                            <span class="meta-badge difficulty-easy">Easy</span>
+                            <span class="meta-badge time-badge">O(n)</span>
+                        </div>
+                        <p class="pattern-description">
+                            Use character frequency maps to solve anagram and permutation problems.
+                        </p>
+                        <div class="pattern-examples">
+                            <h4>When to Use:</h4>
+                            <ul>
+                                <li>Valid anagram</li>
+                                <li>Group anagrams</li>
+                                <li>Find all anagrams</li>
+                                <li>Permutation in string</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- LINKED LIST PATTERNS -->
+            <div class="section" id="linked-list">
+                <div class="category-section">
+                    <div class="category-header">
+                        <span class="category-icon">🔗</span>
+                        <h2 style="margin: 0; border: none; padding: 0;">Linked List Patterns</h2>
+                    </div>
+                    <p style="font-size: 1.1em;">Essential techniques for linked list manipulation</p>
+                </div>
+                
+                <div class="pattern-grid">
+                    <div class="pattern-card">
+                        <h3><span class="pattern-icon">🐰🐢</span>Fast & Slow Pointers</h3>
+                        <div class="pattern-meta">
+                            <span class="meta-badge difficulty-easy">Easy-Medium</span>
+                            <span class="meta-badge time-badge">O(n)</span>
+                        </div>
+                        <p class="pattern-description">
+                            Use two pointers moving at different speeds to detect cycles or find middle elements.
+                        </p>
+                        <div class="pattern-examples">
+                            <h4>When to Use:</h4>
+                            <ul>
+                                <li>Detect cycle in linked list</li>
+                                <li>Find middle of linked list</li>
+                                <li>Find cycle start</li>
+                                <li>Happy number problem</li>
+                            </ul>
+                        </div>
+                        <div class="pattern-examples">
+                            <h4>Key Indicators:</h4>
+                            <ul>
+                                <li>✓ Cycle detection needed</li>
+                                <li>✓ Find middle element</li>
+                                <li>✓ O(1) space required</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="pattern-card">
+                        <h3><span class="pattern-icon">↩️</span>In-place Reversal</h3>
+                        <div class="pattern-meta">
+                            <span class="meta-badge difficulty-medium">Medium</span>
+                            <span class="meta-badge time-badge">O(n)</span>
+                        </div>
+                        <p class="pattern-description">
+                            Reverse linked list or parts of it in-place using pointer manipulation.
+                        </p>
+                        <div class="pattern-examples">
+                            <h4>When to Use:</h4>
+                            <ul>
+                                <li>Reverse linked list</li>
+                                <li>Reverse nodes in k-group</li>
+                                <li>Reverse between positions</li>
+                                <li>Palindrome linked list</li>
+                            </ul>
+                        </div>
+                        <div class="pattern-examples">
+                            <h4>Key Indicators:</h4>
+                            <ul>
+                                <li>✓ Need to reverse</li>
+                                <li>✓ O(1) space</li>
+                                <li>✓ In-place modification</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="pattern-card">
+                        <h3><span class="pattern-icon">🔗</span>Merge Lists</h3>
+                        <div class="pattern-meta">
+                            <span class="meta-badge difficulty-easy">Easy-Medium</span>
+                            <span class="meta-badge time-badge">O(n)</span>
+                        </div>
+                        <p class="pattern-description">
+                            Merge multiple sorted linked lists or combine lists using dummy node technique.
+                        </p>
+                        <div class="pattern-examples">
+                            <h4>When to Use:</h4>
+                            <ul>
+                                <li>Merge two sorted lists</li>
+                                <li>Merge k sorted lists</li>
+                                <li>Add two numbers</li>
+                                <li>Flatten multilevel list</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- TREE PATTERNS -->
+            <div class="section" id="tree">
+                <div class="category-section">
+                    <div class="category-header">
+                        <span class="category-icon">🌳</span>
+                        <h2 style="margin: 0; border: none; padding: 0;">Tree & Binary Tree Patterns</h2>
+                    </div>
+                    <p style="font-size: 1.1em;">Traversal and manipulation techniques for tree structures</p>
+                </div>
+                
+                <div class="pattern-grid">
+                    <div class="pattern-card">
+                        <h3><span class="pattern-icon">⬇️</span>DFS (Depth-First Search)</h3>
+                        <div class="pattern-meta">
+                            <span class="meta-badge difficulty-easy">Easy-Medium</span>
+                            <span class="meta-badge time-badge">O(n)</span>
+                        </div>
+                        <p class="pattern-description">
+                            Traverse tree depth-wise using recursion or stack. Three variants: preorder, inorder, postorder.
+                        </p>
+                        <div class="pattern-examples">
+                            <h4>When to Use:</h4>
+                            <ul>
+                                <li>Tree traversals (pre/in/post-order)</li>
+                                <li>Path sum problems</li>
+                                <li>Validate BST</li>
+                                <li>Diameter/height of tree</li>
+                            </ul>
+                        </div>
+                        <div class="pattern-examples">
+                            <h4>Key Indicators:</h4>
+                            <ul>
+                                <li>✓ Explore all paths/nodes</li>
+                                <li>✓ Calculate tree properties</li>
+                                <li>✓ Top-down or bottom-up</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="pattern-card">
+                        <h3><span class="pattern-icon">➡️</span>BFS (Level-Order Traversal)</h3>
+                        <div class="pattern-meta">
+                            <span class="meta-badge difficulty-easy">Easy-Medium</span>
+                            <span class="meta-badge time-badge">O(n)</span>
+                        </div>
+                        <p class="pattern-description">
+                            Traverse tree level by level using a queue to explore nodes breadth-wise.
+                        </p>
+                        <div class="pattern-examples">
+                            <h4>When to Use:</h4>
+                            <ul>
+                                <li>Level order traversal</li>
+                                <li>Right/left side view</li>
+                                <li>Zigzag level order</li>
+                                <li>Find level of node</li>
+                            </ul>
+                        </div>
+                        <div class="pattern-examples">
+                            <h4>Key Indicators:</h4>
+                            <ul>
+                                <li>✓ Level-by-level processing</li>
+                                <li>✓ Find shortest path in tree</li>
+                                <li>✓ Level-specific operations</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="pattern-card">
+                        <h3><span class="pattern-icon">🔍</span>Binary Search Tree</h3>
+                        <div class="pattern-meta">
+                            <span class="meta-badge difficulty-medium">Medium</span>
+                            <span class="meta-badge time-badge">O(log n)</span>
+                        </div>
+                        <p class="pattern-description">
+                            Leverage BST properties (left < root < right) for efficient search and operations.
+                        </p>
+                        <div class="pattern-examples">
+                            <h4>When to Use:</h4>
+                            <ul>
+                                <li>Validate BST</li>
+                                <li>Kth smallest element</li>
+                                <li>Lowest common ancestor (BST)</li>
+                                <li>Insert/delete in BST</li>
+                            </ul>
+                        </div>
+                        <div class="pattern-examples">
+                            <h4>Key Indicators:</h4>
+                            <ul>
+                                <li>✓ Tree is BST</li>
+                                <li>✓ Need sorted order</li>
+                                <li>✓ Search in O(log n)</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="pattern-card">
+                        <h3><span class="pattern-icon">🎯</span>Tree DP</h3>
+                        <div class="pattern-meta">
+                            <span class="meta-badge difficulty-hard">Hard</span>
+                            <span class="meta-badge time-badge">O(n)</span>
+                        </div>
+                        <p class="pattern-description">
+                            Use dynamic programming on trees, typically computing values from children to parent.
+                        </p>
+                        <div class="pattern-examples">
+                            <h4>When to Use:</h4>
+                            <ul>
+                                <li>House robber III</li>
+                                <li>Binary tree cameras</li>
+                                <li>Maximum path sum</li>
+                                <li>Tree diameter problems</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- GRAPH PATTERNS -->
+            <div class="section" id="graph">
+                <div class="category-section">
+                    <div class="category-header">
+                        <span class="category-icon">🕸️</span>
+                        <h2 style="margin: 0; border: none; padding: 0;">Graph Patterns</h2>
+                    </div>
+                    <p style="font-size: 1.1em;">Essential algorithms for graph traversal and problem-solving</p>
+                </div>
+                
+                <div class="pattern-grid">
+                    <div class="pattern-card">
+                        <h3><span class="pattern-icon">🔙</span>Backtracking</h3>
+                        <div class="pattern-meta">
+                            <span class="meta-badge difficulty-medium">Medium-Hard</span>
+                            <span class="meta-badge time-badge">O(2ⁿ)</span>
+                        </div>
+                        <p class="pattern-description">
+                            Explore all possible solutions by building candidates incrementally and abandoning invalid paths.
+                        </p>
+                        <div class="pattern-examples">
+                            <h4>When to Use:</h4>
+                            <ul>
+                                <li>Generate permutations/combinations</li>
+                                <li>Subset sum problems</li>
+                                <li>N-Queens, Sudoku solver</li>
+                                <li>Word search, path finding</li>
+                            </ul>
+                        </div>
+                        <div class="pattern-examples">
+                            <h4>Key Indicators:</h4>
+                            <ul>
+                                <li>✓ Find ALL solutions</li>
+                                <li>✓ Constraint satisfaction</li>
+                                <li>✓ Generate combinations</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="pattern-card">
+                        <h3><span class="pattern-icon">🌐</span>Graph DFS/BFS</h3>
+                        <div class="pattern-meta">
+                            <span class="meta-badge difficulty-medium">Medium</span>
+                            <span class="meta-badge time-badge">O(V+E)</span>
+                        </div>
+                        <p class="pattern-description">
+                            Traverse graphs using DFS (stack) or BFS (queue) to explore nodes and edges.
+                        </p>
+                        <div class="pattern-examples">
+                            <h4>When to Use:</h4>
+                            <ul>
+                                <li>Number of islands</li>
+                                <li>Clone graph</li>
+                                <li>Course schedule</li>
+                                <li>Shortest path (BFS)</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="pattern-card">
+                        <h3><span class="pattern-icon">🔗</span>Union-Find</h3>
+                        <div class="pattern-meta">
+                            <span class="meta-badge difficulty-medium">Medium</span>
+                            <span class="meta-badge time-badge">O(α(n))</span>
+                        </div>
+                        <p class="pattern-description">
+                            Track connected components efficiently with union and find operations.
+                        </p>
+                        <div class="pattern-examples">
+                            <h4>When to Use:</h4>
+                            <ul>
+                                <li>Number of provinces</li>
+                                <li>Redundant connection</li>
+                                <li>Accounts merge</li>
+                                <li>Kruskal's MST algorithm</li>
+                            </ul>
+                        </div>
+                        <div class="pattern-examples">
+                            <h4>Key Indicators:</h4>
+                            <ul>
+                                <li>✓ Connected components</li>
+                                <li>✓ Cycle detection</li>
+                                <li>✓ Dynamic connectivity</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="pattern-card">
+                        <h3><span class="pattern-icon">📊</span>Topological Sort</h3>
+                        <div class="pattern-meta">
+                            <span class="meta-badge difficulty-medium">Medium</span>
+                            <span class="meta-badge time-badge">O(V+E)</span>
+                        </div>
+                        <p class="pattern-description">
+                            Linear ordering of vertices in a directed acyclic graph (DAG).
+                        </p>
+                        <div class="pattern-examples">
+                            <h4>When to Use:</h4>
+                            <ul>
+                                <li>Course schedule</li>
+                                <li>Task scheduling</li>
+                                <li>Build dependencies</li>
+                                <li>Alien dictionary</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="pattern-card">
+                        <h3><span class="pattern-icon">🛣️</span>Shortest Path</h3>
+                        <div class="pattern-meta">
+                            <span class="meta-badge difficulty-medium">Medium-Hard</span>
+                            <span class="meta-badge time-badge">O(E log V)</span>
+                        </div>
+                        <p class="pattern-description">
+                            Find shortest path using Dijkstra's, Bellman-Ford, or Floyd-Warshall algorithms.
+                        </p>
+                        <div class="pattern-examples">
+                            <h4>When to Use:</h4>
+                            <ul>
+                                <li>Network delay time</li>
+                                <li>Cheapest flights</li>
+                                <li>Path with minimum effort</li>
+                                <li>Shortest path problems</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- ADVANCED PATTERNS -->
+            <div class="section" id="advanced">
+                <div class="category-section">
+                    <div class="category-header">
+                        <span class="category-icon">🚀</span>
+                        <h2 style="margin: 0; border: none; padding: 0;">Advanced Patterns</h2>
+                    </div>
+                    <p style="font-size: 1.1em;">Specialized techniques for complex problems</p>
+                </div>
+                
+                <div class="pattern-grid">
+                    <div class="pattern-card">
+                        <h3><span class="pattern-icon">🔍</span>Binary Search</h3>
+                        <div class="pattern-meta">
+                            <span class="meta-badge difficulty-easy">Easy-Medium</span>
+                            <span class="meta-badge time-badge">O(log n)</span>
+                        </div>
+                        <p class="pattern-description">
+                            Search in sorted space by repeatedly dividing search interval in half.
+                        </p>
+                        <div class="pattern-examples">
+                            <h4>When to Use:</h4>
+                            <ul>
+                                <li>Search in sorted array</li>
+                                <li>Find peak element</li>
+                                <li>Search in rotated array</li>
+                                <li>Find minimum in rotated array</li>
+                            </ul>
+                        </div>
+                        <div class="pattern-examples">
+                            <h4>Key Indicators:</h4>
+                            <ul>
+                                <li>✓ Sorted or partially sorted</li>
+                                <li>✓ Search space can be halved</li>
+                                <li>✓ Need O(log n) solution</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="pattern-card">
+                        <h3><span class="pattern-icon">🎯</span>Modified Binary Search</h3>
+                        <div class="pattern-meta">
+                            <span class="meta-badge difficulty-medium">Medium-Hard</span>
+                            <span class="meta-badge time-badge">O(log n)</span>
+                        </div>
+                        <p class="pattern-description">
+                            Apply binary search on answer space or non-traditional sorted structures.
+                        </p>
+                        <div class="pattern-examples">
+                            <h4>When to Use:</h4>
+                            <ul>
+                                <li>Capacity to ship packages</li>
+                                <li>Koko eating bananas</li>
+                                <li>Split array largest sum</li>
+                                <li>Minimize max distance to gas station</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="pattern-card">
+                        <h3><span class="pattern-icon">📚</span>Monotonic Stack</h3>
+                        <div class="pattern-meta">
+                            <span class="meta-badge difficulty-medium">Medium</span>
+                            <span class="meta-badge time-badge">O(n)</span>
+                        </div>
+                        <p class="pattern-description">
+                            Maintain stack in monotonic order to find next/previous greater/smaller element.
+                        </p>
+                        <div class="pattern-examples">
+                            <h4>When to Use:</h4>
+                            <ul>
+                                <li>Next greater element</li>
+                                <li>Daily temperatures</li>
+                                <li>Largest rectangle in histogram</li>
+                                <li>Trapping rain water</li>
+                            </ul>
+                        </div>
+                        <div class="pattern-examples">
+                            <h4>Key Indicators:</h4>
+                            <ul>
+                                <li>✓ Next/previous greater/smaller</li>
+                                <li>✓ Need O(n) solution</li>
+                                <li>✓ Range queries on array</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="pattern-card">
+                        <h3><span class="pattern-icon">🎚️</span>Monotonic Queue</h3>
+                        <div class="pattern-meta">
+                            <span class="meta-badge difficulty-hard">Hard</span>
+                            <span class="meta-badge time-badge">O(n)</span>
+                        </div>
+                        <p class="pattern-description">
+                            Maintain deque in monotonic order for sliding window maximum/minimum problems.
+                        </p>
+                        <div class="pattern-examples">
+                            <h4>When to Use:</h4>
+                            <ul>
+                                <li>Sliding window maximum</li>
+                                <li>Shortest subarray with sum ≥ K</li>
+                                <li>Jump game variations</li>
+                                <li>Constrained subsequence sum</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="pattern-card">
+                        <h3><span class="pattern-icon">⏱️</span>Interval Merging</h3>
+                        <div class="pattern-meta">
+                            <span class="meta-badge difficulty-medium">Medium</span>
+                            <span class="meta-badge time-badge">O(n log n)</span>
+                        </div>
+                        <p class="pattern-description">
+                            Sort intervals and merge overlapping ones for scheduling and range problems.
+                        </p>
+                        <div class="pattern-examples">
+                            <h4>When to Use:</h4>
+                            <ul>
+                                <li>Merge intervals</li>
+                                <li>Insert interval</li>
+                                <li>Meeting rooms</li>
+                                <li>Non-overlapping intervals</li>
+                            </ul>
+                        </div>
+                        <div class="pattern-examples">
+                            <h4>Key Indicators:</h4>
+                            <ul>
+                                <li>✓ Intervals/ranges given</li>
+                                <li>✓ Overlapping detection</li>
+                                <li>✓ Scheduling problems</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="pattern-card">
+                        <h3><span class="pattern-icon">💰</span>Greedy Algorithm</h3>
+                        <div class="pattern-meta">
+                            <span class="meta-badge difficulty-medium">Medium</span>
+                            <span class="meta-badge time-badge">Varies</span>
+                        </div>
+                        <p class="pattern-description">
+                            Make locally optimal choice at each step hoping to find global optimum.
+                        </p>
+                        <div class="pattern-examples">
+                            <h4>When to Use:</h4>
+                            <ul>
+                                <li>Jump game</li>
+                                <li>Gas station</li>
+                                <li>Task scheduler</li>
+                                <li>Minimum number of arrows</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="pattern-card">
+                        <h3><span class="pattern-icon">🔢</span>Bit Manipulation</h3>
+                        <div class="pattern-meta">
+                            <span class="meta-badge difficulty-easy">Easy-Medium</span>
+                            <span class="meta-badge time-badge">O(1) - O(n)</span>
+                        </div>
+                        <p class="pattern-description">
+                            Use bitwise operations for efficient solutions to certain problems.
+                        </p>
+                        <div class="pattern-examples">
+                            <h4>When to Use:</h4>
+                            <ul>
+                                <li>Single number</li>
+                                <li>Number of 1 bits</li>
+                                <li>Power of two</li>
+                                <li>Reverse bits</li>
+                            </ul>
+                        </div>
+                        <div class="pattern-examples">
+                            <h4>Key Indicators:</h4>
+                            <ul>
+                                <li>✓ XOR properties needed</li>
+                                <li>✓ Binary representation</li>
+                                <li>✓ Optimize with bits</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="pattern-card">
+                        <h3><span class="pattern-icon">⛰️</span>Top K Elements</h3>
+                        <div class="pattern-meta">
+                            <span class="meta-badge difficulty-medium">Medium</span>
+                            <span class="meta-badge time-badge">O(n log k)</span>
+                        </div>
+                        <p class="pattern-description">
+                            Use heap/priority queue to find K largest, smallest, or most frequent elements.
+                        </p>
+                        <div class="pattern-examples">
+                            <h4>When to Use:</h4>
+                            <ul>
+                                <li>Kth largest element</li>
+                                <li>Top K frequent elements</li>
+                                <li>K closest points</li>
+                                <li>Find median from data stream</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="pattern-card">
+                        <h3><span class="pattern-icon">🎲</span>Reservoir Sampling</h3>
+                        <div class="pattern-meta">
+                            <span class="meta-badge difficulty-medium">Medium</span>
+                            <span class="meta-badge time-badge">O(n)</span>
+                        </div>
+                        <p class="pattern-description">
+                            Randomly select K items from stream of unknown size with uniform probability.
+                        </p>
+                        <div class="pattern-examples">
+                            <h4>When to Use:</h4>
+                            <ul>
+                                <li>Random pick from stream</li>
+                                <li>Linked list random node</li>
+                                <li>Sample from large dataset</li>
+                                <li>Shuffle algorithm</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- PATTERN RECOGNITION -->
+            <div class="section" id="recognition">
+                <h2>🎯 Pattern Recognition Guide</h2>
+                <p>Learn to quickly identify which pattern to apply based on problem characteristics</p>
+                
+                <h3>Decision Tree: Which Pattern to Use?</h3>
+                
+                <div class="visual-flow">
+                    <h4>Start Here → Analyze Problem</h4>
+                </div>
+                
+                <table>
+                    <tr>
+                        <th>Problem Characteristic</th>
+                        <th>Likely Pattern</th>
+                        <th>Key Questions</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Sorted array</strong></td>
+                        <td>Binary Search, Two Pointers</td>
+                        <td>Can we eliminate half? Need pairs?</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Contiguous subarray/substring</strong></td>
+                        <td>Sliding Window, Prefix Sum</td>
+                        <td>Fixed or variable window? Range queries?</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Find pairs/triplets</strong></td>
+                        <td>Two Pointers, Hash Map</td>
+                        <td>Is array sorted? Need O(n) solution?</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Linked list cycle/middle</strong></td>
+                        <td>Fast & Slow Pointers</td>
+                        <td>Need O(1) space? Detect cycle?</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Tree traversal</strong></td>
+                        <td>DFS or BFS</td>
+                        <td>Level-by-level or path-based?</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Graph connectivity</strong></td>
+                        <td>Union-Find, DFS/BFS</td>
+                        <td>Dynamic connections? Connected components?</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Generate combinations</strong></td>
+                        <td>Backtracking</td>
+                        <td>Need all solutions? Constraint satisfaction?</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Next greater/smaller</strong></td>
+                        <td>Monotonic Stack</td>
+                        <td>Array range queries? Need O(n)?</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Intervals/ranges</strong></td>
+                        <td>Interval Merging, Greedy</td>
+                        <td>Overlapping? Scheduling?</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Top K elements</strong></td>
+                        <td>Heap/Priority Queue</td>
+                        <td>Find K largest/smallest/frequent?</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Optimization (max/min)</strong></td>
+                        <td>Dynamic Programming, Greedy</td>
+                        <td>Overlapping subproblems? Optimal substructure?</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Shortest path</strong></td>
+                        <td>BFS, Dijkstra, Bellman-Ford</td>
+                        <td>Weighted? Negative weights? All pairs?</td>
+                    </tr>
+                </table>
+                
+                <h3>Common Problem Keywords → Pattern Mapping</h3>
+                
+                <div class="comparison-grid">
+                    <div class="card">
+                        <h3>Maximum/Minimum Subarray</h3>
+                        <p><strong>Patterns:</strong></p>
+                        <ul>
+                            <li>Kadane's Algorithm</li>
+                            <li>Sliding Window</li>
+                            <li>Dynamic Programming</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="card">
+                        <h3>Find All/Count Ways</h3>
+                        <p><strong>Patterns:</strong></p>
+                        <ul>
+                            <li>Backtracking</li>
+                            <li>Dynamic Programming</li>
+                            <li>DFS with memoization</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="card">
+                        <h3>Pairs with Target Sum</h3>
+                        <p><strong>Patterns:</strong></p>
+                        <ul>
+                            <li>Two Pointers</li>
+                            <li>Hash Map</li>
+                            <li>Binary Search</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="card">
+                        <h3>Cycle Detection</h3>
+                        <p><strong>Patterns:</strong></p>
+                        <ul>
+                            <li>Fast & Slow Pointers</li>
+                            <li>DFS with colors</li>
+                            <li>Union-Find</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <h3>Complexity Hints</h3>
+                
+                <div class="info-box">
+                    <h4>Time Complexity Clues:</h4>
+                    <ul>
+                        <li><strong>O(1):</strong> Math formula, bit manipulation</li>
+                        <li><strong>O(log n):</strong> Binary search, balanced tree operations</li>
+                        <li><strong>O(n):</strong> Single pass, two pointers, sliding window, linear scan</li>
+                        <li><strong>O(n log n):</strong> Sorting, heap operations, modified binary search</li>
+                        <li><strong>O(n²):</strong> Nested loops, DP with 2D table, checking all pairs</li>
+                        <li><strong>O(2ⁿ):</strong> Backtracking, generate all subsets/permutations</li>
+                    </ul>
+                </div>
+                
+                <div class="success-box">
+                    <h4>✅ Pattern Recognition Checklist:</h4>
+                    <ol>
+                        <li><strong>Read carefully:</strong> Understand input, output, and constraints</li>
+                        <li><strong>Identify keywords:</strong> Look for hints like "sorted", "contiguous", "all solutions"</li>
+                        <li><strong>Check constraints:</strong> Size limits hint at acceptable time complexity</li>
+                        <li><strong>Consider data structure:</strong> Array, string, tree, graph dictate available patterns</li>
+                        <li><strong>Think of similar problems:</strong> Have you solved something like this before?</li>
+                        <li><strong>Start simple:</strong> Brute force first, then optimize with patterns</li>
+                    </ol>
+                </div>
+                
+                <h3>Practice Strategy</h3>
+                
+                <div class="highlight-box">
+                    <h4>📚 How to Master Patterns:</h4>
+                    <ol style="line-height: 2;">
+                        <li><strong>Learn One Pattern at a Time:</strong> Deeply understand one pattern before moving to next</li>
+                        <li><strong>Solve 5-10 Problems per Pattern:</strong> Build muscle memory and recognition</li>
+                        <li><strong>Code Templates:</strong> Create reusable templates for each pattern</li>
+                        <li><strong>Mix Practice:</strong> After learning several patterns, solve random problems</li>
+                        <li><strong>Time Yourself:</strong> Practice recognizing patterns quickly under time pressure</li>
+                        <li><strong>Review Regularly:</strong> Revisit patterns weekly to maintain familiarity</li>
+                    </ol>
+                </div>
+                
+                <h3>Common Mistakes to Avoid</h3>
+                
+                <div class="warning-box">
+                    <h4>⚠️ Pattern Pitfalls:</h4>
+                    <ul>
+                        <li><strong>Forcing a pattern:</strong> Not every problem fits a standard pattern</li>
+                        <li><strong>Overlooking constraints:</strong> Constraints often hint at the right approach</li>
+                        <li><strong>Ignoring edge cases:</strong> Empty input, single element, duplicates, etc.</li>
+                        <li><strong>Premature optimization:</strong> Get brute force working first</li>
+                        <li><strong>Not testing:</strong> Always test with examples before submission</li>
+                        <li><strong>Skipping analysis:</strong> Understand why a pattern works, not just how</li>
+                    </ul>
+                </div>
+                
+                <h3>Pattern Complexity Reference</h3>
+                
+                <table>
+                    <tr>
+                        <th>Pattern</th>
+                        <th>Typical Time</th>
+                        <th>Typical Space</th>
+                        <th>Best For</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Two Pointers</strong></td>
+                        <td>O(n)</td>
+                        <td>O(1)</td>
+                        <td>Sorted arrays, pairs</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Sliding Window</strong></td>
+                        <td>O(n)</td>
+                        <td>O(1) - O(k)</td>
+                        <td>Subarrays, substrings</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Fast & Slow Pointers</strong></td>
+                        <td>O(n)</td>
+                        <td>O(1)</td>
+                        <td>Linked list problems</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Binary Search</strong></td>
+                        <td>O(log n)</td>
+                        <td>O(1)</td>
+                        <td>Sorted data, search space</td>
+                    </tr>
+                    <tr>
+                        <td><strong>BFS</strong></td>
+                        <td>O(V + E)</td>
+                        <td>O(V)</td>
+                        <td>Shortest path, level-order</td>
+                    </tr>
+                    <tr>
+                        <td><strong>DFS</strong></td>
+                        <td>O(V + E)</td>
+                        <td>O(h)</td>
+                        <td>Path finding, cycles</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Backtracking</strong></td>
+                        <td>O(2ⁿ) - O(n!)</td>
+                        <td>O(n)</td>
+                        <td>All solutions, combinations</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Dynamic Programming</strong></td>
+                        <td>O(n²) - O(n³)</td>
+                        <td>O(n) - O(n²)</td>
+                        <td>Optimization, counting</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Union-Find</strong></td>
+                        <td>O(α(n))</td>
+                        <td>O(n)</td>
+                        <td>Connected components</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Monotonic Stack</strong></td>
+                        <td>O(n)</td>
+                        <td>O(n)</td>
+                        <td>Next greater/smaller</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Topological Sort</strong></td>
+                        <td>O(V + E)</td>
+                        <td>O(V)</td>
+                        <td>DAG, dependencies</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Heap (Top K)</strong></td>
+                        <td>O(n log k)</td>
+                        <td>O(k)</td>
+                        <td>K largest/smallest</td>
+                    </tr>
+                </table>
+            </div>
+            
+            <!-- LEARNING PATH -->
+            <div class="section">
+                <h2>🎓 Learning Path & Resources</h2>
+                
+                <h3>Recommended Learning Order</h3>
+                
+                <div class="visual-flow">
+                    <h4>Beginner → Intermediate → Advanced</h4>
+                </div>
+                
+                <div class="category-section">
+                    <h3>Phase 1: Fundamentals (Weeks 1-2)</h3>
+                    <div class="comparison-grid">
+                        <div class="card">
+                            <h4>Week 1</h4>
+                            <ul>
+                                <li>Two Pointers</li>
+                                <li>Sliding Window (fixed)</li>
+                                <li>Prefix Sum</li>
+                                <li>Hash Map basics</li>
+                            </ul>
+                        </div>
+                        <div class="card">
+                            <h4>Week 2</h4>
+                            <ul>
+                                <li>Binary Search</li>
+                                <li>Fast & Slow Pointers</li>
+                                <li>In-place Reversal</li>
+                                <li>Cyclic Sort</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="category-section">
+                    <h3>Phase 2: Core Patterns (Weeks 3-6)</h3>
+                    <div class="comparison-grid">
+                        <div class="card">
+                            <h4>Week 3</h4>
+                            <ul>
+                                <li>Tree DFS</li>
+                                <li>Tree BFS</li>
+                                <li>BST properties</li>
+                            </ul>
+                        </div>
+                        <div class="card">
+                            <h4>Week 4</h4>
+                            <ul>
+                                <li>Backtracking</li>
+                                <li>Subsets/Permutations</li>
+                                <li>Graph DFS/BFS</li>
+                            </ul>
+                        </div>
+                        <div class="card">
+                            <h4>Week 5</h4>
+                            <ul>
+                                <li>Dynamic Programming (1D)</li>
+                                <li>Dynamic Programming (2D)</li>
+                                <li>Kadane's Algorithm</li>
+                            </ul>
+                        </div>
+                        <div class="card">
+                            <h4>Week 6</h4>
+                            <ul>
+                                <li>Topological Sort</li>
+                                <li>Union-Find</li>
+                                <li>Interval Merging</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="category-section">
+                    <h3>Phase 3: Advanced Patterns (Weeks 7-10)</h3>
+                    <div class="comparison-grid">
+                        <div class="card">
+                            <h4>Week 7-8</h4>
+                            <ul>
+                                <li>Monotonic Stack</li>
+                                <li>Monotonic Queue</li>
+                                <li>Modified Binary Search</li>
+                                <li>Sliding Window (variable)</li>
+                            </ul>
+                        </div>
+                        <div class="card">
+                            <h4>Week 9-10</h4>
+                            <ul>
+                                <li>Top K Elements (Heap)</li>
+                                <li>Advanced DP patterns</li>
+                                <li>Greedy algorithms</li>
+                                <li>Bit Manipulation</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3>Problem Count by Difficulty</h3>
+                
+                <table>
+                    <tr>
+                        <th>Pattern</th>
+                        <th>Easy Problems</th>
+                        <th>Medium Problems</th>
+                        <th>Hard Problems</th>
+                        <th>Total</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Two Pointers</strong></td>
+                        <td>10</td>
+                        <td>15</td>
+                        <td>5</td>
+                        <td>30</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Sliding Window</strong></td>
+                        <td>8</td>
+                        <td>20</td>
+                        <td>7</td>
+                        <td>35</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Binary Search</strong></td>
+                        <td>12</td>
+                        <td>18</td>
+                        <td>8</td>
+                        <td>38</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Tree DFS/BFS</strong></td>
+                        <td>15</td>
+                        <td>25</td>
+                        <td>10</td>
+                        <td>50</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Backtracking</strong></td>
+                        <td>5</td>
+                        <td>20</td>
+                        <td>10</td>
+                        <td>35</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Dynamic Programming</strong></td>
+                        <td>10</td>
+                        <td>30</td>
+                        <td>20</td>
+                        <td>60</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Graph Patterns</strong></td>
+                        <td>8</td>
+                        <td>22</td>
+                        <td>12</td>
+                        <td>42</td>
+                    </tr>
+                </table>
+                
+                <h3>Practice Platforms</h3>
+                
+                <div class="comparison-grid">
+                    <div class="card">
+                        <h3>🎯 LeetCode</h3>
+                        <p><strong>Best for:</strong> Interview prep</p>
+                        <ul>
+                            <li>Explore by pattern/tag</li>
+                            <li>Company-specific questions</li>
+                            <li>Discussion forums</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="card">
+                        <h3>💻 HackerRank</h3>
+                        <p><strong>Best for:</strong> Structured learning</p>
+                        <ul>
+                            <li>Interview preparation kits</li>
+                            <li>Skill certifications</li>
+                            <li>Step-by-step tutorials</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="card">
+                        <h3>🏆 Codeforces</h3>
+                        <p><strong>Best for:</strong> Competitive programming</p>
+                        <ul>
+                            <li>Regular contests</li>
+                            <li>Rating system</li>
+                            <li>Advanced algorithms</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="card">
+                        <h3>📚 NeetCode</h3>
+                        <p><strong>Best for:</strong> Pattern-based learning</p>
+                        <ul>
+                            <li>Curated problem lists</li>
+                            <li>Video explanations</li>
+                            <li>Pattern categorization</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="success-box">
+                    <h4>🌟 Pro Tips for Success:</h4>
+                    <ol style="line-height: 2;">
+                        <li><strong>Consistency over intensity:</strong> 1-2 problems daily beats 10 problems once a week</li>
+                        <li><strong>Understand, don't memorize:</strong> Focus on WHY a solution works</li>
+                        <li><strong>Time yourself:</strong> Simulate interview conditions (45 min per problem)</li>
+                        <li><strong>Code without looking:</strong> Try to implement from memory</li>
+                        <li><strong>Explain out loud:</strong> Practice articulating your thought process</li>
+                        <li><strong>Review mistakes:</strong> Keep an error log and review weekly</li>
+                        <li><strong>Mix it up:</strong> Alternate between new problems and review</li>
+                        <li><strong>Join study groups:</strong> Collaborate and learn from others</li>
+                    </ol>
+                </div>
+                
+                <div class="info-box">
+                    <h4>📊 Progress Tracking:</h4>
+                    <p>Track your progress with these metrics:</p>
+                    <ul>
+                        <li><strong>Problems solved per pattern:</strong> Aim for 10-15 per pattern</li>
+                        <li><strong>Success rate:</strong> Target 70%+ solve rate without hints</li>
+                        <li><strong>Time to solve:</strong> Average under 30 minutes for medium problems</li>
+                        <li><strong>Pattern recognition speed:</strong> Identify pattern within 5 minutes</li>
+                        <li><strong>Code quality:</strong> Clean, bug-free on first submission</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- INTERVIEW PREPARATION -->
+            <div class="section">
+                <h2>🎤 Interview Preparation Strategy</h2>
+                
+                <h3>Before the Interview</h3>
+                
+                <div class="comparison-grid">
+                    <div class="card">
+                        <h3>📅 1 Week Before</h3>
+                        <ul>
+                            <li>Review all pattern templates</li>
+                            <li>Solve 2-3 problems per pattern</li>
+                            <li>Practice on whiteboard/paper</li>
+                            <li>Mock interviews with peers</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="card">
+                        <h3>📅 1 Day Before</h3>
+                        <ul>
+                            <li>Review pattern cheat sheet</li>
+                            <li>Solve 2-3 easy problems</li>
+                            <li>Rest well, stay confident</li>
+                            <li>Prepare questions to ask</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <h3>During the Interview</h3>
+                
+                <div class="highlight-box">
+                    <h4>🎯 Step-by-Step Approach:</h4>
+                    <ol style="line-height: 2; font-size: 1.05em;">
+                        <li><strong>Clarify (2 min):</strong> Ask about input size, edge cases, expected output</li>
+                        <li><strong>Example (2 min):</strong> Walk through example, verify understanding</li>
+                        <li><strong>Approach (5 min):</strong> Identify pattern, discuss brute force, then optimize</li>
+                        <li><strong>Complexity (2 min):</strong> State time/space complexity before coding</li>
+                        <li><strong>Code (25 min):</strong> Write clean code, explain as you go</li>
+                        <li><strong>Test (5 min):</strong> Test with examples, edge cases</li>
+                        <li><strong>Optimize (5 min):</strong> Discuss improvements if time permits</li>
+                    </ol>
+                </div>
+                
+                <div class="warning-box">
+                    <h4>🚫 Common Interview Mistakes:</h4>
+                    <ul>
+                        <li><strong>Jumping to code too quickly</strong> - Always discuss approach first</li>
+                        <li><strong>Staying silent</strong> - Think out loud, communicate your thought process</li>
+                        <li><strong>Getting stuck</strong> - Ask for hints, don't waste time in silence</li>
+                        <li><strong>Ignoring interviewer hints</strong> - Listen carefully to suggestions</li>
+                        <li><strong>Not testing</strong> - Always test your solution with examples</li>
+                        <li><strong>Poor variable names</strong> - Use meaningful names, not just i, j, k</li>
+                        <li><strong>Giving up</strong> - Show persistence and problem-solving ability</li>
+                    </ul>
+                </div>
+                
+                <h3>Communication Template</h3>
+                
+                <div class="success-box">
+                    <h4>💬 What to Say During Interview:</h4>
+                    
+                    <p><strong>1. Understanding the Problem:</strong></p>
+                    <p style="margin-left: 20px; font-style: italic;">
+                        "Let me make sure I understand correctly. We need to [restate problem]. 
+                        The input is [describe input], and we should return [describe output]. 
+                        Can I assume [ask about constraints]?"
+                    </p>
+                    
+                    <p style="margin-top: 15px;"><strong>2. Identifying the Pattern:</strong></p>
+                    <p style="margin-left: 20px; font-style: italic;">
+                        "This looks like a [pattern name] problem because [reason]. 
+                        The typical approach would be to [describe approach]. 
+                        This should give us O(n) time complexity."
+                    </p>
+                    
+                    <p style="margin-top: 15px;"><strong>3. Discussing Trade-offs:</strong></p>
+                    <p style="margin-left: 20px; font-style: italic;">
+                        "We could use [approach 1] which is simpler but takes O(n²) time, 
+                        or we could use [approach 2] with O(n) time but O(n) extra space. 
+                        Given the constraints, I think [chosen approach] is better because [reason]."
+                    </p>
+                    
+                    <p style="margin-top: 15px;"><strong>4. While Coding:</strong></p>
+                    <p style="margin-left: 20px; font-style: italic;">
+                        "I'm going to use [data structure] here to [purpose]. 
+                        First, I'll handle the [base case], then [main logic]."
+                    </p>
+                    
+                    <p style="margin-top: 15px;"><strong>5. Testing:</strong></p>
+                    <p style="margin-left: 20px; font-style: italic;">
+                        "Let me test this with the example: [walk through]. 
+                        I should also check edge cases like [empty input, single element, etc.]."
+                    </p>
+                </div>
+            </div>
+            
+            <!-- CONCLUSION -->
+            <div class="section">
+                <h2>🎓 Final Thoughts</h2>
+                
+                <div class="visual-flow">
+                    <h3>Your Journey to Pattern Mastery</h3>
+                    <p style="font-size: 1.1em; margin: 20px 0;">
+                        Mastering DSA patterns is not about memorizing solutions—it's about developing 
+                        problem-solving intuition. With consistent practice, you'll start recognizing 
+                        patterns instantly and applying them effectively.
+                    </p>
+                </div>
+                
+                <div class="comparison-grid">
+                    <div class="card">
+                        <h3>🎯 Week 1-2</h3>
+                        <p><strong>Beginner</strong></p>
+                        <p>Learning patterns, solving with hints</p>
+                    </div>
+                    
+                    <div class="card">
+                        <h3>📚 Week 3-6</h3>
+                        <p><strong>Intermediate</strong></p>
+                        <p>Recognizing patterns, solving independently</p>
+                    </div>
+                    
+                    <div class="card">
+                        <h3>🚀 Week 7-10</h3>
+                        <p><strong>Advanced</strong></p>
+                        <p>Quick recognition, optimal solutions</p>
+                    </div>
+                    
+                    <div class="card">
+                        <h3>🌟 Week 10+</h3>
+                        <p><strong>Expert</strong></p>
+                        <p>Instant pattern ID, teaching others</p>
+                    </div>
+                </div>
+                
+                <div class="highlight-box" style="text-align: center; margin: 40px 0;">
+                    <h3 style="color: #667eea; margin-bottom: 20px;">Remember: Every Expert Was Once a Beginner</h3>
+                    <p style="font-size: 1.2em; line-height: 1.8;">
+                        <strong>Consistency</strong> beats intensity<br>
+                        <strong>Understanding</strong> beats memorization<br>
+                        <strong>Practice</strong> beats theory<br>
+                        <strong>Patience</strong> beats pressure
+                    </p>
+                </div>
+                
+                <div class="success-box">
+                    <h3>✨ Next Steps:</h3>
+                    <ol style="font-size: 1.1em; line-height: 2;">
+                        <li><strong>Choose a pattern</strong> from this guide that interests you</li>
+                        <li><strong>Study the pattern</strong> - understand when and how to use it</li>
+                        <li><strong>Solve 5-10 problems</strong> using that pattern</li>
+                        <li><strong>Create your own template</strong> for quick reference</li>
+                        <li><strong>Move to the next pattern</strong> and repeat</li>
+                        <li><strong>Review regularly</strong> to maintain your skills</li>
+                    </ol>
+                </div>
+                
+                <div class="info-box" style="text-align: center; margin: 40px 0;">
+                    <h3>🎯 Ready to Deep Dive?</h3>
+                    <p style="font-size: 1.1em; margin: 20px 0;">
+                        Click on any pattern in the navigation menu above to access detailed guides, 
+                        code templates, and practice problems for that specific pattern.
+                    </p>
+                    <p style="font-size: 1.3em; color: #667eea; font-weight: bold;">
+                        Happy Coding! 🚀
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
