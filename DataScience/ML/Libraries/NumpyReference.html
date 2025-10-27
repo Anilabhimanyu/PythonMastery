@@ -1,0 +1,1591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete NumPy Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .section:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.3em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .section-header:hover {
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+        }
+
+        .section-header .icon {
+            font-size: 1.2em;
+            transition: transform 0.3s ease;
+        }
+
+        .section-header.active .icon {
+            transform: rotate(180deg);
+        }
+
+        .section-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+            background: #f9f9f9;
+        }
+
+        .section-content.active {
+            max-height: 5000px;
+        }
+
+        .problem {
+            background: white;
+            margin: 20px;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .problem-title {
+            font-size: 1.1em;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .problem-title:hover {
+            color: #667eea;
+        }
+
+        .problem-description {
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .solution {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .solution.active {
+            max-height: 1000px;
+        }
+
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.5;
+            white-space: pre;
+        }
+
+        .keyword { color: #ff79c6; }
+        .string { color: #f1fa8c; }
+        .comment { color: #6272a4; }
+        .function { color: #50fa7b; }
+        .number { color: #bd93f9; }
+
+        .toggle-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-btn:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+        }
+
+        .output {
+            background: #f0f0f0;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔢 Complete NumPy Guide</h1>
+            <p>Master NumPy from basics to advanced with hands-on problems</p>
+        </div>
+
+        <div class="content">
+            <!-- Section 1: Array Creation -->
+            <div class="section">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <span>1. Array Creation & Basics</span>
+                    <span class="icon">▼</span>
+                </div>
+                <div class="section-content">
+                    <div class="problem">
+                        <div class="problem-title" onclick="toggleSolution(this)">
+                            Problem 1.1: Create arrays using different methods
+                            <button class="toggle-btn">Show Solution</button>
+                        </div>
+                        <div class="problem-description">
+                            Create NumPy arrays from a Python list, using zeros, ones, arange, and linspace.
+                        </div>
+                        <div class="solution">
+                            <div class="code-block"><span class="keyword">import</span> numpy <span class="keyword">as</span> np
+
+<span class="comment"># From list</span>
+arr1 = np.array([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>])
+<span class="function">print</span>(<span class="string">"From list:"</span>, arr1)
+
+<span class="comment"># Array of zeros</span>
+arr2 = np.zeros((<span class="number">3</span>, <span class="number">4</span>))
+<span class="function">print</span>(<span class="string">"Zeros:\n"</span>, arr2)
+
+<span class="comment"># Array of ones</span>
+arr3 = np.ones((<span class="number">2</span>, <span class="number">3</span>))
+<span class="function">print</span>(<span class="string">"Ones:\n"</span>, arr3)
+
+<span class="comment"># Using arange</span>
+arr4 = np.arange(<span class="number">0</span>, <span class="number">10</span>, <span class="number">2</span>)
+<span class="function">print</span>(<span class="string">"Arange:"</span>, arr4)
+
+<span class="comment"># Using linspace</span>
+arr5 = np.linspace(<span class="number">0</span>, <span class="number">1</span>, <span class="number">5</span>)
+<span class="function">print</span>(<span class="string">"Linspace:"</span>, arr5)</div>
+                        </div>
+                    </div>
+
+                    <div class="problem">
+                        <div class="problem-title" onclick="toggleSolution(this)">
+                            Problem 1.2: Create identity and random arrays
+                            <button class="toggle-btn">Show Solution</button>
+                        </div>
+                        <div class="problem-description">
+                            Create an identity matrix, random integers, and random floats.
+                        </div>
+                        <div class="solution">
+                            <div class="code-block"><span class="keyword">import</span> numpy <span class="keyword">as</span> np
+
+<span class="comment"># Identity matrix</span>
+identity = np.eye(<span class="number">4</span>)
+<span class="function">print</span>(<span class="string">"Identity:\n"</span>, identity)
+
+<span class="comment"># Random integers</span>
+rand_int = np.random.randint(<span class="number">0</span>, <span class="number">100</span>, size=(<span class="number">3</span>, <span class="number">3</span>))
+<span class="function">print</span>(<span class="string">"Random ints:\n"</span>, rand_int)
+
+<span class="comment"># Random floats</span>
+rand_float = np.random.random((<span class="number">2</span>, <span class="number">4</span>))
+<span class="function">print</span>(<span class="string">"Random floats:\n"</span>, rand_float)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 2: Array Attributes -->
+            <div class="section">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <span>2. Array Attributes & Properties</span>
+                    <span class="icon">▼</span>
+                </div>
+                <div class="section-content">
+                    <div class="problem">
+                        <div class="problem-title" onclick="toggleSolution(this)">
+                            Problem 2.1: Explore array attributes
+                            <button class="toggle-btn">Show Solution</button>
+                        </div>
+                        <div class="problem-description">
+                            Check shape, size, ndim, dtype, and itemsize of arrays.
+                        </div>
+                        <div class="solution">
+                            <div class="code-block"><span class="keyword">import</span> numpy <span class="keyword">as</span> np
+
+arr = np.array([[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>], [<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>]])
+
+<span class="function">print</span>(<span class="string">"Shape:"</span>, arr.shape)        <span class="comment"># (2, 3)</span>
+<span class="function">print</span>(<span class="string">"Size:"</span>, arr.size)          <span class="comment"># 6</span>
+<span class="function">print</span>(<span class="string">"Dimensions:"</span>, arr.ndim)    <span class="comment"># 2</span>
+<span class="function">print</span>(<span class="string">"Data type:"</span>, arr.dtype)    <span class="comment"># int64</span>
+<span class="function">print</span>(<span class="string">"Item size:"</span>, arr.itemsize) <span class="comment"># 8 bytes</span></div>
+                        </div>
+                    </div>
+
+                    <div class="problem">
+                        <div class="problem-title" onclick="toggleSolution(this)">
+                            Problem 2.2: Change data types
+                            <button class="toggle-btn">Show Solution</button>
+                        </div>
+                        <div class="problem-description">
+                            Convert array data types using astype().
+                        </div>
+                        <div class="solution">
+                            <div class="code-block"><span class="keyword">import</span> numpy <span class="keyword">as</span> np
+
+arr = np.array([<span class="number">1.5</span>, <span class="number">2.7</span>, <span class="number">3.9</span>])
+<span class="function">print</span>(<span class="string">"Original:"</span>, arr.dtype)
+
+<span class="comment"># Convert to int</span>
+arr_int = arr.astype(<span class="keyword">int</span>)
+<span class="function">print</span>(<span class="string">"As int:"</span>, arr_int, arr_int.dtype)
+
+<span class="comment"># Convert to string</span>
+arr_str = arr.astype(<span class="keyword">str</span>)
+<span class="function">print</span>(<span class="string">"As string:"</span>, arr_str, arr_str.dtype)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 3: Indexing & Slicing -->
+            <div class="section">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <span>3. Indexing & Slicing</span>
+                    <span class="icon">▼</span>
+                </div>
+                <div class="section-content">
+                    <div class="problem">
+                        <div class="problem-title" onclick="toggleSolution(this)">
+                            Problem 3.1: Basic indexing and slicing
+                            <button class="toggle-btn">Show Solution</button>
+                        </div>
+                        <div class="problem-description">
+                            Access elements and slices from 1D and 2D arrays.
+                        </div>
+                        <div class="solution">
+                            <div class="code-block"><span class="keyword">import</span> numpy <span class="keyword">as</span> np
+
+<span class="comment"># 1D array</span>
+arr1d = np.array([<span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>, <span class="number">40</span>, <span class="number">50</span>])
+<span class="function">print</span>(<span class="string">"Element at index 2:"</span>, arr1d[<span class="number">2</span>])
+<span class="function">print</span>(<span class="string">"Slice [1:4]:"</span>, arr1d[<span class="number">1</span>:<span class="number">4</span>])
+<span class="function">print</span>(<span class="string">"Last element:"</span>, arr1d[-<span class="number">1</span>])
+
+<span class="comment"># 2D array</span>
+arr2d = np.array([[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>], [<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>], [<span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>]])
+<span class="function">print</span>(<span class="string">"Element [1,2]:"</span>, arr2d[<span class="number">1</span>, <span class="number">2</span>])
+<span class="function">print</span>(<span class="string">"First row:"</span>, arr2d[<span class="number">0</span>])
+<span class="function">print</span>(<span class="string">"First column:"</span>, arr2d[:, <span class="number">0</span>])
+<span class="function">print</span>(<span class="string">"Subarray:\n"</span>, arr2d[<span class="number">0</span>:<span class="number">2</span>, <span class="number">1</span>:<span class="number">3</span>])</div>
+                        </div>
+                    </div>
+
+                    <div class="problem">
+                        <div class="problem-title" onclick="toggleSolution(this)">
+                            Problem 3.2: Boolean and fancy indexing
+                            <button class="toggle-btn">Show Solution</button>
+                        </div>
+                        <div class="problem-description">
+                            Use boolean masks and fancy indexing to access array elements.
+                        </div>
+                        <div class="solution">
+                            <div class="code-block"><span class="keyword">import</span> numpy <span class="keyword">as</span> np
+
+arr = np.array([<span class="number">15</span>, <span class="number">22</span>, <span class="number">8</span>, <span class="number">31</span>, <span class="number">45</span>, <span class="number">12</span>])
+
+<span class="comment"># Boolean indexing</span>
+mask = arr > <span class="number">20</span>
+<span class="function">print</span>(<span class="string">"Elements > 20:"</span>, arr[mask])
+
+<span class="comment"># Fancy indexing</span>
+indices = [<span class="number">0</span>, <span class="number">2</span>, <span class="number">4</span>]
+<span class="function">print</span>(<span class="string">"Elements at indices [0,2,4]:"</span>, arr[indices])
+
+<span class="comment"># Conditional indexing</span>
+<span class="function">print</span>(<span class="string">"Even numbers:"</span>, arr[arr % <span class="number">2</span> == <span class="number">0</span>])</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 4: Array Operations -->
+            <div class="section">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <span>4. Array Operations & Broadcasting</span>
+                    <span class="icon">▼</span>
+                </div>
+                <div class="section-content">
+                    <div class="problem">
+                        <div class="problem-title" onclick="toggleSolution(this)">
+                            Problem 4.1: Element-wise operations
+                            <button class="toggle-btn">Show Solution</button>
+                        </div>
+                        <div class="problem-description">
+                            Perform arithmetic operations on arrays.
+                        </div>
+                        <div class="solution">
+                            <div class="code-block"><span class="keyword">import</span> numpy <span class="keyword">as</span> np
+
+a = np.array([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>])
+b = np.array([<span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>, <span class="number">40</span>])
+
+<span class="function">print</span>(<span class="string">"Addition:"</span>, a + b)
+<span class="function">print</span>(<span class="string">"Subtraction:"</span>, a - b)
+<span class="function">print</span>(<span class="string">"Multiplication:"</span>, a * b)
+<span class="function">print</span>(<span class="string">"Division:"</span>, b / a)
+<span class="function">print</span>(<span class="string">"Power:"</span>, a ** <span class="number">2</span>)
+<span class="function">print</span>(<span class="string">"Square root:"</span>, np.sqrt(b))</div>
+                        </div>
+                    </div>
+
+                    <div class="problem">
+                        <div class="problem-title" onclick="toggleSolution(this)">
+                            Problem 4.2: Broadcasting examples
+                            <button class="toggle-btn">Show Solution</button>
+                        </div>
+                        <div class="problem-description">
+                            Demonstrate broadcasting with arrays of different shapes.
+                        </div>
+                        <div class="solution">
+                            <div class="code-block"><span class="keyword">import</span> numpy <span class="keyword">as</span> np
+
+<span class="comment"># Scalar broadcasting</span>
+arr = np.array([[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>], [<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>]])
+<span class="function">print</span>(<span class="string">"Array * 10:\n"</span>, arr * <span class="number">10</span>)
+
+<span class="comment"># 1D to 2D broadcasting</span>
+row = np.array([<span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>])
+<span class="function">print</span>(<span class="string">"Broadcasting row:\n"</span>, arr + row)
+
+<span class="comment"># Column broadcasting</span>
+col = np.array([[<span class="number">100</span>], [<span class="number">200</span>]])
+<span class="function">print</span>(<span class="string">"Broadcasting column:\n"</span>, arr + col)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 5: Reshaping & Manipulation -->
+            <div class="section">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <span>5. Reshaping & Array Manipulation</span>
+                    <span class="icon">▼</span>
+                </div>
+                <div class="section-content">
+                    <div class="problem">
+                        <div class="problem-title" onclick="toggleSolution(this)">
+                            Problem 5.1: Reshape, flatten, and ravel
+                            <button class="toggle-btn">Show Solution</button>
+                        </div>
+                        <div class="problem-description">
+                            Change array dimensions using reshape, flatten, and ravel.
+                        </div>
+                        <div class="solution">
+                            <div class="code-block"><span class="keyword">import</span> numpy <span class="keyword">as</span> np
+
+arr = np.arange(<span class="number">12</span>)
+<span class="function">print</span>(<span class="string">"Original:"</span>, arr)
+
+<span class="comment"># Reshape</span>
+reshaped = arr.reshape(<span class="number">3</span>, <span class="number">4</span>)
+<span class="function">print</span>(<span class="string">"Reshaped (3x4):\n"</span>, reshaped)
+
+<span class="comment"># Flatten (returns copy)</span>
+flattened = reshaped.flatten()
+<span class="function">print</span>(<span class="string">"Flattened:"</span>, flattened)
+
+<span class="comment"># Ravel (returns view)</span>
+raveled = reshaped.ravel()
+<span class="function">print</span>(<span class="string">"Raveled:"</span>, raveled)</div>
+                        </div>
+                    </div>
+
+                    <div class="problem">
+                        <div class="problem-title" onclick="toggleSolution(this)">
+                            Problem 5.2: Transpose and swapaxes
+                            <button class="toggle-btn">Show Solution</button>
+                        </div>
+                        <div class="problem-description">
+                            Transpose arrays and swap axes.
+                        </div>
+                        <div class="solution">
+                            <div class="code-block"><span class="keyword">import</span> numpy <span class="keyword">as</span> np
+
+arr = np.array([[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>], [<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>]])
+<span class="function">print</span>(<span class="string">"Original:\n"</span>, arr)
+
+<span class="comment"># Transpose</span>
+<span class="function">print</span>(<span class="string">"Transposed:\n"</span>, arr.T)
+
+<span class="comment"># 3D array swap</span>
+arr3d = np.arange(<span class="number">24</span>).reshape(<span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>)
+<span class="function">print</span>(<span class="string">"3D shape:"</span>, arr3d.shape)
+swapped = np.swapaxes(arr3d, <span class="number">0</span>, <span class="number">2</span>)
+<span class="function">print</span>(<span class="string">"Swapped shape:"</span>, swapped.shape)</div>
+                        </div>
+                    </div>
+
+                    <div class="problem">
+                        <div class="problem-title" onclick="toggleSolution(this)">
+                            Problem 5.3: Stack and concatenate arrays
+                            <button class="toggle-btn">Show Solution</button>
+                        </div>
+                        <div class="problem-description">
+                            Join arrays using concatenate, vstack, hstack, and stack.
+                        </div>
+                        <div class="solution">
+                            <div class="code-block"><span class="keyword">import</span> numpy <span class="keyword">as</span> np
+
+a = np.array([[<span class="number">1</span>, <span class="number">2</span>], [<span class="number">3</span>, <span class="number">4</span>]])
+b = np.array([[<span class="number">5</span>, <span class="number">6</span>], [<span class="number">7</span>, <span class="number">8</span>]])
+
+<span class="comment"># Vertical stack</span>
+<span class="function">print</span>(<span class="string">"vstack:\n"</span>, np.vstack((a, b)))
+
+<span class="comment"># Horizontal stack</span>
+<span class="function">print</span>(<span class="string">"hstack:\n"</span>, np.hstack((a, b)))
+
+<span class="comment"># Concatenate</span>
+<span class="function">print</span>(<span class="string">"Concatenate axis=0:\n"</span>, np.concatenate((a, b), axis=<span class="number">0</span>))
+<span class="function">print</span>(<span class="string">"Concatenate axis=1:\n"</span>, np.concatenate((a, b), axis=<span class="number">1</span>))</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 6: Statistical Operations -->
+            <div class="section">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <span>6. Statistical Operations</span>
+                    <span class="icon">▼</span>
+                </div>
+                <div class="section-content">
+                    <div class="problem">
+                        <div class="problem-title" onclick="toggleSolution(this)">
+                            Problem 6.1: Basic statistics
+                            <button class="toggle-btn">Show Solution</button>
+                        </div>
+                        <div class="problem-description">
+                            Calculate mean, median, std, var, min, max, sum.
+                        </div>
+                        <div class="solution">
+                            <div class="code-block"><span class="keyword">import</span> numpy <span class="keyword">as</span> np
+
+arr = np.array([<span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>, <span class="number">40</span>, <span class="number">50</span>])
+
+<span class="function">print</span>(<span class="string">"Mean:"</span>, np.mean(arr))
+<span class="function">print</span>(<span class="string">"Median:"</span>, np.median(arr))
+<span class="function">print</span>(<span class="string">"Std Dev:"</span>, np.std(arr))
+<span class="function">print</span>(<span class="string">"Variance:"</span>, np.var(arr))
+<span class="function">print</span>(<span class="string">"Min:"</span>, np.min(arr))
+<span class="function">print</span>(<span class="string">"Max:"</span>, np.max(arr))
+<span class="function">print</span>(<span class="string">"Sum:"</span>, np.sum(arr))
+<span class="function">print</span>(<span class="string">"Cumsum:"</span>, np.cumsum(arr))</div>
+                        </div>
+                    </div>
+
+                    <div class="problem">
+                        <div class="problem-title" onclick="toggleSolution(this)">
+                            Problem 6.2: Axis-wise operations
+                            <button class="toggle-btn">Show Solution</button>
+                        </div>
+                        <div class="problem-description">
+                            Perform statistical operations along specific axes.
+                        </div>
+                        <div class="solution">
+                            <div class="code-block"><span class="keyword">import</span> numpy <span class="keyword">as</span> np
+
+arr = np.array([[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>],
+                [<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>],
+                [<span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>]])
+
+<span class="function">print</span>(<span class="string">"Mean of all:"</span>, np.mean(arr))
+<span class="function">print</span>(<span class="string">"Mean axis=0 (columns):"</span>, np.mean(arr, axis=<span class="number">0</span>))
+<span class="function">print</span>(<span class="string">"Mean axis=1 (rows):"</span>, np.mean(arr, axis=<span class="number">1</span>))
+<span class="function">print</span>(<span class="string">"Sum axis=0:"</span>, np.sum(arr, axis=<span class="number">0</span>))
+<span class="function">print</span>(<span class="string">"Max axis=1:"</span>, np.max(arr, axis=<span class="number">1</span>))</div>
+                        </div>
+                    </div>
+
+                    <div class="problem">
+                        <div class="problem-title" onclick="toggleSolution(this)">
+                            Problem 6.3: Percentiles and quantiles
+                            <button class="toggle-btn">Show Solution</button>
+                        </div>
+                        <div class="problem-description">
+                            Calculate percentiles and quantiles of data.
+                        </div>
+                        <div class="solution">
+                            <div class="code-block"><span class="keyword">import</span> numpy <span class="keyword">as</span> np
+
+arr = np.array([<span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>, <span class="number">40</span>, <span class="number">50</span>, <span class="number">60</span>, <span class="number">70</span>, <span class="number">80</span>, <span class="number">90</span>, <span class="number">100</span>])
+
+<span class="function">print</span>(<span class="string">"25th percentile:"</span>, np.percentile(arr, <span class="number">25</span>))
+<span class="function">print</span>(<span class="string">"50th percentile (median):"</span>, np.percentile(arr, <span class="number">50</span>))
+<span class="function">print</span>(<span class="string">"75th percentile:"</span>, np.percentile(arr, <span class="number">75</span>))
+<span class="function">print</span>(<span class="string">"Quantiles [0.25, 0.5, 0.75]:"</span>, np.quantile(arr, [<span class="number">0.25</span>, <span class="number">0.5</span>, <span class="number">0.75</span>]))</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 7: Linear Algebra -->
+            <div class="section">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <span>7. Linear Algebra Operations</span>
+                    <span class="icon">▼</span>
+                </div>
+                <div class="section-content">
+                    <div class="problem">
+                        <div class="problem-title" onclick="toggleSolution(this)">
+                            Problem 7.1: Matrix multiplication
+                            <button class="toggle-btn">Show Solution</button>
+                        </div>
+                        <div class="problem-description">
+                            Perform dot product and matrix multiplication.
+                        </div>
+                        <div class="solution">
+                            <div class="code-block"><span class="keyword">import</span> numpy <span class="keyword">as</span> np
+
+a = np.array([[<span class="number">1</span>, <span class="number">2</span>], [<span class="number">3</span>, <span class="number">4</span>]])
+b = np.array([[<span class="number">5</span>, <span class="number">6</span>], [<span class="number">7</span>, <span class="number">8</span>]])
+
+<span class="comment"># Dot product</span>
+<span class="function">print</span>(<span class="string">"Dot product:\n"</span>, np.dot(a, b))
+
+<span class="comment"># Matrix multiplication (@ operator)</span>
+<span class="function">print</span>(<span class="string">"Matrix mult:\n"</span>, a @ b)
+
+<span class="comment"># Element-wise multiplication</span>
+<span class="function">print</span>(<span class="string">"Element-wise:\n"</span>, a * b)</div>
+                        </div>
+                    </div>
+
+                    <div class="problem">
+                        <div class="problem-title" onclick="toggleSolution(this)">
+                            Problem 7.2: Determinant and inverse
+                            <button class="toggle-btn">Show Solution</button>
+                        </div>
+                        <div class="problem-description">
+                            Calculate determinant, inverse, and verify inverse property.
+                        </div>
+                        <div class="solution">
+                            <div class="code-block"><span class="keyword">import</span> numpy <span class="keyword">as</span> np
+
+matrix = np.array([[<span class="number">4</span>, <span class="number">7</span>], [<span class="number">2</span>, <span class="number">6</span>]])
+
+<span class="comment"># Determinant</span>
+det = np.linalg.det(matrix)
+<span class="function">print</span>(<span class="string">"Determinant:"</span>, det)
+
+<span class="comment"># Inverse</span>
+inv = np.linalg.inv(matrix)
+<span class="function">print</span>(<span class="string">"Inverse:\n"</span>, inv)
+
+<span class="comment"># Verify A * A^-1 = I</span>
+identity = matrix @ inv
+<span class="function">print</span>(<span class="string">"Verification:\n"</span>, np.round(identity))</div>
+                        </div>
+                    </div>
+
+                    <div class="problem">
+                        <div class="problem-title" onclick="toggleSolution(this)">
+                            Problem 7.3: Eigenvalues and eigenvectors
+                            <button class="toggle-btn">Show Solution</button>
+                        </div>
+                        <div class="problem-description">
+                            Find eigenvalues and eigenvectors of a matrix.
+                        </div>
+                        <div class="solution">
+                            <div class="code-block"><span class="keyword">import</span> numpy <span class="keyword">as</span> np
+
+matrix = np.array([[<span class="number">3</span>, <span class="number">1</span>], [<span class="number">1</span>, <span class="number">3</span>]])
+
+<span class="comment"># Eigenvalues and eigenvectors</span>
+eigenvalues, eigenvectors = np.linalg.eig(matrix)
+
+<span class="function">print</span>(<span class="string">"Eigenvalues:"</span>, eigenvalues)
+<span class="function">print</span>(<span class="string">"Eigenvectors:\n"</span>, eigenvectors)</div>
+                        </div>
+                    </div>
+
+                    <div class="problem">
+                        <div class="problem-title" onclick="toggleSolution(this)">
+                            Problem 7.4: Solve linear equations
+                            <button class="toggle-btn">Show Solution</button>
+                        </div>
+                        <div class="problem-description">
+                            Solve system of linear equations Ax = b.
+                        </div>
+                        <div class="solution">
+                            <div class="code-block"><span class="keyword">import</span> numpy <span class="keyword">as</span> np
+
+<span class="comment"># System: 2x + y = 8, x + 3y = 13</span>
+A = np.array([[<span class="number">2</span>, <span class="number">1</span>], [<span class="number">1</span>, <span class="number">3</span>]])
+b = np.array([<span class="number">8</span>, <span class="number">13</span>])
+
+<span class="comment"># Solve</span>
+x = np.linalg.solve(A, b)
+<span class="function">print</span>(<span class="string">"Solution:"</span>, x)
+
+<span class="comment"># Verify</span>
+<span class="function">print</span>(<span class="string">"Verification:"</span>, np.allclose(A @ x, b))</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 8: Sorting & Searching -->
+            <div class="section">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <span>8. Sorting & Searching</span>
+                    <span class="icon">▼</span>
+                </div>
+                <div class="section-content">
+                    <div class="problem">
+                        <div class="problem-title" onclick="toggleSolution(this)">
+                            Problem 8.1: Sort arrays
+                            <button class="toggle-btn">Show Solution</button>
+                        </div>
+                        <div class="problem-description">
+                            Sort arrays and get sorted indices using argsort.
+                        </div>
+                        <div class="solution">
+                            <div class="code-block"><span class="keyword">import</span> numpy <span class="keyword">as</span> np
+
+arr = np.array([<span class="number">3</span>, <span class="number">1</span>, <span class="number">4</span>, <span class="number">1</span>, <span class="number">5</span>, <span class="number">9</span>, <span class="number">2</span>, <span class="number">6</span>])
+
+<span class="comment"># Sort array</span>
+<span class="function">print</span>(<span class="string">"Sorted:"</span>, np.sort(arr))
+
+<span class="comment"># Get sorted indices</span>
+<span class="function">print</span>(<span class="string">"Argsort:"</span>, np.argsort(arr))
+
+<span class="comment"># Sort 2D array</span>
+arr2d = np.array([[<span class="number">3</span>, <span class="number">1</span>, <span class="number">2</span>], [<span class="number">9</span>, <span class="number">5</span>, <span class="number">7</span>]])
+<span class="function">print</span>(<span class="string">"Sort axis=0:\n"</span>, np.sort(arr2d, axis=<span class="number">0</span>))
+<span class="function">print</span>(<span class="string">"Sort axis=1:\n"</span>, np.sort(arr2d, axis=<span class="number">1</span>))</div>
+                        </div>
+                    </div>
+
+                    <div class="problem">
+                        <div class="problem-title" onclick="toggleSolution(this)">
+                            Problem 8.2: Find elements and conditions
+                            <button class="toggle-btn">Show Solution</button>
+                        </div>
+                        <div class="problem-description">
+                            Use where, argmax, argmin to find elements.
+                        </div>
+                        <div class="solution">
+                            <div class="code-block"><span class="keyword">import</span> numpy <span class="keyword">as</span> np
+
+arr = np.array([<span class="number">10</span>, <span class="number">25</span>, <span class="number">30</span>, <span class="number">15</span>, <span class="number">40</span>])
+
+<span class="comment"># Find index of max/min</span>
+<span class="function">print</span>(<span class="string">"Argmax:"</span>, np.argmax(arr))
+<span class="function">print</span>(<span class="string">"Argmin:"</span>, np.argmin(arr))
+
+<span class="comment"># Where condition is true</span>
+<span class="function">print</span>(<span class="string">"Indices where > 20:"</span>, np.where(arr > <span class="number">20</span>))
+
+<span class="comment"># Conditional assignment</span>
+result = np.where(arr > <span class="number">20</span>, <span class="string">"High"</span>, <span class="string">"Low"</span>)
+<span class="function">print</span>(<span class="string">"Conditional:"</span>, result)</div>
+                        </div>
+                    </div>
+
+                    <div class="problem">
+                        <div class="problem-title" onclick="toggleSolution(this)">
+                            Problem 8.3: Unique values and counts
+                            <button class="toggle-btn">Show Solution</button>
+                        </div>
+                        <div class="problem-description">
+                            Find unique elements and their counts.
+                        </div>
+                        <div class="solution">
+                            <div class="code-block"><span class="keyword">import</span> numpy <span class="keyword">as</span> np
+
+arr = np.array([<span class="number">1</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">4</span>, <span class="number">4</span>, <span class="number">4</span>])
+
+<span class="comment"># Unique values</span>
+<span class="function">print</span>(<span class="string">"Unique:"</span>, np.unique(arr))
+
+<span class="comment"># With counts</span>
+unique, counts = np.unique(arr, return_counts=<span class="keyword">True</span>)
+<span class="function">print</span>(<span class="string">"Values:"</span>, unique)
+<span class="function">print</span>(<span class="string">"Counts:"</span>, counts)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 9: Mathematical Functions -->
+            <div class="section">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <span>9. Mathematical Functions</span>
+                    <span class="icon">▼</span>
+                </div>
+                <div class="section-content">
+                    <div class="problem">
+                        <div class="problem-title" onclick="toggleSolution(this)">
+                            Problem 9.1: Trigonometric functions
+                            <button class="toggle-btn">Show Solution</button>
+                        </div>
+                        <div class="problem-description">
+                            Apply sin, cos, tan and their inverses.
+                        </div>
+                        <div class="solution">
+                            <div class="code-block"><span class="keyword">import</span> numpy <span class="keyword">as</span> np
+
+angles = np.array([<span class="number">0</span>, <span class="number">30</span>, <span class="number">45</span>, <span class="number">60</span>, <span class="number">90</span>])
+radians = np.deg2rad(angles)
+
+<span class="function">print</span>(<span class="string">"Sin:"</span>, np.sin(radians))
+<span class="function">print</span>(<span class="string">"Cos:"</span>, np.cos(radians))
+<span class="function">print</span>(<span class="string">"Tan:"</span>, np.tan(radians))
+
+<span class="comment"># Inverse functions</span>
+values = np.array([<span class="number">0</span>, <span class="number">0.5</span>, <span class="number">1</span>])
+<span class="function">print</span>(<span class="string">"Arcsin (degrees):"</span>, np.rad2deg(np.arcsin(values)))</div>
+                        </div>
+                    </div>
+
+                    <div class="problem">
+                        <div class="problem-title" onclick="toggleSolution(this)">
+                            Problem 9.2: Exponential and logarithmic
+                            <button class="toggle-btn">Show Solution</button>
+                        </div>
+                        <div class="problem-description">
+                            Use exp, log, log10, log2 functions.
+                        </div>
+                        <div class="solution">
+                            <div class="code-block"><span class="keyword">import</span> numpy <span class="keyword">as</span> np
+
+arr = np.array([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>])
+
+<span class="function">print</span>(<span class="string">"Exponential:"</span>, np.exp(arr))
+<span class="function">print</span>(<span class="string">"Natural log:"</span>, np.log(arr))
+<span class="function">print</span>(<span class="string">"Log base 10:"</span>, np.log10(arr))
+<span class="function">print</span>(<span class="string">"Log base 2:"</span>, np.log2(arr))
+<span class="function">print</span>(<span class="string">"Log1p (log(1+x)):"</span>, np.log1p(arr))</div>
+                        </div>
+                    </div>
+
+                    <div class="problem">
+                        <div class="problem-title" onclick="toggleSolution(this)">
+                            Problem 9.3: Rounding functions
+                            <button class="toggle-btn">Show Solution</button>
+                        </div>
+                        <div class="problem-description">
+                            Round, floor, ceil, and truncate values.
+                        </div>
+                        <div class="solution">
+                            <div class="code-block"><span class="keyword">import</span> numpy <span class="keyword">as</span> np
+
+arr = np.array([<span class="number">1.2</span>, <span class="number">2.7</span>, -<span class="number">1.3</span>, -<span class="number">2.8</span>])
+
+<span class="function">print</span>(<span class="string">"Round:"</span>, np.round(arr))
+<span class="function">print</span>(<span class="string">"Floor:"</span>, np.floor(arr))
+<span class="function">print</span>(<span class="string">"Ceil:"</span>, np.ceil(arr))
+<span class="function">print</span>(<span class="string">"Truncate:"</span>, np.trunc(arr))
+<span class="function">print</span>(<span class="string">"Absolute:"</span>, np.abs(arr))</div>
+                        </div>
+                    </div>
+
+                    <div class="problem">
+                        <div class="problem-title" onclick="toggleSolution(this)">
+                            Problem 9.4: Aggregation functions
+                            <button class="toggle-btn">Show Solution</button>
+                        </div>
+                        <div class="problem-description">
+                            Use prod, cumprod, diff, gradient.
+                        </div>
+                        <div class="solution">
+                            <div class="code-block"><span class="keyword">import</span> numpy <span class="keyword">as</span> np
+
+arr = np.array([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>])
+
+<span class="function">print</span>(<span class="string">"Product:"</span>, np.prod(arr))
+<span class="function">print</span>(<span class="string">"Cumulative product:"</span>, np.cumprod(arr))
+<span class="function">print</span>(<span class="string">"Difference:"</span>, np.diff(arr))
+<span class="function">print</span>(<span class="string">"Gradient:"</span>, np.gradient(arr))</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 10: Random Numbers -->
+            <div class="section">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <span>10. Random Number Generation</span>
+                    <span class="icon">▼</span>
+                </div>
+                <div class="section-content">
+                    <div class="problem">
+                        <div class="problem-title" onclick="toggleSolution(this)">
+                            Problem 10.1: Random distributions
+                            <button class="toggle-btn">Show Solution</button>
+                        </div>
+                        <div class="problem-description">
+                            Generate random numbers from various distributions.
+                        </div>
+                        <div class="solution">
+                            <div class="code-block"><span class="keyword">import</span> numpy <span class="keyword">as</span> np
+
+<span class="comment"># Set seed for reproducibility</span>
+np.random.seed(<span class="number">42</span>)
+
+<span class="comment"># Uniform distribution [0, 1)</span>
+<span class="function">print</span>(<span class="string">"Uniform:"</span>, np.random.random(<span class="number">5</span>))
+
+<span class="comment"># Normal distribution</span>
+<span class="function">print</span>(<span class="string">"Normal:"</span>, np.random.randn(<span class="number">5</span>))
+
+<span class="comment"># Integers</span>
+<span class="function">print</span>(<span class="string">"Random ints:"</span>, np.random.randint(<span class="number">1</span>, <span class="number">100</span>, <span class="number">5</span>))
+
+<span class="comment"># Binomial</span>
+<span class="function">print</span>(<span class="string">"Binomial:"</span>, np.random.binomial(<span class="number">10</span>, <span class="number">0.5</span>, <span class="number">5</span>))</div>
+                        </div>
+                    </div>
+
+                    <div class="problem">
+                        <div class="problem-title" onclick="toggleSolution(this)">
+                            Problem 10.2: Shuffle and choice
+                            <button class="toggle-btn">Show Solution</button>
+                        </div>
+                        <div class="problem-description">
+                            Shuffle arrays and randomly choose elements.
+                        </div>
+                        <div class="solution">
+                            <div class="code-block"><span class="keyword">import</span> numpy <span class="keyword">as</span> np
+
+arr = np.arange(<span class="number">10</span>)
+<span class="function">print</span>(<span class="string">"Original:"</span>, arr)
+
+<span class="comment"># Shuffle in place</span>
+np.random.shuffle(arr)
+<span class="function">print</span>(<span class="string">"Shuffled:"</span>, arr)
+
+<span class="comment"># Random choice</span>
+<span class="function">print</span>(<span class="string">"Random choice:"</span>, np.random.choice(arr, <span class="number">5</span>))
+
+<span class="comment"># Choice without replacement</span>
+<span class="function">print</span>(<span class="string">"Without replacement:"</span>, np.random.choice(arr, <span class="number">5</span>, replace=<span class="keyword">False</span>))</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 11: File I/O -->
+            <div class="section">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <span>11. File Input/Output</span>
+                    <span class="icon">▼</span>
+                </div>
+                <div class="section-content">
+                    <div class="problem">
+                        <div class="problem-title" onclick="toggleSolution(this)">
+                            Problem 11.1: Save and load binary files
+                            <button class="toggle-btn">Show Solution</button>
+                        </div>
+                        <div class="problem-description">
+                            Use save, load, savez for binary format.
+                        </div>
+                        <div class="solution">
+                            <div class="code-block"><span class="keyword">import</span> numpy <span class="keyword">as</span> np
+
+arr = np.array([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>])
+
+<span class="comment"># Save single array</span>
+np.save(<span class="string">'array.npy'</span>, arr)
+
+<span class="comment"># Load array</span>
+loaded = np.load(<span class="string">'array.npy'</span>)
+<span class="function">print</span>(<span class="string">"Loaded:"</span>, loaded)
+
+<span class="comment"># Save multiple arrays</span>
+a = np.array([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>])
+b = np.array([<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>])
+np.savez(<span class="string">'arrays.npz'</span>, a=a, b=b)
+
+<span class="comment"># Load multiple</span>
+data = np.load(<span class="string">'arrays.npz'</span>)
+<span class="function">print</span>(<span class="string">"Array a:"</span>, data[<span class="string">'a'</span>])</div>
+                        </div>
+                    </div>
+
+                    <div class="problem">
+                        <div class="problem-title" onclick="toggleSolution(this)">
+                            Problem 11.2: Text file operations
+                            <button class="toggle-btn">Show Solution</button>
+                        </div>
+                        <div class="problem-description">
+                            Save and load CSV/text files.
+                        </div>
+                        <div class="solution">
+                            <div class="code-block"><span class="keyword">import</span> numpy <span class="keyword">as</span> np
+
+arr = np.array([[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>],
+                [<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>],
+                [<span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>]])
+
+<span class="comment"># Save as text</span>
+np.savetxt(<span class="string">'data.txt'</span>, arr, delimiter=<span class="string">','</span>)
+
+<span class="comment"># Load from text</span>
+loaded = np.loadtxt(<span class="string">'data.txt'</span>, delimiter=<span class="string">','</span>)
+<span class="function">print</span>(<span class="string">"Loaded from text:\n"</span>, loaded)
+
+<span class="comment"># Save with format</span>
+np.savetxt(<span class="string">'formatted.txt'</span>, arr, fmt=<span class="string">'%d'</span>, delimiter=<span class="string">','</span>)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 12: Advanced Indexing -->
+            <div class="section">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <span>12. Advanced Indexing Techniques</span>
+                    <span class="icon">▼</span>
+                </div>
+                <div class="section-content">
+                    <div class="problem">
+                        <div class="problem-title" onclick="toggleSolution(this)">
+                            Problem 12.1: Multi-dimensional indexing
+                            <button class="toggle-btn">Show Solution</button>
+                        </div>
+                        <div class="problem-description">
+                            Use advanced indexing with multiple arrays.
+                        </div>
+                        <div class="solution">
+                            <div class="code-block"><span class="keyword">import</span> numpy <span class="keyword">as</span> np
+
+arr = np.array([[<span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>],
+                [<span class="number">40</span>, <span class="number">50</span>, <span class="number">60</span>],
+                [<span class="number">70</span>, <span class="number">80</span>, <span class="number">90</span>]])
+
+<span class="comment"># Index with arrays</span>
+rows = np.array([<span class="number">0</span>, <span class="number">2</span>])
+cols = np.array([<span class="number">1</span>, <span class="number">2</span>])
+<span class="function">print</span>(<span class="string">"Elements [0,1] and [2,2]:"</span>, arr[rows, cols])
+
+<span class="comment"># Boolean + fancy indexing</span>
+mask = arr > <span class="number">50</span>
+<span class="function">print</span>(<span class="string">"Elements > 50:"</span>, arr[mask])</div>
+                        </div>
+                    </div>
+
+                    <div class="problem">
+                        <div class="problem-title" onclick="toggleSolution(this)">
+                            Problem 12.2: np.ix_ for open mesh
+                            <button class="toggle-btn">Show Solution</button>
+                        </div>
+                        <div class="problem-description">
+                            Create open mesh indexing using ix_.
+                        </div>
+                        <div class="solution">
+                            <div class="code-block"><span class="keyword">import</span> numpy <span class="keyword">as</span> np
+
+arr = np.arange(<span class="number">36</span>).reshape(<span class="number">6</span>, <span class="number">6</span>)
+<span class="function">print</span>(<span class="string">"Array:\n"</span>, arr)
+
+<span class="comment"># Select rows 1,3,5 and columns 0,2,4</span>
+result = arr[np.ix_([<span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>], [<span class="number">0</span>, <span class="number">2</span>, <span class="number">4</span>])]
+<span class="function">print</span>(<span class="string">"Selected:\n"</span>, result)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 13: Performance & Memory -->
+            <div class="section">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <span>13. Performance & Memory Management</span>
+                    <span class="icon">▼</span>
+                </div>
+                <div class="section-content">
+                    <div class="problem">
+                        <div class="problem-title" onclick="toggleSolution(this)">
+                            Problem 13.1: Views vs copies
+                            <button class="toggle-btn">Show Solution</button>
+                        </div>
+                        <div class="problem-description">
+                            Understand difference between views and copies.
+                        </div>
+                        <div class="solution">
+                            <div class="code-block"><span class="keyword">import</span> numpy <span class="keyword">as</span> np
+
+arr = np.array([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>])
+
+<span class="comment"># View (shares memory)</span>
+view = arr[<span class="number">1</span>:<span class="number">4</span>]
+view[<span class="number">0</span>] = <span class="number">999</span>
+<span class="function">print</span>(<span class="string">"Original modified:"</span>, arr)
+
+<span class="comment"># Copy (independent)</span>
+arr2 = np.array([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>])
+copy = arr2[<span class="number">1</span>:<span class="number">4</span>].copy()
+copy[<span class="number">0</span>] = <span class="number">999</span>
+<span class="function">print</span>(<span class="string">"Original unchanged:"</span>, arr2)</div>
+                        </div>
+                    </div>
+
+                    <div class="problem">
+                        <div class="problem-title" onclick="toggleSolution(this)">
+                            Problem 13.2: Vectorization benefits
+                            <button class="toggle-btn">Show Solution</button>
+                        </div>
+                        <div class="problem-description">
+                            Compare vectorized vs loop-based operations.
+                        </div>
+                        <div class="solution">
+                            <div class="code-block"><span class="keyword">import</span> numpy <span class="keyword">as</span> np
+<span class="keyword">import</span> time
+
+arr = np.arange(<span class="number">1000000</span>)
+
+<span class="comment"># Python loop</span>
+start = time.time()
+result = [x**<span class="number">2</span> <span class="keyword">for</span> x <span class="keyword">in</span> arr]
+loop_time = time.time() - start
+
+<span class="comment"># Vectorized</span>
+start = time.time()
+result = arr**<span class="number">2</span>
+vec_time = time.time() - start
+
+<span class="function">print</span>(<span class="string">f"Loop time: {loop_time:.4f}s"</span>)
+<span class="function">print</span>(<span class="string">f"Vectorized: {vec_time:.4f}s"</span>)
+<span class="function">print</span>(<span class="string">f"Speedup: {loop_time/vec_time:.2f}x"</span>)</div>
+                        </div>
+                    </div>
+
+                    <div class="problem">
+                        <div class="problem-title" onclick="toggleSolution(this)">
+                            Problem 13.3: Memory layout and strides
+                            <button class="toggle-btn">Show Solution</button>
+                        </div>
+                        <div class="problem-description">
+                            Check memory layout, strides, and contiguity.
+                        </div>
+                        <div class="solution">
+                            <div class="code-block"><span class="keyword">import</span> numpy <span class="keyword">as</span> np
+
+arr = np.arange(<span class="number">12</span>).reshape(<span class="number">3</span>, <span class="number">4</span>)
+
+<span class="function">print</span>(<span class="string">"Strides:"</span>, arr.strides)
+<span class="function">print</span>(<span class="string">"Flags:\n"</span>, arr.flags)
+<span class="function">print</span>(<span class="string">"Is C-contiguous:"</span>, arr.flags[<span class="string">'C_CONTIGUOUS'</span>])
+<span class="function">print</span>(<span class="string">"Is F-contiguous:"</span>, arr.flags[<span class="string">'F_CONTIGUOUS'</span>])
+
+<span class="comment"># Transpose changes layout</span>
+trans = arr.T
+<span class="function">print</span>(<span class="string">"Transposed strides:"</span>, trans.strides)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 14: Masked Arrays -->
+            <div class="section">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <span>14. Masked Arrays</span>
+                    <span class="icon">▼</span>
+                </div>
+                <div class="section-content">
+                    <div class="problem">
+                        <div class="problem-title" onclick="toggleSolution(this)">
+                            Problem 14.1: Create and use masked arrays
+                            <button class="toggle-btn">Show Solution</button>
+                        </div>
+                        <div class="problem-description">
+                            Handle missing or invalid data with masked arrays.
+                        </div>
+                        <div class="solution">
+                            <div class="code-block"><span class="keyword">import</span> numpy <span class="keyword">as</span> np
+<span class="keyword">import</span> numpy.ma <span class="keyword">as</span> ma
+
+<span class="comment"># Create masked array</span>
+data = np.array([<span class="number">1</span>, <span class="number">2</span>, -<span class="number">999</span>, <span class="number">4</span>, <span class="number">5</span>, -<span class="number">999</span>])
+masked = ma.masked_where(data == -<span class="number">999</span>, data)
+
+<span class="function">print</span>(<span class="string">"Masked array:"</span>, masked)
+<span class="function">print</span>(<span class="string">"Mean (ignoring masked):"</span>, masked.mean())
+<span class="function">print</span>(<span class="string">"Filled with 0:"</span>, masked.filled(<span class="number">0</span>))</div>
+                        </div>
+                    </div>
+
+                    <div class="problem">
+                        <div class="problem-title" onclick="toggleSolution(this)">
+                            Problem 14.2: Masked array operations
+                            <button class="toggle-btn">Show Solution</button>
+                        </div>
+                        <div class="problem-description">
+                            Perform operations on masked arrays.
+                        </div>
+                        <div class="solution">
+                            <div class="code-block"><span class="keyword">import</span> numpy <span class="keyword">as</span> np
+<span class="keyword">import</span> numpy.ma <span class="keyword">as</span> ma
+
+a = ma.array([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>], mask=[<span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>])
+b = ma.array([<span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>, <span class="number">40</span>], mask=[<span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>])
+
+<span class="function">print</span>(<span class="string">"Sum:"</span>, a + b)
+<span class="function">print</span>(<span class="string">"Product:"</span>, a * b)
+<span class="function">print</span>(<span class="string">"Sum of a:"</span>, a.sum())
+<span class="function">print</span>(<span class="string">"Count unmasked:"</span>, a.count())</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 15: Structured Arrays -->
+            <div class="section">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <span>15. Structured Arrays</span>
+                    <span class="icon">▼</span>
+                </div>
+                <div class="section-content">
+                    <div class="problem">
+                        <div class="problem-title" onclick="toggleSolution(this)">
+                            Problem 15.1: Create structured arrays
+                            <button class="toggle-btn">Show Solution</button>
+                        </div>
+                        <div class="problem-description">
+                            Work with arrays containing different data types.
+                        </div>
+                        <div class="solution">
+                            <div class="code-block"><span class="keyword">import</span> numpy <span class="keyword">as</span> np
+
+<span class="comment"># Define structure</span>
+dt = np.dtype([(<span class="string">'name'</span>, <span class="string">'U10'</span>), (<span class="string">'age'</span>, <span class="string">'i4'</span>), (<span class="string">'salary'</span>, <span class="string">'f8'</span>)])
+
+<span class="comment"># Create structured array</span>
+data = np.array([(<span class="string">'Alice'</span>, <span class="number">25</span>, <span class="number">50000.0</span>),
+                 (<span class="string">'Bob'</span>, <span class="number">30</span>, <span class="number">60000.0</span>),
+                 (<span class="string">'Charlie'</span>, <span class="number">35</span>, <span class="number">75000.0</span>)], dtype=dt)
+
+<span class="function">print</span>(<span class="string">"Data:\n"</span>, data)
+<span class="function">print</span>(<span class="string">"Names:"</span>, data[<span class="string">'name'</span>])
+<span class="function">print</span>(<span class="string">"Average salary:"</span>, data[<span class="string">'salary'</span>].mean())</div>
+                        </div>
+                    </div>
+
+                    <div class="problem">
+                        <div class="problem-title" onclick="toggleSolution(this)">
+                            Problem 15.2: Access and filter structured arrays
+                            <button class="toggle-btn">Show Solution</button>
+                        </div>
+                        <div class="problem-description">
+                            Query and filter structured array data.
+                        </div>
+                        <div class="solution">
+                            <div class="code-block"><span class="keyword">import</span> numpy <span class="keyword">as</span> np
+
+dt = np.dtype([(<span class="string">'name'</span>, <span class="string">'U10'</span>), (<span class="string">'age'</span>, <span class="string">'i4'</span>), (<span class="string">'salary'</span>, <span class="string">'f8'</span>)])
+data = np.array([(<span class="string">'Alice'</span>, <span class="number">25</span>, <span class="number">50000</span>),
+                 (<span class="string">'Bob'</span>, <span class="number">30</span>, <span class="number">60000</span>),
+                 (<span class="string">'Charlie'</span>, <span class="number">35</span>, <span class="number">75000</span>)], dtype=dt)
+
+<span class="comment"># Filter by condition</span>
+high_earners = data[data[<span class="string">'salary'</span>] > <span class="number">55000</span>]
+<span class="function">print</span>(<span class="string">"High earners:\n"</span>, high_earners)
+
+<span class="comment"># Sort by field</span>
+sorted_data = np.sort(data, order=<span class="string">'age'</span>)
+<span class="function">print</span>(<span class="string">"Sorted by age:\n"</span>, sorted_data)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 16: Universal Functions -->
+            <div class="section">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <span>16. Universal Functions (ufuncs)</span>
+                    <span class="icon">▼</span>
+                </div>
+                <div class="section-content">
+                    <div class="problem">
+                        <div class="problem-title" onclick="toggleSolution(this)">
+                            Problem 16.1: Ufunc methods
+                            <button class="toggle-btn">Show Solution</button>
+                        </div>
+                        <div class="problem-description">
+                            Use reduce, accumulate, reduceat, and outer methods.
+                        </div>
+                        <div class="solution">
+                            <div class="code-block"><span class="keyword">import</span> numpy <span class="keyword">as</span> np
+
+arr = np.array([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>])
+
+<span class="comment"># Reduce (cumulative operation)</span>
+<span class="function">print</span>(<span class="string">"Add reduce:"</span>, np.add.reduce(arr))
+
+<span class="comment"># Accumulate (intermediate results)</span>
+<span class="function">print</span>(<span class="string">"Add accumulate:"</span>, np.add.accumulate(arr))
+
+<span class="comment"># Outer (all pairs)</span>
+a = np.array([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>])
+b = np.array([<span class="number">10</span>, <span class="number">20</span>])
+<span class="function">print</span>(<span class="string">"Multiply outer:\n"</span>, np.multiply.outer(a, b))</div>
+                        </div>
+                    </div>
+
+                    <div class="problem">
+                        <div class="problem-title" onclick="toggleSolution(this)">
+                            Problem 16.2: Custom ufuncs
+                            <button class="toggle-btn">Show Solution</button>
+                        </div>
+                        <div class="problem-description">
+                            Create custom universal functions with frompyfunc.
+                        </div>
+                        <div class="solution">
+                            <div class="code-block"><span class="keyword">import</span> numpy <span class="keyword">as</span> np
+
+<span class="comment"># Define Python function</span>
+<span class="keyword">def</span> <span class="function">custom_func</span>(x):
+    <span class="keyword">return</span> x**<span class="number">2</span> + <span class="number">2</span>*x + <span class="number">1</span>
+
+<span class="comment"># Create ufunc (1 input, 1 output)</span>
+ufunc = np.frompyfunc(custom_func, <span class="number">1</span>, <span class="number">1</span>)
+
+arr = np.array([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>])
+result = ufunc(arr)
+<span class="function">print</span>(<span class="string">"Custom ufunc result:"</span>, result)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 17: Polynomials -->
+            <div class="section">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <span>17. Polynomial Operations</span>
+                    <span class="icon">▼</span>
+                </div>
+                <div class="section-content">
+                    <div class="problem">
+                        <div class="problem-title" onclick="toggleSolution(this)">
+                            Problem 17.1: Polynomial basics
+                            <button class="toggle-btn">Show Solution</button>
+                        </div>
+                        <div class="problem-description">
+                            Create and evaluate polynomials.
+                        </div>
+                        <div class="solution">
+                            <div class="code-block"><span class="keyword">import</span> numpy <span class="keyword">as</span> np
+
+<span class="comment"># Polynomial: 2x^2 + 3x + 1</span>
+coeffs = [<span class="number">2</span>, <span class="number">3</span>, <span class="number">1</span>]
+poly = np.poly1d(coeffs)
+
+<span class="function">print</span>(<span class="string">"Polynomial:"</span>, poly)
+<span class="function">print</span>(<span class="string">"Evaluate at x=2:"</span>, poly(<span class="number">2</span>))
+<span class="function">print</span>(<span class="string">"Evaluate at array:"</span>, poly([<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>]))
+
+<span class="comment"># Roots</span>
+<span class="function">print</span>(<span class="string">"Roots:"</span>, poly.roots)</div>
+                        </div>
+                    </div>
+
+                    <div class="problem">
+                        <div class="problem-title" onclick="toggleSolution(this)">
+                            Problem 17.2: Polynomial fitting
+                            <button class="toggle-btn">Show Solution</button>
+                        </div>
+                        <div class="problem-description">
+                            Fit polynomial to data using polyfit.
+                        </div>
+                        <div class="solution">
+                            <div class="code-block"><span class="keyword">import</span> numpy <span class="keyword">as</span> np
+
+<span class="comment"># Sample data</span>
+x = np.array([<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>])
+y = np.array([<span class="number">1</span>, <span class="number">3</span>, <span class="number">7</span>, <span class="number">13</span>, <span class="number">21</span>])
+
+<span class="comment"># Fit 2nd degree polynomial</span>
+coeffs = np.polyfit(x, y, <span class="number">2</span>)
+poly = np.poly1d(coeffs)
+
+<span class="function">print</span>(<span class="string">"Fitted polynomial:"</span>, poly)
+<span class="function">print</span>(<span class="string">"Predictions:"</span>, poly(x))</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 18: Set Operations -->
+            <div class="section">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <span>18. Set Operations</span>
+                    <span class="icon">▼</span>
+                </div>
+                <div class="section-content">
+                    <div class="problem">
+                        <div class="problem-title" onclick="toggleSolution(this)">
+                            Problem 18.1: Set operations on arrays
+                            <button class="toggle-btn">Show Solution</button>
+                        </div>
+                        <div class="problem-description">
+                            Perform union, intersection, difference operations.
+                        </div>
+                        <div class="solution">
+                            <div class="code-block"><span class="keyword">import</span> numpy <span class="keyword">as</span> np
+
+a = np.array([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>])
+b = np.array([<span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>])
+
+<span class="function">print</span>(<span class="string">"Union:"</span>, np.union1d(a, b))
+<span class="function">print</span>(<span class="string">"Intersection:"</span>, np.intersect1d(a, b))
+<span class="function">print</span>(<span class="string">"Difference (a-b):"</span>, np.setdiff1d(a, b))
+<span class="function">print</span>(<span class="string">"Symmetric diff:"</span>, np.setxor1d(a, b))
+<span class="function">print</span>(<span class="string">"Is in:"</span>, np.in1d(a, b))</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 19: Date and Time -->
+            <div class="section">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <span>19. DateTime Operations</span>
+                    <span class="icon">▼</span>
+                </div>
+                <div class="section-content">
+                    <div class="problem">
+                        <div class="problem-title" onclick="toggleSolution(this)">
+                            Problem 19.1: Working with datetime64
+                            <button class="toggle-btn">Show Solution</button>
+                        </div>
+                        <div class="problem-description">
+                            Create and manipulate datetime arrays.
+                        </div>
+                        <div class="solution">
+                            <div class="code-block"><span class="keyword">import</span> numpy <span class="keyword">as</span> np
+
+<span class="comment"># Create datetime array</span>
+dates = np.array([<span class="string">'2024-01-01'</span>, <span class="string">'2024-02-01'</span>, <span class="string">'2024-03-01'</span>], 
+                 dtype=<span class="string">'datetime64'</span>)
+<span class="function">print</span>(<span class="string">"Dates:"</span>, dates)
+
+<span class="comment"># Date arithmetic</span>
+one_week = np.timedelta64(<span class="number">7</span>, <span class="string">'D'</span>)
+<span class="function">print</span>(<span class="string">"Add week:"</span>, dates + one_week)
+
+<span class="comment"># Date range</span>
+date_range = np.arange(<span class="string">'2024-01'</span>, <span class="string">'2024-06'</span>, dtype=<span class="string">'datetime64[M]'</span>)
+<span class="function">print</span>(<span class="string">"Range:"</span>, date_range)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 20: Advanced Topics -->
+            <div class="section">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <span>20. Advanced Topics & Best Practices</span>
+                    <span class="icon">▼</span>
+                </div>
+                <div class="section-content">
+                    <div class="problem">
+                        <div class="problem-title" onclick="toggleSolution(this)">
+                            Problem 20.1: Einstein summation (einsum)
+                            <button class="toggle-btn">Show Solution</button>
+                        </div>
+                        <div class="problem-description">
+                            Use einsum for complex tensor operations.
+                        </div>
+                        <div class="solution">
+                            <div class="code-block"><span class="keyword">import</span> numpy <span class="keyword">as</span> np
+
+a = np.array([[<span class="number">1</span>, <span class="number">2</span>], [<span class="number">3</span>, <span class="number">4</span>]])
+b = np.array([[<span class="number">5</span>, <span class="number">6</span>], [<span class="number">7</span>, <span class="number">8</span>]])
+
+<span class="comment"># Matrix multiplication</span>
+<span class="function">print</span>(<span class="string">"Matrix mult:\n"</span>, np.einsum(<span class="string">'ij,jk->ik'</span>, a, b))
+
+<span class="comment"># Trace</span>
+<span class="function">print</span>(<span class="string">"Trace:"</span>, np.einsum(<span class="string">'ii'</span>, a))
+
+<span class="comment"># Element-wise product and sum</span>
+<span class="function">print</span>(<span class="string">"Sum of element-wise:"</span>, np.einsum(<span class="string">'ij,ij->'</span>, a, b))</div>
+                        </div>
+                    </div>
+
+                    <div class="problem">
+                        <div class="problem-title" onclick="toggleSolution(this)">
+                            Problem 20.2: Memory-efficient operations
+                            <button class="toggle-btn">Show Solution</button>
+                        </div>
+                        <div class="problem-description">
+                            Use out parameter for in-place operations.
+                        </div>
+                        <div class="solution">
+                            <div class="code-block"><span class="keyword">import</span> numpy <span class="keyword">as</span> np
+
+arr = np.arange(<span class="number">10</span>)
+
+<span class="comment"># Without out (creates new array)</span>
+result1 = np.multiply(arr, <span class="number">2</span>)
+
+<span class="comment"># With out (modifies in-place)</span>
+result2 = np.zeros_like(arr)
+np.multiply(arr, <span class="number">2</span>, out=result2)
+<span class="function">print</span>(<span class="string">"In-place result:"</span>, result2)
+
+<span class="comment"># Chain operations with out</span>
+np.add(result2, <span class="number">10</span>, out=result2)
+<span class="function">print</span>(<span class="string">"After add:"</span>, result2)</div>
+                        </div>
+                    </div>
+
+                    <div class="problem">
+                        <div class="problem-title" onclick="toggleSolution(this)">
+                            Problem 20.3: meshgrid for coordinate arrays
+                            <button class="toggle-btn">Show Solution</button>
+                        </div>
+                        <div class="problem-description">
+                            Create coordinate matrices for plotting or calculations.
+                        </div>
+                        <div class="solution">
+                            <div class="code-block"><span class="keyword">import</span> numpy <span class="keyword">as</span> np
+
+x = np.array([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>])
+y = np.array([<span class="number">4</span>, <span class="number">5</span>])
+
+<span class="comment"># Create meshgrid</span>
+X, Y = np.meshgrid(x, y)
+<span class="function">print</span>(<span class="string">"X:\n"</span>, X)
+<span class="function">print</span>(<span class="string">"Y:\n"</span>, Y)
+
+<span class="comment"># Calculate distance from origin</span>
+distances = np.sqrt(X**<span class="number">2</span> + Y**<span class="number">2</span>)
+<span class="function">print</span>(<span class="string">"Distances:\n"</span>, distances)</div>
+                        </div>
+                    </div>
+
+                    <div class="problem">
+                        <div class="problem-title" onclick="toggleSolution(this)">
+                            Problem 20.4: Advanced broadcasting tricks
+                            <button class="toggle-btn">Show Solution</button>
+                        </div>
+                        <div class="problem-description">
+                            Use np.newaxis for advanced broadcasting.
+                        </div>
+                        <div class="solution">
+                            <div class="code-block"><span class="keyword">import</span> numpy <span class="keyword">as</span> np
+
+a = np.array([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>])
+b = np.array([<span class="number">10</span>, <span class="number">20</span>])
+
+<span class="comment"># Add newaxis for broadcasting</span>
+result = a[:, np.newaxis] + b[np.newaxis, :]
+<span class="function">print</span>(<span class="string">"Broadcasted addition:\n"</span>, result)
+
+<span class="comment"># Create outer product using broadcasting</span>
+outer = a[:, np.newaxis] * b[np.newaxis, :]
+<span class="function">print</span>(<span class="string">"Outer product:\n"</span>, outer)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        function toggleSection(header) {
+            const content = header.nextElementSibling;
+            const icon = header.querySelector('.icon');
+            
+            header.classList.toggle('active');
+            content.classList.toggle('active');
+        }
+
+        function toggleSolution(problemTitle) {
+            const solution = problemTitle.parentElement.querySelector('.solution');
+            const button = problemTitle.querySelector('.toggle-btn');
+            
+            solution.classList.toggle('active');
+            
+            if (solution.classList.contains('active')) {
+                button.textContent = 'Hide Solution';
+            } else {
+                button.textContent = 'Show Solution';
+            }
+        }
+
+        // Prevent button click from triggering problem title click
+        document.querySelectorAll('.toggle-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+            });
+        });
+    </script>
+</body>
+</html>

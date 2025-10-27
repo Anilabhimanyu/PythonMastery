@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Mastery - Learning Path</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2ecc71;
+            --dark-color: #2c3e50;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        .navbar {
+            background-color: var(--dark-color);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .navbar-brand {
+            color: white !important;
+            font-weight: 600;
+        }
+
+        .section-card {
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-bottom: 2rem;
+        }
+
+        .section-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border-radius: 12px 12px 0 0 !important;
+            padding: 1rem;
+            font-weight: 600;
+        }
+
+        .nav-link {
+            color: var(--dark-color);
+            padding: 0.5rem 1rem;
+            transition: all 0.2s;
+            border-radius: 6px;
+            margin: 0.2rem 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-link:hover {
+            background-color: #e9ecef;
+            color: var(--primary-color);
+            transform: translateX(5px);
+        }
+
+        .nav-link i {
+            margin-right: 8px;
+            color: var(--primary-color);
+        }
+
+        .subsection-title {
+            color: var(--dark-color);
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin: 1rem 0 0.5rem 0;
+            padding-left: 1rem;
+            border-left: 4px solid var(--secondary-color);
+        }
+
+        .page-title {
+            color: var(--dark-color);
+            font-weight: 700;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 3px solid var(--primary-color);
+        }
+
+        .top-banner {
+            background: linear-gradient(135deg, var(--dark-color), var(--primary-color));
+            color: white;
+            padding: 2rem 0;
+            margin-bottom: 3rem;
+        }
+
+        .banner-text {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="bi bi-braces-asterisk"></i>
+                Python Mastery
+            </a>
+        </div>
+    </nav>
+
+    <div class="top-banner">
+        <div class="container">
+            <h1 class="display-4 mb-3">Python Mastery Learning Path</h1>
+            <p class="banner-text mb-0">A comprehensive guide to master Python programming, data structures, algorithms, and more.</p>
+        </div>
+    </div>
+
+    <div class="container pb-5">
+        <div class="row">
+            <!-- Python Basics -->
+            <div class="col-md-6 col-lg-4">
+                <div class="section-card card">
+                    <div class="card-header">
+                        <i class="bi bi-code-square"></i> Python Basics
+                    </div>
+                    <div class="card-body">
+                        <a href="https://anilabhimanyu.github.io/PythonMastery/Basics/python_basics_part1.html" class="nav-link">
+                            <i class="bi bi-play-circle"></i> Getting Started with Python
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Data Structures -->
+            <div class="col-md-6 col-lg-4">
+                <div class="section-card card">
+                    <div class="card-header">
+                        <i class="bi bi-diagram-3"></i> Data Structures
+                    </div>
+                    <div class="card-body">
+                        <div class="subsection-title">Linear Data Structures</div>
+                        <a href="https://anilabhimanyu.github.io/PythonMastery/DSA/DataStructures/Linear/list/python_list_part1.html" class="nav-link">
+                            <i class="bi bi-list-ul"></i> Lists - Part 1
+                        </a>
+                        <a href="https://anilabhimanyu.github.io/PythonMastery/DSA/DataStructures/Linear/list/python_list_part2.html" class="nav-link">
+                            <i class="bi bi-list-ul"></i> Lists - Part 2
+                        </a>
+                        <a href="https://anilabhimanyu.github.io/PythonMastery/DSA/DataStructures/Linear/tuple/python_tuple_part1.html" class="nav-link">
+                            <i class="bi bi-brackets"></i> Tuples
+                        </a>
+                        <a href="https://anilabhimanyu.github.io/PythonMastery/DSA/DataStructures/Linear/dictionary/python_dict_part1.html" class="nav-link">
+                            <i class="bi bi-journal-text"></i> Dictionaries
+                        </a>
+                        <a href="https://anilabhimanyu.github.io/PythonMastery/DSA/DataStructures/Linear/set/python_sets_part1.html" class="nav-link">
+                            <i class="bi bi-collection"></i> Sets
+                        </a>
+                        <a href="https://anilabhimanyu.github.io/PythonMastery/DSA/DataStructures/Linear/strings/python_strings_part1.html" class="nav-link">
+                            <i class="bi bi-text-paragraph"></i> Strings
+                        </a>
+
+                        <div class="subsection-title">Non-Linear Data Structures</div>
+                        <a href="https://anilabhimanyu.github.io/PythonMastery/DSA/DataStructures/NonLinear/trees/python_trees_part1.html" class="nav-link">
+                            <i class="bi bi-diagram-2"></i> Trees
+                        </a>
+                        <a href="https://anilabhimanyu.github.io/PythonMastery/DSA/DataStructures/NonLinear/graphs/python_graphs_part1.html" class="nav-link">
+                            <i class="bi bi-graph-up"></i> Graphs - Part 1
+                        </a>
+                        <a href="https://anilabhimanyu.github.io/PythonMastery/DSA/DataStructures/NonLinear/graphs/python_graphs_part2.html" class="nav-link">
+                            <i class="bi bi-graph-up"></i> Graphs - Part 2
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Algorithms -->
+            <div class="col-md-6 col-lg-4">
+                <div class="section-card card">
+                    <div class="card-header">
+                        <i class="bi bi-cpu"></i> Algorithms
+                    </div>
+                    <div class="card-body">
+                        <a href="https://anilabhimanyu.github.io/PythonMastery/DSA/Algorithms/searching/searching_algorithms.html" class="nav-link">
+                            <i class="bi bi-search"></i> Searching Algorithms
+                        </a>
+                        <a href="https://anilabhimanyu.github.io/PythonMastery/DSA/Algorithms/searching/binary_search_algorithm.html" class="nav-link">
+                            <i class="bi bi-search"></i> Binary Search
+                        </a>
+                        <a href="https://anilabhimanyu.github.io/PythonMastery/DSA/Algorithms/sorting/sorting_algorithms.html" class="nav-link">
+                            <i class="bi bi-sort-alpha-down"></i> Sorting Algorithms
+                        </a>
+                        <a href="https://anilabhimanyu.github.io/PythonMastery/DSA/Algorithms/Recursion/recursion.html" class="nav-link">
+                            <i class="bi bi-arrow-repeat"></i> Recursion
+                        </a>
+                        <a href="https://anilabhimanyu.github.io/PythonMastery/DSA/Algorithms/DivideAndConquer/divide_and_conquer.html" class="nav-link">
+                            <i class="bi bi-scissors"></i> Divide and Conquer
+                        </a>
+                        <a href="https://anilabhimanyu.github.io/PythonMastery/DSA/Algorithms/DynamicProgramming/dynamic_programming.html" class="nav-link">
+                            <i class="bi bi-grid-3x3"></i> Dynamic Programming
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Advanced Concepts -->
+            <div class="col-md-6 col-lg-4">
+                <div class="section-card card">
+                    <div class="card-header">
+                        <i class="bi bi-gear"></i> Advanced Concepts
+                    </div>
+                    <div class="card-body">
+                        <a href="https://anilabhimanyu.github.io/PythonMastery/Python_Concepts/file_handling/python_file_handling_part1.html" class="nav-link">
+                            <i class="bi bi-file-earmark-text"></i> File Handling
+                        </a>
+                        <a href="https://anilabhimanyu.github.io/PythonMastery/Python_Concepts/regular_expressions/python_regex_part1.html" class="nav-link">
+                            <i class="bi bi-regex"></i> Regular Expressions
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Design Patterns -->
+            <div class="col-md-6 col-lg-4">
+                <div class="section-card card">
+                    <div class="card-header">
+                        <i class="bi bi-boxes"></i> Design Patterns
+                    </div>
+                    <div class="card-body">
+                        <a href="https://anilabhimanyu.github.io/PythonMastery/DSA/Patterns/patterns_overview.html" class="nav-link">
+                            <i class="bi bi-puzzle"></i> Patterns Overview
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Development Tools -->
+            <div class="col-md-6 col-lg-4">
+                <div class="section-card card">
+                    <div class="card-header">
+                        <i class="bi bi-tools"></i> Development Tools
+                    </div>
+                    <div class="card-body">
+                        <a href="https://anilabhimanyu.github.io/PythonMastery/ThingsNeedToKnowMust/git_fundamentals.html" class="nav-link">
+                            <i class="bi bi-git"></i> Git Fundamentals
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
